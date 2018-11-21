@@ -19,7 +19,6 @@ namespace Movolira {
                 JObject json = JObject.Parse(data);
                 JToken result = json["images"];
                 this.base_url = result["base_url"].Value<string>();
-                //IList<JToken> json_backdrop_sizes = result["backdrop_sizes"].Children().ToList();
                 IList<JToken> json_backdrop_sizes = result["backdrop_sizes"].Children().ToList();
                 this.backdrop_sizes = new List<string>();
                 foreach(JToken backdrop_size in json_backdrop_sizes) {
@@ -64,13 +63,6 @@ namespace Movolira {
                             genre_text += ", ";
                         }
                     }
-                    /*IList<JToken> genres = result["genres"].Value<IList<JToken>>();
-                    for(int i_genres = 0; i_genres < genres.Count; ++i_genres) {
-                        genre_text += genres[i_genres]["name"].Value<string>();
-                        if (i_genres + 1 != genres.Count) {
-                            genre_text += ", ";
-                        }
-                    }*/
                     CardMovie card_movie = new CardMovie(backdrop_path, title, genre_text, rating);
                     movie_data.Add(card_movie);
                 }

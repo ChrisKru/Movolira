@@ -1,5 +1,7 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.OS;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
@@ -7,25 +9,26 @@ using System.Collections.Generic;
 /*
  * Add support for landscape, tablets
  * Improve layouts on small screens
+ * Add handling for server failures
+ * TMDB cache, global/service
  */
 namespace Movolira {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : Activity{
+    public class MainActivity : FragmentActivity{
         protected override void OnCreate(Bundle savedInstanceState){
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.main_activity);
             tmdb = new TMDBController();
-            pagePopularMovies();
+            SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_frame, new CardMovieFragment()).Commit();
         }
-        private void pagePopularMovies() {
-            List<CardMovie> movie_data = tmdb.getPopularMovies();
-            CardMovieAdapter adapter = new CardMovieAdapter(movie_data, this);
-            RecyclerView layout = FindViewById<RecyclerView>(Resource.Id.main_activity_layout);
-            layout.SetAdapter(adapter);
-            CardMovieDecoration decoration = new CardMovieDecoration(this);
-            layout.AddItemDecoration(decoration);
+        public override void OnBackPressed() {
+            if(SupportFragmentManager.BackStackEntryCount > 0) {
+                SupportFragmentManager.PopBackStack();
+            } else {
+                base.OnBackPressed();
+            }
         }
-        TMDBController tmdb;
+        public TMDBController tmdb { get; private set; }
     }
 }
 

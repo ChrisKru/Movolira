@@ -14,7 +14,8 @@ using Android.Widget;
 
 namespace Movolira {
     class CardMovieHolder : RecyclerView.ViewHolder{
-        public CardMovieHolder(View view) : base (view){
+        public CardMovieHolder(View view, Action<int> listener) : base (view){
+            view.Click += (sender, position) => listener(base.LayoutPosition);
             this.backdrop_view = view.FindViewById<ImageView>(Resource.Id.card_movie_backdrop);
             this.title_view = view.FindViewById<TextView>(Resource.Id.card_movie_title);
             this.genres_view = view.FindViewById<TextView>(Resource.Id.card_movie_genres);

@@ -26,11 +26,11 @@ namespace Movolira {
             this.context = context;
         }
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent_view, int view_type) {
-            View view = LayoutInflater.From(parent_view.Context).Inflate(Resource.Layout.card_movie, parent_view, false);
-            CardMovieHolder holder = new CardMovieHolder(view);
+            View view = LayoutInflater.From(parent_view.Context).Inflate(Resource.Layout.card_movie_item, parent_view, false);
+            CardMovieHolder holder = new CardMovieHolder(view, onClick);
             return holder;
         }
-        public override async void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             CardMovieHolder card_holder = holder as CardMovieHolder;
             card_holder.title_view.Text = movie_data[position].title;
             card_holder.genres_view.Text = movie_data[position].genres;
@@ -50,8 +50,14 @@ namespace Movolira {
             }
             Picasso.With(context).Load(movie_data[position].backdrop_path).Into(card_holder.backdrop_view);
         }
+        private void onClick(int position) {
+            if(click_handler != null) {
+                click_handler(this, position);
+            }
+        }
         public override int ItemCount { get { return movie_data.Count(); } }
         public List<CardMovie> movie_data { get; private set; }
+        public event EventHandler<int> click_handler;
         private Context context;
     }
 }
