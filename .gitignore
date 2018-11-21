@@ -1,0 +1,10 @@
+
+\.vs/
+
+bin/
+
+obj/
+
+ApiKeys\.cs
+
+Movolira\.csproj\.user
