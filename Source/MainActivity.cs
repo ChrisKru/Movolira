@@ -4,6 +4,10 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
 
+/*
+ * Add support for landscape, tablets
+ * Improve layouts on small screens
+ */
 namespace Movolira {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : Activity{

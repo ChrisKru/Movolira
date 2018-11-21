@@ -59,15 +59,15 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CardMovieAdapter.cs" />
-    <Compile Include="CardMovie.cs" />
-    <Compile Include="ApiKeys.cs" />
-    <Compile Include="MainActivity.cs" />
-    <Compile Include="CardMovieDecoration.cs" />
-    <Compile Include="CardMovieHolder.cs" />
+    <Compile Include="Source\CardMoviePage\CardMovieAdapter.cs" />
+    <Compile Include="Source\CardMoviePage\CardMovie.cs" />
+    <Compile Include="Source\ApiKeys.cs" />
+    <Compile Include="Source\MainActivity.cs" />
+    <Compile Include="Source\CardMoviePage\CardMovieDecoration.cs" />
+    <Compile Include="Source\CardMoviePage\CardMovieHolder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TMDBController.cs" />
+    <Compile Include="Source\TMDBController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml">
