@@ -14,11 +14,12 @@ using Android.Widget;
 
 using Av4 = Android.Support.V4.App;
 using Android.Support.V7.Widget;
+using Newtonsoft.Json;
 
 namespace Movolira{
     public class CardMovieFragment : Av4.Fragment {
-        public override void OnCreate(Bundle savedInstanceState) {
-            base.OnCreate(savedInstanceState);
+        public override void OnCreate(Bundle saved_instance_state) {
+            base.OnCreate(saved_instance_state);
             main_activity = (MainActivity)Activity;
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

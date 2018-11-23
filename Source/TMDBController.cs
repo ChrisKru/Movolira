@@ -1,15 +1,18 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Android.Arch.Lifecycle;
+using Android.OS;
+using Android.Runtime;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-//****************
-//Develop guards for tmdb server failure
-//****************
+
 namespace Movolira {
-    public class TMDBController {
+    public class TMDBController{
         public TMDBController() {
+            http_cache = new Dictionary<string, JObject>();
             HttpClient http = new HttpClient();
             http.MaxResponseContentBufferSize = 256000;
             Uri request_uri = new Uri("https://api.themoviedb.org/3/configuration?api_key=" + ApiKeys.TMDB_KEY);
@@ -41,39 +44,52 @@ namespace Movolira {
                 //TMDB SERVER FAILED
             }
         }
+        [JsonConstructor]
+        public TMDBController(string base_url, List<string> backdrop_sizes, Dictionary<int, string> genres, 
+                Dictionary<string, JObject> http_cache) {
+            this.base_url = base_url;
+            this.backdrop_sizes = backdrop_sizes;
+            this.genres = genres;
+            this.http_cache = http_cache;
+        }
         public List<CardMovie> getPopularMovies() {
-            HttpClient http = new HttpClient();
-            http.MaxResponseContentBufferSize = 256000;
-            Uri request_uri = new Uri("https://api.themoviedb.org/3/discover/movie?api_key=" + ApiKeys.TMDB_KEY + "&sort_by=popularity.desc");
-            var request = http.GetAsync(request_uri).Result;
-            if(request.IsSuccessStatusCode) {
-                var data = request.Content.ReadAsStringAsync().Result;
-                JObject json = JObject.Parse(data);
-                IList<JToken> results = json["results"].Children().ToList();
-                List<CardMovie> movie_data = new List<CardMovie>();
-                foreach(JToken result in results) {
-                    string backdrop_path = base_url + backdrop_sizes[1] + result["backdrop_path"].Value<string>();
-                    string title = result["title"].Value<string>();
-                    double rating = result["vote_average"].Value<double>();
-                    string genre_text = "";
-                    IList<int> genre_ids = result["genre_ids"].Select(x => (int)x).ToList();
-                    for(int i_genre_ids = 0; i_genre_ids < genre_ids.Count; ++i_genre_ids) {
-                        genre_text += genres[genre_ids[i_genre_ids]];
-                        if(i_genre_ids + 1 < genre_ids.Count) {
-                            genre_text += ", ";
-                        }
-                    }
-                    CardMovie card_movie = new CardMovie(backdrop_path, title, genre_text, rating);
-                    movie_data.Add(card_movie);
+            JObject json_data;
+            if (!http_cache.TryGetValue("popular", out json_data)) {
+                HttpClient http = new HttpClient();
+                http.MaxResponseContentBufferSize = 256000;
+                Uri request_uri = new Uri("https://api.themoviedb.org/3/discover/movie?api_key=" + ApiKeys.TMDB_KEY + "&sort_by=popularity.desc");
+                HttpResponseMessage request = http.GetAsync(request_uri).Result;
+                if (request.IsSuccessStatusCode) {
+                    var data = request.Content.ReadAsStringAsync().Result;
+                    json_data = JObject.Parse(data);
+                    http_cache.Add("popular", json_data);
+                } else {
+                    //TMDB SERVER FAILED
+                    return null;
                 }
-                return movie_data;
-            } else {
-                //TMDB SERVER FAILED
-                return null;
             }
+            IList<JToken> results = json_data["results"].Children().ToList();
+            List<CardMovie> movie_data = new List<CardMovie>();
+            foreach (JToken result in results) {
+                string backdrop_path = base_url + backdrop_sizes[1] + result["backdrop_path"].Value<string>();
+                string title = result["title"].Value<string>();
+                double rating = result["vote_average"].Value<double>();
+                string genre_text = "";
+                IList<int> genre_ids = result["genre_ids"].Select(x => (int)x).ToList();
+                for (int i_genre_ids = 0; i_genre_ids < genre_ids.Count; ++i_genre_ids) {
+                    genre_text += genres[genre_ids[i_genre_ids]];
+                    if (i_genre_ids + 1 < genre_ids.Count) {
+                        genre_text += ", ";
+                    }
+                }
+                CardMovie card_movie = new CardMovie(backdrop_path, title, genre_text, rating);
+                movie_data.Add(card_movie);
+            }
+            return movie_data;
         }
         public string base_url { get; private set; }
         public List<string> backdrop_sizes { get; private set; }
         public Dictionary<int, string> genres { get; private set; }
+        public Dictionary<string, JObject> http_cache { get; private set; }
     }
 }
