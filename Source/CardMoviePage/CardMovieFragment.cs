@@ -20,7 +20,11 @@ namespace Movolira{
     public class CardMovieFragment : Av4.Fragment {
         public override void OnCreate(Bundle saved_instance_state) {
             base.OnCreate(saved_instance_state);
-            main_activity = (MainActivity)Activity;
+            //main_activity = (MainActivity)Activity;
+        }
+        public override void OnAttach(Context activity) {
+            main_activity = (MainActivity)activity;
+            base.OnAttach(activity);
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View layout = inflater.Inflate(Resource.Layout.card_movie, container, false);

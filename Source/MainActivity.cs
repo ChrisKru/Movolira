@@ -21,13 +21,15 @@ namespace Movolira {
     public class MainActivity : FragmentActivity{
         protected override void OnCreate(Bundle saved_state){
             base.OnCreate(saved_state);
-            SetContentView(Resource.Layout.main_activity);
             if(saved_state != null) {
                 tmdb = JsonConvert.DeserializeObject<TMDBController>(saved_state.GetString("tmdb"));
             } else {
                 tmdb = new TMDBController();
             }
-            SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_frame, new CardMovieFragment()).Commit();
+            SetContentView(Resource.Layout.main_activity);
+            if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_frame) == null) {
+                SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_frame, new CardMovieFragment(), null).Commit();
+            }
         }
         public override void OnBackPressed() {
             if(SupportFragmentManager.BackStackEntryCount > 0) {
