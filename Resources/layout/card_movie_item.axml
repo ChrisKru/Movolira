@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="3dp"
             android:paddingLeft="3dp"
-            android:background="@drawable/rating_background"
+            android:background="@drawable/card_rating"
             android:fontFamily="@font/notosans"
             android:textStyle="bold"
             android:textSize="13dp"

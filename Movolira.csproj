@@ -153,7 +153,7 @@
     <Folder Include="Assets\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\rating_background.xml" />
+    <AndroidResource Include="Resources\drawable\card_rating.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\movie_details.axml">
@@ -170,6 +170,9 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\backdrop_gradient.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

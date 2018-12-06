@@ -23,9 +23,18 @@ namespace Movolira {
                 JToken result = json["images"];
                 this.base_url = result["base_url"].Value<string>();
                 IList<JToken> json_backdrop_sizes = result["backdrop_sizes"].Children().ToList();
-                this.backdrop_sizes = new List<string>();
-                foreach(JToken backdrop_size in json_backdrop_sizes) {
-                    backdrop_sizes.Add(backdrop_size.Value<string>());
+                if(json_backdrop_sizes.Count == 1) {
+                    this.backdrop_item_size = json_backdrop_sizes[0].Value<string>();
+                    this.backdrop_size = json_backdrop_sizes[0].Value<string>();
+                } else {
+                    this.backdrop_item_size = json_backdrop_sizes[json_backdrop_sizes.Count / 2 - 1].Value<string>();
+                    this.backdrop_size = json_backdrop_sizes[json_backdrop_sizes.Count - 1].Value<string>();
+                }
+                IList<JToken> json_poster_sizes = result["poster_sizes"].Children().ToList();
+                if(json_poster_sizes.Count == 1) {
+                    this.poster_size = json_poster_sizes[0].Value<string>();
+                } else {
+                    this.poster_size = json_poster_sizes[json_poster_sizes.Count / 2].Value<string>();
                 }
             } else {
                 //TMDB SERVER FAILED
@@ -45,10 +54,12 @@ namespace Movolira {
             }
         }
         [JsonConstructor]
-        public TMDBController(string base_url, List<string> backdrop_sizes, Dictionary<int, string> genres, 
+        public TMDBController(string base_url, string backdrop_item_size, string backdrop_size, string poster_size, Dictionary<int, string> genres, 
                 Dictionary<string, JObject> http_cache) {
             this.base_url = base_url;
-            this.backdrop_sizes = backdrop_sizes;
+            this.backdrop_item_size = backdrop_item_size;
+            this.backdrop_size = backdrop_size;
+            this.poster_size = poster_size;
             this.genres = genres;
             this.http_cache = http_cache;
         }
@@ -71,8 +82,12 @@ namespace Movolira {
             IList<JToken> results = json_data["results"].Children().ToList();
             List<CardMovie> movie_data = new List<CardMovie>();
             foreach (JToken result in results) {
-                string backdrop_path = base_url + backdrop_sizes[1] + result["backdrop_path"].Value<string>();
+                string backdrop_item_path = base_url + backdrop_item_size + result["backdrop_path"].Value<string>();
+                string backdrop_path = base_url + backdrop_size + result["backdrop_path"].Value<string>();
+                string poster_path = base_url + poster_size + result["poster_path"].Value<string>();
                 string title = result["title"].Value<string>();
+                string overview = result["overview"].Value<string>();
+                string release_date = result["release_date"].Value<string>();
                 double rating = result["vote_average"].Value<double>();
                 string genre_text = "";
                 IList<int> genre_ids = result["genre_ids"].Select(x => (int)x).ToList();
@@ -82,13 +97,16 @@ namespace Movolira {
                         genre_text += ", ";
                     }
                 }
-                CardMovie card_movie = new CardMovie(backdrop_path, title, genre_text, rating);
+                CardMovie card_movie = new CardMovie(backdrop_item_path, backdrop_path, poster_path, title, overview, genre_text, release_date,
+                        rating);
                 movie_data.Add(card_movie);
             }
             return movie_data;
         }
         public string base_url { get; private set; }
-        public List<string> backdrop_sizes { get; private set; }
+        public string backdrop_item_size { get; private set; }
+        public string backdrop_size { get; private set; }
+        public string poster_size { get; private set; }
         public Dictionary<int, string> genres { get; private set; }
         public Dictionary<string, JObject> http_cache { get; private set; }
     }

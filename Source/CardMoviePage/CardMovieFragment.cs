@@ -28,7 +28,7 @@ namespace Movolira{
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View layout = inflater.Inflate(Resource.Layout.card_movie, container, false);
-            List<CardMovie> movie_data = main_activity.tmdb.getPopularMovies();
+            movie_data = main_activity.tmdb.getPopularMovies();
             CardMovieAdapter recycler_adapter = new CardMovieAdapter(movie_data, main_activity);
             recycler_adapter.click_handler += OnItemClick;
             RecyclerView recycler_view = layout.FindViewById<RecyclerView>(Resource.Id.main_activity_layout);
@@ -38,9 +38,14 @@ namespace Movolira{
             return layout;
         }
         private void OnItemClick(object sender, int position) {
-            main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, new MovieDetailsFragment())
-                .AddToBackStack(null).Commit();
+            MovieDetailsFragment details_fragment = new MovieDetailsFragment();
+            Bundle args = new Bundle();
+            args.PutString("movie_data", JsonConvert.SerializeObject(movie_data[position]));
+            details_fragment.Arguments = args;
+            main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, details_fragment)
+                    .SetTransition(Av4.FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
         }
+        private List<CardMovie> movie_data;
         private MainActivity main_activity;
     }
 }

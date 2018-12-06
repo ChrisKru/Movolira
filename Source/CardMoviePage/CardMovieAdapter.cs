@@ -48,7 +48,7 @@ namespace Movolira {
             }else {
                 rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_godlike));
             }
-            Picasso.With(context).Load(movie_data[position].backdrop_path).Into(card_holder.backdrop_view);
+            Picasso.With(context).Load(movie_data[position].backdrop_item_path).Into(card_holder.backdrop_view);
         }
         private void onClick(int position) {
             if(click_handler != null) {

@@ -8,9 +8,9 @@ using Android.Support.V7.Widget;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 /*
- * Add support for landscape, tablets
- * Improve layouts on small screens
+ * Improve layouts on small screens / tablets
  * Add handling for server failures
+ * Add a default backdrop for items that lack one
  */
 namespace Movolira {
     [Activity(
