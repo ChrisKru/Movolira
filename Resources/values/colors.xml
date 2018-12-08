@@ -4,13 +4,16 @@
     <color name="colorPrimary">#2c3e50</color>
     <color name="colorPrimaryDark">#1B3147</color>
     <color name="colorAccent">#3498db</color>
-    <!--card-->
+    <!--CardMovie-->
     <color name="card_text">#ffffff</color>
     <color name="card_primary">#cc000000</color>
-    <!--rating-->
+    <!--CardMovie rating-->
     <color name="rating_godlike">#ffffff</color>
     <color name="rating_good">#5cff30</color>
     <color name="rating_average">#fbff30</color>
     <color name="rating_bad">#ffbd30</color>
     <color name="rating_tragic">#ff5230</color>
+    <!--MovieDetails-->
+    <color name="details_title">#232323</color>
+    <color name="details_text">#636363</color>
 </resources>

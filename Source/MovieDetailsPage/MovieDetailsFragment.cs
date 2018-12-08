@@ -31,9 +31,17 @@ namespace Movolira {
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
             ImageView backdrop = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
-            ImageView poster = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
             Picasso.With(Activity).Load(movie_data.backdrop_path).Into(backdrop);
+            ImageView poster = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
             Picasso.With(Activity).Load(movie_data.poster_path).Into(poster);
+            TextView title = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
+            title.Text = movie_data.title;
+            TextView genres = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
+            genres.Text = movie_data.genres;
+            TextView release_date = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
+            release_date.Text = "Released: " + movie_data.release_date;
+            TextView overview = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
+            overview.Text = movie_data.overview;
             return layout;
         }
         CardMovie movie_data;

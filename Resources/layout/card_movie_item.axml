@@ -23,7 +23,7 @@
             android:paddingRight="30dp"
             android:background="@color/card_primary"
             android:textColor="@color/card_text"
-            android:fontFamily="@font/notosans"
+            android:fontFamily="@font/notosans_regular"
             android:textSize="10dp"/>
         <TextView
             android:id="@+id/card_movie_title"
@@ -35,8 +35,7 @@
             android:paddingBottom="5dp"
             android:background="@color/card_primary"
             android:textColor="@color/card_text"
-            android:fontFamily="@font/notosans"
-            android:textStyle="bold"
+            android:fontFamily="@font/notosans_bold"
             android:textSize="15dp"
             android:gravity="center"/>
         <TextView
@@ -48,8 +47,7 @@
             android:paddingRight="3dp"
             android:paddingLeft="3dp"
             android:background="@drawable/card_rating"
-            android:fontFamily="@font/notosans"
-            android:textStyle="bold"
+            android:fontFamily="@font/notosans_bold"
             android:textSize="13dp"
             android:textColor="#000000"
             android:gravity="center"/>
