@@ -25,11 +25,15 @@ using Square.Picasso;
 namespace Movolira {
     public class MovieDetailsFragment : Fragment {
         public override void OnCreate(Bundle savedInstanceState) {
-            movie_data = JsonConvert.DeserializeObject<CardMovie>(Arguments.GetString("movie_data"));
             base.OnCreate(savedInstanceState);
+        }
+        public override void OnAttach(Context activity) {
+            main_activity = (MainActivity)activity;
+            base.OnAttach(activity);
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
+            movie_data = main_activity.tmdb.getMovieDetails(Arguments.GetInt("id"));
             ImageView backdrop = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
             Picasso.With(Activity).Load(movie_data.backdrop_path).Into(backdrop);
             ImageView poster = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
@@ -40,10 +44,13 @@ namespace Movolira {
             genres.Text = movie_data.genres;
             TextView release_date = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
             release_date.Text = "Released: " + movie_data.release_date;
+            TextView runtime = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
+            runtime.Text = "Runtime: " + movie_data.runtime;
             TextView overview = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
             overview.Text = movie_data.overview;
             return layout;
         }
-        CardMovie movie_data;
+        DetailedMovie movie_data;
+        private MainActivity main_activity;
     }
 }

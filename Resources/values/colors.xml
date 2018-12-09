@@ -8,6 +8,7 @@
     <color name="card_text">#ffffff</color>
     <color name="card_primary">#cc000000</color>
     <!--CardMovie rating-->
+    <color name="rating_text">#232323</color>
     <color name="rating_godlike">#ffffff</color>
     <color name="rating_good">#5cff30</color>
     <color name="rating_average">#fbff30</color>

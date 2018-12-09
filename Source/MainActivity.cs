@@ -8,9 +8,12 @@ using Android.Support.V7.Widget;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 /*
- * Improve layouts on small screens / tablets
- * Add handling for server failures
- * Add a default backdrop for items that lack one
+ * Layout for tablet/small
+ * Server fail handling
+ * Default backdrop backdrops/posters
+ * Page scrolling
+ * Loading animation
+ * Asyncloading
  */
 namespace Movolira {
     [Activity(

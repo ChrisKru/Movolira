@@ -11,12 +11,11 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 
-namespace Movolira {
-    public class CardMovie {
+namespace Movolira{
+    public class DetailedMovie{
         [JsonConstructor]
-        public CardMovie(int id, string backdrop_item_path, string backdrop_path, string poster_path, string title, string overview, 
-                string genres, string release_date, double rating) {
-            this.id = id;
+        public DetailedMovie(string backdrop_item_path, string backdrop_path, string poster_path, string title, string overview, string genres,
+                string release_date, double rating, string runtime) {
             this.backdrop_item_path = backdrop_item_path;
             this.backdrop_path = backdrop_path;
             this.poster_path = poster_path;
@@ -25,8 +24,8 @@ namespace Movolira {
             this.genres = genres;
             this.release_date = release_date;
             this.rating = rating;
+            this.runtime = runtime;
         }
-        public int id { get; private set; }
         public string backdrop_item_path { get; private set; }
         public string backdrop_path { get; private set; }
         public string poster_path { get; private set; }
@@ -35,5 +34,6 @@ namespace Movolira {
         public string genres { get; private set; }
         public string release_date { get; private set; }
         public double rating { get; private set; }
+        public string runtime { get; private set; }
     }
 }

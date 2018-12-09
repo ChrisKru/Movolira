@@ -20,7 +20,6 @@ namespace Movolira{
     public class CardMovieFragment : Av4.Fragment {
         public override void OnCreate(Bundle saved_instance_state) {
             base.OnCreate(saved_instance_state);
-            //main_activity = (MainActivity)Activity;
         }
         public override void OnAttach(Context activity) {
             main_activity = (MainActivity)activity;
@@ -40,7 +39,7 @@ namespace Movolira{
         private void OnItemClick(object sender, int position) {
             MovieDetailsFragment details_fragment = new MovieDetailsFragment();
             Bundle args = new Bundle();
-            args.PutString("movie_data", JsonConvert.SerializeObject(movie_data[position]));
+            args.PutInt("id", movie_data[position].id);
             details_fragment.Arguments = args;
             main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, details_fragment)
                     .SetTransition(Av4.FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();

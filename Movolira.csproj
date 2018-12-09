@@ -68,6 +68,7 @@
     <Compile Include="Source\CardMoviePage\CardMovieHolder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\MovieDetailsPage\DetailedMovie.cs" />
     <Compile Include="Source\MovieDetailsPage\MovieDetailsFragment.cs" />
     <Compile Include="Source\TMDBController.cs" />
   </ItemGroup>
