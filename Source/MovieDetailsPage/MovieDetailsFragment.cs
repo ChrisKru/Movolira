@@ -5,6 +5,7 @@ using System.Text;
 
 
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.App;
@@ -13,7 +14,7 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using Square.Picasso;
-
+using Av4 = Android.Support.V4;
 //backdrop 
 //poster 
 //title 
@@ -46,6 +47,34 @@ namespace Movolira {
             release_date.Text = "Released: " + movie_data.release_date;
             TextView runtime = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
             runtime.Text = "Runtime: " + movie_data.runtime;
+            double rating = movie_data.rating;
+            TextView rating_text = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
+            rating_text.Text = String.Format("{0:F1}", rating);
+            TextView rating_outline = layout.FindViewById<TextView>(Resource.Id.movie_details_rating_outline);
+            rating_outline.Text = String.Format("{0:F1}", rating);
+            rating_outline.Paint.StrokeWidth = 2;
+            rating_outline.Paint.SetStyle(Paint.Style.Stroke);
+            Shader rating_text_shader;
+            Rect rating_text_bounds = new Rect();
+            ImageView rating_star = layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star);
+            rating_text.Paint.GetTextBounds(rating_text.Text.ToCharArray(), 0, rating_text.Length(), rating_text_bounds);
+            if (rating < 3) {
+                rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_text.LineHeight,
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_bad_gradient_start)),
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_bad_gradient_end)), Shader.TileMode.Clamp);
+                rating_star.SetImageResource(Resource.Drawable.rating_star_bad);
+            } else if (rating < 7) {
+                rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_text.LineHeight,
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_average_gradient_start)),
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_average_gradient_end)), Shader.TileMode.Clamp);
+                rating_star.SetImageResource(Resource.Drawable.rating_star_average);
+            } else {
+                rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_text.LineHeight, 
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_good_gradient_start)),
+                                     new Color(Av4.Content.ContextCompat.GetColor(main_activity, Resource.Color.rating_good_gradient_end)), Shader.TileMode.Clamp);
+                rating_star.SetImageResource(Resource.Drawable.rating_star_good);
+            }
+            rating_text.Paint.SetShader(rating_text_shader);
             TextView overview = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
             overview.Text = movie_data.overview;
             return layout;

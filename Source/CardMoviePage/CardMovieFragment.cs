@@ -6,18 +6,17 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
-using Android.OS;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-using Av4 = Android.Support.V4.App;
+using Av4 = Android.Support.V4;
 using Android.Support.V7.Widget;
 using Newtonsoft.Json;
 
 namespace Movolira{
-    public class CardMovieFragment : Av4.Fragment {
+    public class CardMovieFragment : Av4.App.Fragment {
         public override void OnCreate(Bundle saved_instance_state) {
             base.OnCreate(saved_instance_state);
         }
@@ -42,7 +41,7 @@ namespace Movolira{
             args.PutInt("id", movie_data[position].id);
             details_fragment.Arguments = args;
             main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, details_fragment)
-                    .SetTransition(Av4.FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
+                    .SetTransition(Av4.App.FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
         }
         private List<CardMovie> movie_data;
         private MainActivity main_activity;

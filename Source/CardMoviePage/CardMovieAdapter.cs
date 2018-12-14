@@ -16,6 +16,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using Square.Picasso;
+using Av4 = Android.Support.V4;
 //****************
 //Develop guards for tmdb server failure
 //****************
@@ -35,18 +36,13 @@ namespace Movolira {
             card_holder.title_view.Text = movie_data[position].title;
             card_holder.genres_view.Text = movie_data[position].genres;
             double rating = movie_data[position].rating;
-            card_holder.rating_view.Text = rating.ToString();         
-            GradientDrawable rating_background = (GradientDrawable)card_holder.rating_view.Background;
-            if(rating < 2) {
-                rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_tragic));
-            }else if(rating < 4) {
-                rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_bad));
-            }else if(rating < 7) {
-                rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_average));
-            }else if(rating < 9.5) {
-                rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_good));
-            }else {
-                rating_background.SetColor(Android.Support.V4.Content.ContextCompat.GetColorStateList(context, Resource.Color.rating_godlike));
+            card_holder.rating_view.Text = String.Format("{0:F1}", rating);
+            if (rating < 3) {
+                card_holder.rating_view.Background = Av4.Content.ContextCompat.GetDrawable(context, Resource.Drawable.card_rating_bad);
+            } else if(rating < 7) {
+                card_holder.rating_view.Background = Av4.Content.ContextCompat.GetDrawable(context, Resource.Drawable.card_rating_average);
+            } else{
+                card_holder.rating_view.Background = Av4.Content.ContextCompat.GetDrawable(context, Resource.Drawable.card_rating_good);
             }
             Picasso.With(context).Load(movie_data[position].backdrop_item_path).Into(card_holder.backdrop_view);
         }

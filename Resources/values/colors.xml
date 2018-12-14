@@ -9,11 +9,13 @@
     <color name="card_primary">#cc000000</color>
     <!--CardMovie rating-->
     <color name="rating_text">#232323</color>
-    <color name="rating_godlike">#ffffff</color>
-    <color name="rating_good">#5cff30</color>
-    <color name="rating_average">#fbff30</color>
-    <color name="rating_bad">#ffbd30</color>
-    <color name="rating_tragic">#ff5230</color>
+    <color name="rating_text_outline">#000000</color>
+    <color name="rating_good_gradient_start">#61ff5e</color>
+    <color name="rating_good_gradient_end">#4DC94D</color>
+    <color name="rating_average_gradient_start">#fcff57</color>
+    <color name="rating_average_gradient_end">#ffe500</color>
+    <color name="rating_bad_gradient_start">#ff4d4d</color>
+    <color name="rating_bad_gradient_end">#ff0000</color>
     <!--MovieDetails-->
     <color name="details_title">#232323</color>
     <color name="details_text">#636363</color>

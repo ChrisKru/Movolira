@@ -61,8 +61,8 @@
   <ItemGroup>
     <Compile Include="Source\CardMoviePage\CardMovieAdapter.cs" />
     <Compile Include="Source\CardMoviePage\CardMovie.cs" />
-    <Compile Include="Source\ApiKeys.cs" />
     <Compile Include="Source\CardMoviePage\CardMovieFragment.cs" />
+    <Compile Include="Source\ApiKeys.cs" />
     <Compile Include="Source\MainActivity.cs" />
     <Compile Include="Source\CardMoviePage\CardMovieDecoration.cs" />
     <Compile Include="Source\CardMoviePage\CardMovieHolder.cs" />
@@ -151,7 +151,7 @@
     <Folder Include="Assets\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\card_rating.xml" />
+    <AndroidResource Include="Resources\drawable\card_rating_good.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\movie_details.axml">
@@ -171,6 +171,66 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\backdrop_gradient.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\card_rating_average.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\card_rating_bad.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\rating_star_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-ldpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-ldpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-ldpi\rating_star_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\rating_star_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\rating_star_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\rating_star_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\rating_star_average.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\rating_star_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\rating_star_good.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
