@@ -15,13 +15,6 @@ using Android.Widget;
 using Newtonsoft.Json;
 using Square.Picasso;
 using Av4 = Android.Support.V4;
-//backdrop 
-//poster 
-//title 
-//genres 
-//release date
-//rating 
-//overview
 
 namespace Movolira {
     public class MovieDetailsFragment : Fragment {

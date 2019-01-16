@@ -12,7 +12,8 @@
         <ImageView
             android:id="@+id/card_movie_backdrop"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,1:1.5"
             android:scaleType="centerCrop"/>
         <TextView
             android:id="@+id/card_movie_genres"
@@ -24,7 +25,7 @@
             android:background="@color/card_primary"
             android:textColor="@color/card_text"
             android:fontFamily="@font/notosans_regular"
-            android:textSize="10dp"/>
+            android:textSize="10sp"/>
         <TextView
             android:id="@+id/card_movie_title"
             app:layout_constraintBottom_toTopOf="@id/card_movie_genres"
@@ -36,7 +37,7 @@
             android:background="@color/card_primary"
             android:textColor="@color/card_text"
             android:fontFamily="@font/notosans_bold"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:gravity="center"/>
         <TextView
             android:id="@+id/card_movie_rating"
@@ -45,7 +46,7 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosans_bold"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:textColor="@color/rating_text"
             android:gravity="center"/>
     </android.support.constraint.ConstraintLayout>
