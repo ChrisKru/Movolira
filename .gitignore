@@ -8,3 +8,7 @@ obj/
 ApiKeys\.cs
 
 Movolira\.csproj\.user
+
+Movolira\.sln\.DotSettings\.user
+
+*.Tmp

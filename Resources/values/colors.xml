@@ -4,10 +4,10 @@
     <color name="colorPrimary">#2c3e50</color>
     <color name="colorPrimaryDark">#1B3147</color>
     <color name="colorAccent">#3498db</color>
-    <!--CardMovie-->
+    <!--MovieCard-->
     <color name="card_text">#ffffff</color>
     <color name="card_primary">#cc000000</color>
-    <!--CardMovie rating-->
+    <!--MovieCard rating-->
     <color name="rating_text">#232323</color>
     <color name="rating_text_outline">#000000</color>
     <color name="rating_good_gradient_start">#61ff5e</color>
