@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using Av4 = Android.Support.V4;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Movolira {
 	public class MovieListFragment : Fragment {
-		private ImageView _loading;
+		private ImageView _loading_view;
 		private MainActivity _main_activity;
-		private List<MovieCard> _movie_data;
+		private List<MovieCard> _movie_cards;
 
 		public override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
@@ -25,31 +24,31 @@ namespace Movolira {
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View layout = inflater.Inflate(Resource.Layout.card_movie, container, false);
-			_loading = layout.FindViewById<ImageView>(Resource.Id.card_movie_loading);
-			_movie_data = _main_activity.MovieDataProvider.getPopularMovies();
-			MovieCardViewAdapter recycler_adapter = new MovieCardViewAdapter(_movie_data, _main_activity);
-			recycler_adapter.click_handler += OnItemClick;
-			RecyclerView recycler_view = layout.FindViewById<RecyclerView>(Resource.Id.card_movie_layout);
-			recycler_view.SetAdapter(recycler_adapter);
-			MovieCardViewDecoration item_decoration = new MovieCardViewDecoration(_main_activity);
-			recycler_view.AddItemDecoration(item_decoration);
-			return layout;
+			View frag_layout = inflater.Inflate(Resource.Layout.card_movie, container, false);
+			_loading_view = frag_layout.FindViewById<ImageView>(Resource.Id.card_movie_loading);
+			_movie_cards = _main_activity.MovieDataProvider.getPopularMovieCards();
+			MovieCardViewAdapter cards_view_adapter = new MovieCardViewAdapter(_movie_cards, _main_activity);
+			cards_view_adapter.click_handler += OnItemClick;
+			RecyclerView cards_view = frag_layout.FindViewById<RecyclerView>(Resource.Id.card_movie_layout);
+			cards_view.SetAdapter(cards_view_adapter);
+			MovieCardViewDecoration cards_decoration = new MovieCardViewDecoration(_main_activity);
+			cards_view.AddItemDecoration(cards_decoration);
+			return frag_layout;
 		}
 
 		private void OnItemClick(object sender, int position) {
-			_loading.Visibility = ViewStates.Visible;
-			((AnimationDrawable) _loading.Background).Start();
-			Task.Run(() => moveToMovieDetails(position));
+			_loading_view.Visibility = ViewStates.Visible;
+			((AnimationDrawable) _loading_view.Background).Start();
+			Task.Run(() => moveToMovieDetailsFrag(position));
 		}
 
-		private void moveToMovieDetails(int position) {
-			int id = _movie_data[position].Id;
-			_main_activity.MovieDataProvider.getMovieDetails(id);
+		private void moveToMovieDetailsFrag(int position) {
+			int id = _movie_cards[position].Id;
+			_main_activity.MovieDataProvider.getDetailedMovie(id);
 			MovieDetailsFragment details_fragment = new MovieDetailsFragment();
-			Bundle args = new Bundle();
-			args.PutInt("id", id);
-			details_fragment.Arguments = args;
+			Bundle frag_args = new Bundle();
+			frag_args.PutInt("id", id);
+			details_fragment.Arguments = frag_args;
 			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}

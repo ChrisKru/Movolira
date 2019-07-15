@@ -13,8 +13,8 @@ namespace Movolira {
 		}
 
 		public override void GetItemOffsets(Rect offset_rect, View view, RecyclerView parent_view, RecyclerView.State parent_state) {
-			float density = _app_context.Resources.DisplayMetrics.Density;
-			int offset = (int) (density * 7);
+			float display_density = _app_context.Resources.DisplayMetrics.Density;
+			int offset = (int) (display_density * 7);
 			int child_pos = parent_view.GetChildLayoutPosition(view);
 			int child_count = parent_state.ItemCount;
 			if (_app_context.Resources.Configuration.Orientation == Orientation.Landscape) {

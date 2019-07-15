@@ -13,8 +13,8 @@ namespace Movolira {
 		public double Rating { get; }
 
 		[JsonConstructor]
-		public MovieCard(int id, string backdrop_small_url, string backdrop_url, string poster_url, string title, string overview,
-		                 string genres, string release_date, double rating) {
+		public MovieCard(int id, string backdrop_small_url, string backdrop_url, string poster_url, string title, string overview, string genres,
+		                 string release_date, double rating) {
 			Id = id;
 			BackdropSmallUrl = backdrop_small_url;
 			BackdropUrl = backdrop_url;

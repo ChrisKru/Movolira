@@ -1,7 +1,7 @@
-﻿using System;
-using Android.Support.V7.Widget;
+﻿using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using System;
 
 namespace Movolira {
 	internal class MovieCardViewHolder : RecyclerView.ViewHolder {
