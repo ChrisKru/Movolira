@@ -1,38 +1,48 @@
-﻿using Android.Content;
+﻿using System.Linq;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 using Square.Picasso;
 
 namespace Movolira {
 	public class MovieDetailsFragment : Fragment {
 		private MainActivity _main_activity;
-		private DetailedMovie _detailed_movie;
+		private Movie _movie;
 
-		public override void OnAttach(Context activity) {
-			_main_activity = (MainActivity) activity;
-			base.OnAttach(activity);
+		public override void OnAttach(Context main_activity) {
+			_main_activity = (MainActivity) main_activity;
+			base.OnAttach(main_activity);
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
-			_detailed_movie = _main_activity.MovieDataProvider.getDetailedMovie(Arguments.GetInt("id"));
+			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
+			if (_movie.BackdropFilePath == null || _movie.PosterFilePath == null) {
+				_main_activity.MovieDataProvider.getMovieImages(_movie);
+			}
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
-			Picasso.With(Activity).Load(_detailed_movie.BackdropUrl).Into(backdrop_view);
+			string backdrop_url = _main_activity.MovieDataProvider.getMovieBackdropUrl(_movie.BackdropFilePath);
+			Picasso.With(Activity).Load(backdrop_url).Into(backdrop_view);
 			ImageView poster_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
-			Picasso.With(Activity).Load(_detailed_movie.PosterUrl).Into(poster_view);
+			string poster_url = _main_activity.MovieDataProvider.getMovieBackdropUrl(_movie.PosterFilePath);
+			Picasso.With(Activity).Load(poster_url).Into(poster_view);
 			TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
-			title_view.Text = _detailed_movie.Title;
+			title_view.Text = _movie.Title;
 			TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
-			genres_view.Text = _detailed_movie.Genres;
+			genres_view.Text += _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
+			for (int i_genre = 1; i_genre < _movie.Genres.Length; ++i_genre) {
+				genres_view.Text += ", " + _movie.Genres[i_genre].First().ToString().ToUpper() + _movie.Genres[i_genre].Substring(1);
+			}
 			TextView release_date_view = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
-			release_date_view.Text = "Released: " + _detailed_movie.ReleaseDate;
+			release_date_view.Text = "Released: " + _movie.ReleaseDate;
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
-			runtime_view.Text = "Runtime: " + _detailed_movie.Runtime;
-			double rating = _detailed_movie.Rating;
+			runtime_view.Text = "Runtime: " + _movie.Runtime;
+			double rating = _movie.Rating;
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
 			rating_view.Text = $"{rating:F1}";
 			TextView rating_outline = layout.FindViewById<TextView>(Resource.Id.movie_details_rating_outline);
@@ -48,14 +58,12 @@ namespace Movolira {
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_bad_gradient_start)),
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_bad_gradient_end)), Shader.TileMode.Clamp);
 				rating_star.SetImageResource(Resource.Drawable.rating_star_bad);
-			}
-			else if (rating < 7) {
+			} else if (rating < 7) {
 				rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_view.LineHeight,
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_average_gradient_start)),
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_average_gradient_end)), Shader.TileMode.Clamp);
 				rating_star.SetImageResource(Resource.Drawable.rating_star_average);
-			}
-			else {
+			} else {
 				rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_view.LineHeight,
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_good_gradient_start)),
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_good_gradient_end)), Shader.TileMode.Clamp);
@@ -64,7 +72,7 @@ namespace Movolira {
 
 			rating_view.Paint.SetShader(rating_text_shader);
 			TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
-			overview_view.Text = _detailed_movie.Overview;
+			overview_view.Text = _movie.Overview;
 			return layout;
 		}
 	}

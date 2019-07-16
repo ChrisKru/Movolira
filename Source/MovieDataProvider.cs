@@ -1,34 +1,31 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Movolira {
 	public class MovieDataProvider {
+		public Dictionary<string, JObject> HttpCache { get; }
 		public string TMDBImagesBaseUrl { get; private set; }
-		public string TMDBBackdropItemSize { get; private set; }
+		public string TMDBBackdropSmallSize { get; private set; }
 		public string TMDBBackdropSize { get; private set; }
 		public string TMDBPosterSize { get; private set; }
-		public Dictionary<int, string> TMDBGenres { get; private set; }
-		public Dictionary<string, JObject> HttpCache { get; }
 
 		[JsonConstructor]
-		public MovieDataProvider(string TMDBImagesBaseUrl, string TMDBBackdropItemSize, string TMDBBackdropSize, string TMDBPosterSize, Dictionary<int, string> TMDBGenres,
-		                         Dictionary<string, JObject> HttpCache) {
+		public MovieDataProvider(Dictionary<string, JObject> HttpCache, string TMDBImagesBaseUrl, string TMDBBackdropSmallSize,
+		                         string TMDBBackdropSize, string TMDBPosterSize) {
+			this.HttpCache = HttpCache;
 			this.TMDBImagesBaseUrl = TMDBImagesBaseUrl;
-			this.TMDBBackdropItemSize = TMDBBackdropItemSize;
+			this.TMDBBackdropSmallSize = TMDBBackdropSmallSize;
 			this.TMDBBackdropSize = TMDBBackdropSize;
 			this.TMDBPosterSize = TMDBPosterSize;
-			this.TMDBGenres = TMDBGenres;
-			this.HttpCache = HttpCache;
 		}
 
 		public MovieDataProvider() {
 			HttpCache = new Dictionary<string, JObject>();
 			setupTMDBImages();
-			setupTMDBGenres();
 		}
 
 		private void setupTMDBImages() {
@@ -42,75 +39,51 @@ namespace Movolira {
 				JToken setup_images = setup_json["images"];
 				TMDBImagesBaseUrl = setup_images["base_url"].Value<string>();
 				IList<JToken> backdrop_sizes = setup_images["backdrop_sizes"].Children().ToList();
-				if (backdrop_sizes.Count == 1) {
-					TMDBBackdropItemSize = backdrop_sizes[0].Value<string>();
-					TMDBBackdropSize = backdrop_sizes[0].Value<string>();
-				} else {
-					TMDBBackdropItemSize = backdrop_sizes[backdrop_sizes.Count / 2 - 1].Value<string>();
-					TMDBBackdropSize = backdrop_sizes[backdrop_sizes.Count - 1].Value<string>();
-				}
+				TMDBBackdropSmallSize = backdrop_sizes[1].Value<string>();
+				TMDBBackdropSize = backdrop_sizes[1].Value<string>();
 				IList<JToken> poster_sizes = setup_images["poster_sizes"].Children().ToList();
-				if (poster_sizes.Count == 1) {
-					TMDBPosterSize = poster_sizes[0].Value<string>();
-				} else {
-					TMDBPosterSize = poster_sizes[poster_sizes.Count / 2].Value<string>();
-				}
+				TMDBPosterSize = poster_sizes[0].Value<string>();
 			}
 		}
 
-		private void setupTMDBGenres() {
-			HttpClient http_client = new HttpClient();
-			http_client.MaxResponseContentBufferSize = 256000;
-			Uri genres_uri = new Uri("https://api.themoviedb.org/3/genre/movie/list?api_key=" + ApiKeys.TMDB_KEY);
-			HttpResponseMessage genres_response = http_client.GetAsync(genres_uri).Result;
-			if (genres_response.IsSuccessStatusCode) {
-				string genres_data = genres_response.Content.ReadAsStringAsync().Result;
-				JObject genres_json = JObject.Parse(genres_data);
-				IList<JToken> genres = genres_json["genres"].Children().ToList();
-				TMDBGenres = new Dictionary<int, string>();
-				foreach (JToken genre in genres) {
-					TMDBGenres.Add(genre["id"].Value<int>(), genre["name"].Value<string>());
-				}
+		private List<Movie> getMoviesFromJson(JObject movies_json) {
+			var movies = new List<Movie>();
+			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+			foreach (JToken movie_jtoken in movies_jtokens) {
+				string trakt_id = movie_jtoken["ids"]["trakt"].Value<string>();
+				string tmdb_id = movie_jtoken["ids"]["tmdb"].Value<string>();
+				string title = movie_jtoken["title"].Value<string>();
+				var genres = movie_jtoken["genres"].Select(genre => (string) genre).ToArray();
+				string release_date = movie_jtoken["released"].Value<string>();
+				int runtime = movie_jtoken["runtime"].Value<int>();
+				double rating = movie_jtoken["rating"].Value<double>();
+				int votes = movie_jtoken["votes"].Value<int>();
+				string certification = movie_jtoken["certification"].Value<string>();
+				string overview = movie_jtoken["overview"].Value<string>();
+				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+				movies.Add(movie);
 			}
+			return movies;
 		}
 
-		public List<MovieCard> getPopularMovieCards() {
-			JObject popular_movies_json = getPopularMoviesJson();
-			IList<JToken> popular_movies = popular_movies_json["results"].Children().ToList();
-			var popular_movie_cards = new List<MovieCard>();
-			foreach (JToken movie in popular_movies) {
-				int id = movie["id"].Value<int>();
-				string backdrop_item_path = TMDBImagesBaseUrl + TMDBBackdropItemSize + movie["backdrop_path"].Value<string>();
-				string backdrop_path = TMDBImagesBaseUrl + TMDBBackdropSize + movie["backdrop_path"].Value<string>();
-				string poster_path = TMDBImagesBaseUrl + TMDBPosterSize + movie["poster_path"].Value<string>();
-				string title = movie["title"].Value<string>();
-				string overview = movie["overview"].Value<string>();
-				string release_date = movie["release_date"].Value<string>();
-				double rating = movie["vote_average"].Value<double>();
-				string genre_text = "";
-				IList<int> genre_ids = movie["genre_ids"].Select(x => (int) x).ToList();
-				for (int i_genre_ids = 0; i_genre_ids < genre_ids.Count; ++i_genre_ids) {
-					genre_text += TMDBGenres[genre_ids[i_genre_ids]];
-					if (i_genre_ids + 1 < genre_ids.Count) {
-						genre_text += ", ";
-					}
-				}
-				MovieCard card_movie = new MovieCard(id, backdrop_item_path, backdrop_path, poster_path, title, overview, genre_text, release_date, rating);
-				popular_movie_cards.Add(card_movie);
-			}
-			return popular_movie_cards;
+		public List<Movie> getPopularMovies() {
+			return getMoviesFromJson(getPopularMoviesJson());
 		}
 
 		private JObject getPopularMoviesJson() {
 			JObject popular_movies_json;
 			if (!HttpCache.TryGetValue("popular", out popular_movies_json)) {
+				popular_movies_json = new JObject();
 				HttpClient http_client = new HttpClient();
 				http_client.MaxResponseContentBufferSize = 256000;
-				Uri popular_movies_uri = new Uri("https://api.themoviedb.org/3/discover/movie?api_key=" + ApiKeys.TMDB_KEY + "&sort_by=popularity.desc");
+				http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
+				http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
+				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full");
 				HttpResponseMessage popular_movies_response = http_client.GetAsync(popular_movies_uri).Result;
 				if (popular_movies_response.IsSuccessStatusCode) {
 					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
-					popular_movies_json = JObject.Parse(popular_movies_data);
+					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
+					popular_movies_json.Add("data", popular_movies_json_array);
 					HttpCache.Add("popular", popular_movies_json);
 				} else {
 					//HANDLE RESPONSE FAILED
@@ -120,52 +93,38 @@ namespace Movolira {
 			return popular_movies_json;
 		}
 
-		public DetailedMovie getDetailedMovie(int movie_id) {
-			JObject movie_json = getMovieDetailsJson(movie_id);
-			string backdrop_item_path = TMDBImagesBaseUrl + TMDBBackdropItemSize + movie_json["backdrop_path"].Value<string>();
-			string backdrop_path = TMDBImagesBaseUrl + TMDBBackdropSize + movie_json["backdrop_path"].Value<string>();
-			string poster_path = TMDBImagesBaseUrl + TMDBPosterSize + movie_json["poster_path"].Value<string>();
-			string title = movie_json["title"].Value<string>();
-			string overview = movie_json["overview"].Value<string>();
-			string release_date = movie_json["release_date"].Value<string>();
-			double rating = movie_json["vote_average"].Value<double>();
-			int runtime_min = movie_json["runtime"].Value<int>();
-			int runtime_hours = 0;
-			while (runtime_min >= 60) {
-				++runtime_hours;
-				runtime_min -= 60;
-			}
-			string runtime_text = runtime_hours + "h " + runtime_min + "min";
-			string genre_text = "";
-			IList<JToken> json_genres = movie_json["genres"].Children().ToList();
-			for (int i_genres = 0; i_genres < json_genres.Count; ++i_genres) {
-				int genre_id = json_genres[i_genres]["id"].Value<int>();
-				genre_text += TMDBGenres[genre_id];
-				if (i_genres + 1 < json_genres.Count) {
-					genre_text += ", ";
-				}
-			}
-			DetailedMovie detailed_movie = new DetailedMovie(backdrop_item_path, backdrop_path, poster_path, title, overview, genre_text, release_date, rating, runtime_text);
-			return detailed_movie;
+		public void getMovieImages(Movie movie) {
+			JObject images_json = getMovieImagesJson(movie.TMDB_ID);
+			string poster_file_path = images_json["posters"].Children().First()["file_path"].Value<string>();
+			string backdrop_file_path = images_json["backdrops"].Children().First()["file_path"].Value<string>();
+			movie.setImages(poster_file_path, backdrop_file_path);
 		}
 
-		private JObject getMovieDetailsJson(int movie_id) {
-			JObject movie_json;
-			if (!HttpCache.TryGetValue("movie" + movie_id, out movie_json)) {
+		private JObject getMovieImagesJson(string movie_tmdb_id) {
+			JObject images_json;
+			if (!HttpCache.TryGetValue("images" + movie_tmdb_id, out images_json)) {
 				HttpClient http_client = new HttpClient();
 				http_client.MaxResponseContentBufferSize = 256000;
-				Uri movie_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie_id + "?api_key=" + ApiKeys.TMDB_KEY + "&sort_by=popularity.desc");
-				HttpResponseMessage movie_response = http_client.GetAsync(movie_uri).Result;
-				if (movie_response.IsSuccessStatusCode) {
-					string movie_data = movie_response.Content.ReadAsStringAsync().Result;
-					movie_json = JObject.Parse(movie_data);
-					HttpCache.Add("movie" + movie_id, movie_json);
+				Uri images_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie_tmdb_id + "/images?api_key=" + ApiKeys.TMDB_KEY);
+				HttpResponseMessage images_response = http_client.GetAsync(images_uri).Result;
+				if (images_response.IsSuccessStatusCode) {
+					string images_data = images_response.Content.ReadAsStringAsync().Result;
+					images_json = JObject.Parse(images_data);
+					HttpCache["images" + movie_tmdb_id] = images_json;
 				} else {
 					//HANDLE RESPONSE FAILED
 					return null;
 				}
 			}
-			return movie_json;
+			return images_json;
+		}
+
+		public string getMoviePosterUrl(string poster_file_name) {
+			return TMDBImagesBaseUrl + TMDBPosterSize + "/" + poster_file_name;
+		}
+
+		public string getMovieBackdropUrl(string backdrop_file_name) {
+			return TMDBImagesBaseUrl + TMDBBackdropSize + "/" + backdrop_file_name;
 		}
 	}
 }
