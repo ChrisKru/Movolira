@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </None>
     <AndroidResource Include="Resources\font\opensans_regular.ttf" />
+    <AndroidResource Include="Resources\font\opensans_bold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\font\notosans_bold.ttf">
@@ -112,11 +113,11 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Glide.Xamarin">
+      <Version>4.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Square.Picasso">
-      <Version>2.5.2.1</Version>
     </PackageReference>
     <PackageReference Include="System.Buffers">
       <Version>4.5.0</Version>
@@ -131,6 +132,9 @@
       <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v4">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
       <Version>27.0.2.1</Version>
     </PackageReference>
@@ -142,7 +146,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\card_movie_item.axml">
+    <AndroidResource Include="Resources\layout\movie_card.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -158,13 +162,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\card_movie.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout-land\card_movie.axml">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    <AndroidResource Include="Resources\layout\movie_list.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

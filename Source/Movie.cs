@@ -12,12 +12,12 @@ namespace Movolira {
 		public int Votes { get; }
 		public string Certification { get; }
 		public string Overview { get; }
-		public string PosterFilePath { get; private set; }
-		public string BackdropFilePath { get; private set; }
+		public string PosterUrl { get; }
+		public string BackdropUrl { get; }
 
 		[JsonConstructor]
-		public Movie(string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating, int Votes, string Certification,
-		             string Overview) {
+		public Movie(string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating, int Votes,
+		             string Certification, string Overview, string PosterUrl, string BackdropUrl) {
 			this.TraktID = TraktID;
 			this.TMDB_ID = TMDB_ID;
 			this.Title = Title;
@@ -28,11 +28,8 @@ namespace Movolira {
 			this.Votes = Votes;
 			this.Certification = Certification;
 			this.Overview = Overview;
-		}
-
-		public void setImages(string poster_file_path, string backdrop_file_path) {
-			PosterFilePath = poster_file_path;
-			BackdropFilePath = backdrop_file_path;
+			this.PosterUrl = PosterUrl;
+			this.BackdropUrl = BackdropUrl;
 		}
 	}
 }

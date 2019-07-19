@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Graphics.Drawables;
@@ -26,12 +27,16 @@ namespace Movolira {
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			_frag_layout = inflater.Inflate(Resource.Layout.card_movie, container, false);
-			_loading_view = _frag_layout.FindViewById<ImageView>(Resource.Id.card_movie_loading);
+			_frag_layout = inflater.Inflate(Resource.Layout.movie_list, container, false);
+			_loading_view = _frag_layout.FindViewById<ImageView>(Resource.Id.movie_list_loading);
 			_movies = _main_activity.MovieDataProvider.getPopularMovies();
 			MovieCardViewAdapter cards_view_adapter = new MovieCardViewAdapter(_movies, _main_activity);
 			cards_view_adapter.click_handler += OnItemClick;
-			RecyclerView cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.card_movie_layout);
+			RecyclerView cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.movie_list_layout);
+			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
+			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
+			int span_count = (int) Math.Floor(display_width_pixels / display_dpi / 1.2);
+			((GridLayoutManager) cards_view.GetLayoutManager()).SpanCount = span_count;
 			cards_view.SetAdapter(cards_view_adapter);
 			MovieCardViewDecoration cards_decoration = new MovieCardViewDecoration(_main_activity);
 			cards_view.AddItemDecoration(cards_decoration);

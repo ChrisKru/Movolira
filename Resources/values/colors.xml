@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <!--app-->
     <color name="colorPrimary">#2c3e50</color>
@@ -6,7 +7,7 @@
     <color name="colorAccent">#3498db</color>
     <!--MovieCard-->
     <color name="card_text">#ffffff</color>
-    <color name="card_primary">#cc000000</color>
+    <color name="card_primary">#ee000000</color>
     <!--MovieCard rating-->
     <color name="rating_text">#232323</color>
     <color name="rating_text_outline">#000000</color>

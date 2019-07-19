@@ -6,8 +6,9 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
+using Com.Bumptech.Glide;
+using Com.Bumptech.Glide.Load.Resource.Drawable;
 using Newtonsoft.Json;
-using Square.Picasso;
 
 namespace Movolira {
 	public class MovieDetailsFragment : Fragment {
@@ -22,31 +23,30 @@ namespace Movolira {
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
-			if (_movie.BackdropFilePath == null || _movie.PosterFilePath == null) {
-				_main_activity.MovieDataProvider.getMovieImages(_movie);
-			}
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
-			string backdrop_url = _main_activity.MovieDataProvider.getMovieBackdropUrl(_movie.BackdropFilePath);
-			Picasso.With(Activity).Load(backdrop_url).Into(backdrop_view);
+			Glide.With(Activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
 			ImageView poster_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
-			string poster_url = _main_activity.MovieDataProvider.getMovieBackdropUrl(_movie.PosterFilePath);
-			Picasso.With(Activity).Load(poster_url).Into(poster_view);
+			Glide.With(Activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
 			TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 			title_view.Text = _movie.Title;
 			TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
-			genres_view.Text += _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
-			for (int i_genre = 1; i_genre < _movie.Genres.Length; ++i_genre) {
-				genres_view.Text += ", " + _movie.Genres[i_genre].First().ToString().ToUpper() + _movie.Genres[i_genre].Substring(1);
+			genres_view.Text = _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
+			if (_movie.Genres.Length > 1) {
+				genres_view.Text += " " + _movie.Genres[1].First().ToString().ToUpper() + _movie.Genres[1].Substring(1);
 			}
 			TextView release_date_view = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
-			release_date_view.Text = "Released: " + _movie.ReleaseDate;
+			release_date_view.Text = _movie.ReleaseDate;
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
-			runtime_view.Text = "Runtime: " + _movie.Runtime;
+			int runtime_hours = _movie.Runtime / 60;
+			int runtime_minutes = _movie.Runtime % 60;
+			runtime_view.Text = runtime_hours.ToString() + "h " + runtime_minutes.ToString() + "min";
+			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.movie_details_certification);
+			certification_view.Text = _movie.Certification;
 			double rating = _movie.Rating;
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
-			rating_view.Text = $"{rating:F1}";
+			rating_view.Text = $"{rating*10:F0}%";
 			TextView rating_outline = layout.FindViewById<TextView>(Resource.Id.movie_details_rating_outline);
-			rating_outline.Text = $"{rating:F1}";
+			rating_outline.Text = $"{rating*10:F0}%";
 			rating_outline.Paint.StrokeWidth = 2;
 			rating_outline.Paint.SetStyle(Paint.Style.Stroke);
 			Shader rating_text_shader;
@@ -69,7 +69,6 @@ namespace Movolira {
 					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_good_gradient_end)), Shader.TileMode.Clamp);
 				rating_star.SetImageResource(Resource.Drawable.rating_star_good);
 			}
-
 			rating_view.Paint.SetShader(rating_text_shader);
 			TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 			overview_view.Text = _movie.Overview;

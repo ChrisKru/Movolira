@@ -8,42 +8,41 @@ using Newtonsoft.Json.Linq;
 namespace Movolira {
 	public class MovieDataProvider {
 		public Dictionary<string, JObject> HttpCache { get; }
-		public string TMDBImagesBaseUrl { get; private set; }
-		public string TMDBBackdropSmallSize { get; private set; }
-		public string TMDBBackdropSize { get; private set; }
-		public string TMDBPosterSize { get; private set; }
 
 		[JsonConstructor]
-		public MovieDataProvider(Dictionary<string, JObject> HttpCache, string TMDBImagesBaseUrl, string TMDBBackdropSmallSize,
-		                         string TMDBBackdropSize, string TMDBPosterSize) {
+		public MovieDataProvider(Dictionary<string, JObject> HttpCache) {
 			this.HttpCache = HttpCache;
-			this.TMDBImagesBaseUrl = TMDBImagesBaseUrl;
-			this.TMDBBackdropSmallSize = TMDBBackdropSmallSize;
-			this.TMDBBackdropSize = TMDBBackdropSize;
-			this.TMDBPosterSize = TMDBPosterSize;
 		}
 
 		public MovieDataProvider() {
 			HttpCache = new Dictionary<string, JObject>();
-			setupTMDBImages();
 		}
 
-		private void setupTMDBImages() {
-			HttpClient http_client = new HttpClient();
-			http_client.MaxResponseContentBufferSize = 256000;
-			Uri setup_uri = new Uri("https://api.themoviedb.org/3/configuration?api_key=" + ApiKeys.TMDB_KEY);
-			HttpResponseMessage setup_response = http_client.GetAsync(setup_uri).Result;
-			if (setup_response.IsSuccessStatusCode) {
-				string setup_data = setup_response.Content.ReadAsStringAsync().Result;
-				JObject setup_json = JObject.Parse(setup_data);
-				JToken setup_images = setup_json["images"];
-				TMDBImagesBaseUrl = setup_images["base_url"].Value<string>();
-				IList<JToken> backdrop_sizes = setup_images["backdrop_sizes"].Children().ToList();
-				TMDBBackdropSmallSize = backdrop_sizes[1].Value<string>();
-				TMDBBackdropSize = backdrop_sizes[1].Value<string>();
-				IList<JToken> poster_sizes = setup_images["poster_sizes"].Children().ToList();
-				TMDBPosterSize = poster_sizes[0].Value<string>();
+		public List<Movie> getPopularMovies() {
+			return getMoviesFromJson(getPopularMoviesJson());
+		}
+
+		private JObject getPopularMoviesJson() {
+			JObject popular_movies_json;
+			if (!HttpCache.TryGetValue("popular", out popular_movies_json)) {
+				popular_movies_json = new JObject();
+				HttpClient http_client = new HttpClient();
+				http_client.MaxResponseContentBufferSize = 256000;
+				http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
+				http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
+				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30");
+				HttpResponseMessage popular_movies_response = http_client.GetAsync(popular_movies_uri).Result;
+				if (popular_movies_response.IsSuccessStatusCode) {
+					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
+					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
+					popular_movies_json.Add("data", popular_movies_json_array);
+					HttpCache.Add("popular", popular_movies_json);
+				} else {
+					//HANDLE RESPONSE FAILED
+					return null;
+				}
 			}
+			return popular_movies_json;
 		}
 
 		private List<Movie> getMoviesFromJson(JObject movies_json) {
@@ -60,44 +59,14 @@ namespace Movolira {
 				int votes = movie_jtoken["votes"].Value<int>();
 				string certification = movie_jtoken["certification"].Value<string>();
 				string overview = movie_jtoken["overview"].Value<string>();
-				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+				JObject images_json = getMovieImagesJson(tmdb_id);
+				string poster_url = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
+				string backdrop_url = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
+				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview, poster_url,
+					backdrop_url);
 				movies.Add(movie);
 			}
 			return movies;
-		}
-
-		public List<Movie> getPopularMovies() {
-			return getMoviesFromJson(getPopularMoviesJson());
-		}
-
-		private JObject getPopularMoviesJson() {
-			JObject popular_movies_json;
-			if (!HttpCache.TryGetValue("popular", out popular_movies_json)) {
-				popular_movies_json = new JObject();
-				HttpClient http_client = new HttpClient();
-				http_client.MaxResponseContentBufferSize = 256000;
-				http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
-				http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
-				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full");
-				HttpResponseMessage popular_movies_response = http_client.GetAsync(popular_movies_uri).Result;
-				if (popular_movies_response.IsSuccessStatusCode) {
-					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
-					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
-					popular_movies_json.Add("data", popular_movies_json_array);
-					HttpCache.Add("popular", popular_movies_json);
-				} else {
-					//HANDLE RESPONSE FAILED
-					return null;
-				}
-			}
-			return popular_movies_json;
-		}
-
-		public void getMovieImages(Movie movie) {
-			JObject images_json = getMovieImagesJson(movie.TMDB_ID);
-			string poster_file_path = images_json["posters"].Children().First()["file_path"].Value<string>();
-			string backdrop_file_path = images_json["backdrops"].Children().First()["file_path"].Value<string>();
-			movie.setImages(poster_file_path, backdrop_file_path);
 		}
 
 		private JObject getMovieImagesJson(string movie_tmdb_id) {
@@ -105,7 +74,7 @@ namespace Movolira {
 			if (!HttpCache.TryGetValue("images" + movie_tmdb_id, out images_json)) {
 				HttpClient http_client = new HttpClient();
 				http_client.MaxResponseContentBufferSize = 256000;
-				Uri images_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie_tmdb_id + "/images?api_key=" + ApiKeys.TMDB_KEY);
+				Uri images_uri = new Uri("http://webservice.fanart.tv/v3/movies/" + movie_tmdb_id + "?api_key=" + ApiKeys.FANARTTV_KEY);
 				HttpResponseMessage images_response = http_client.GetAsync(images_uri).Result;
 				if (images_response.IsSuccessStatusCode) {
 					string images_data = images_response.Content.ReadAsStringAsync().Result;
@@ -117,14 +86,6 @@ namespace Movolira {
 				}
 			}
 			return images_json;
-		}
-
-		public string getMoviePosterUrl(string poster_file_name) {
-			return TMDBImagesBaseUrl + TMDBPosterSize + "/" + poster_file_name;
-		}
-
-		public string getMovieBackdropUrl(string backdrop_file_name) {
-			return TMDBImagesBaseUrl + TMDBBackdropSize + "/" + backdrop_file_name;
 		}
 	}
 }
