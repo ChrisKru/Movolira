@@ -2,13 +2,18 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.Transitions;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using Android.Text;
+using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
 using Com.Bumptech.Glide;
 using Com.Bumptech.Glide.Load.Resource.Drawable;
+using Java.Lang;
 using Newtonsoft.Json;
+using Math = System.Math;
 
 namespace Movolira {
 	public class MovieDetailsFragment : Fragment {
@@ -20,7 +25,7 @@ namespace Movolira {
 			base.OnAttach(main_activity);
 		}
 
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
@@ -72,7 +77,43 @@ namespace Movolira {
 			rating_view.Paint.SetShader(rating_text_shader);
 			TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 			overview_view.Text = _movie.Overview;
+			overview_view.Visibility = ViewStates.Visible;
+			TextView overview_unconstrained = layout.FindViewById<TextView>(Resource.Id.movie_details_overview_unconstrained);
+			overview_unconstrained.Text = "";
+			layout.ViewTreeObserver.AddOnGlobalLayoutListener(new OverviewViewSpanModifier(layout));
 			return layout;
+		}
+
+		private class OverviewViewSpanModifier : Java.Lang.Object, ViewTreeObserver.IOnGlobalLayoutListener {
+			private View _layout;
+
+			public OverviewViewSpanModifier(View layout) {
+				_layout = layout;
+			}
+			public void OnGlobalLayout() {
+				_layout.ViewTreeObserver.RemoveOnGlobalLayoutListener(this);
+				ImageView poster_view = _layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
+				TextView overview_view = _layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
+				TextView overview_unconstrained = _layout.FindViewById<TextView>(Resource.Id.movie_details_overview_unconstrained);
+				if (poster_view.Bottom < overview_view.Bottom) {
+					int constrained_text_height = poster_view.Bottom - overview_view.Top;
+					int constrained_text_line_count;
+					if (constrained_text_height < 0) {
+						constrained_text_line_count = 0;
+					} else {
+						constrained_text_line_count = (int)Math.Round((double)constrained_text_height / overview_view.LineHeight);
+						if (constrained_text_line_count > overview_view.LineCount) {
+							constrained_text_line_count = overview_view.LineCount;
+						}
+					}
+					int constrained_text_end = overview_view.Layout.GetLineEnd(constrained_text_line_count - 1);
+					overview_unconstrained.Text = overview_view.Text.Substring(constrained_text_end);
+					overview_view.Text = overview_view.Text.Substring(0, constrained_text_end);
+					if (constrained_text_line_count == 0) {
+						overview_view.Visibility = ViewStates.Gone;
+					}
+				}
+			}
 		}
 	}
 }
