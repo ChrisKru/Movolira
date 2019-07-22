@@ -18,25 +18,25 @@ namespace Movolira {
 			HttpCache = new Dictionary<string, JObject>();
 		}
 
-		public List<Movie> getPopularMovies() {
-			return getMoviesFromJson(getPopularMoviesJson());
+		public List<Movie> getPopularMovies(int page_number) {
+			return getMoviesFromJson(getPopularMoviesJson(page_number));
 		}
 
-		private JObject getPopularMoviesJson() {
+		private JObject getPopularMoviesJson(int page_number) {
 			JObject popular_movies_json;
-			if (!HttpCache.TryGetValue("popular", out popular_movies_json)) {
+			if (!HttpCache.TryGetValue("popular" + page_number, out popular_movies_json)) {
 				popular_movies_json = new JObject();
 				HttpClient http_client = new HttpClient();
 				http_client.MaxResponseContentBufferSize = 256000;
 				http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
 				http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
-				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30");
+				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
 				HttpResponseMessage popular_movies_response = http_client.GetAsync(popular_movies_uri).Result;
 				if (popular_movies_response.IsSuccessStatusCode) {
 					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
 					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
 					popular_movies_json.Add("data", popular_movies_json_array);
-					HttpCache.Add("popular", popular_movies_json);
+					HttpCache.Add("popular" + page_number, popular_movies_json);
 				} else {
 					//HANDLE RESPONSE FAILED
 					return null;

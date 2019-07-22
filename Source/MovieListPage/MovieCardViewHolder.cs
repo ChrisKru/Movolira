@@ -10,8 +10,8 @@ namespace Movolira {
 		public TextView GenresText { get; }
 		public TextView RatingText { get; }
 
-		public MovieCardViewHolder(View view, Action<int> listener) : base(view) {
-			view.Click += (sender, position) => listener(LayoutPosition);
+		public MovieCardViewHolder(View view, Action<int> click_listener) : base(view) {
+			view.Click += (sender, position) => click_listener(LayoutPosition);
 			BackdropImage = view.FindViewById<ImageView>(Resource.Id.movie_card_backdrop);
 			TitleText = view.FindViewById<TextView>(Resource.Id.movie_card_title);
 			GenresText = view.FindViewById<TextView>(Resource.Id.movie_card_genres);
