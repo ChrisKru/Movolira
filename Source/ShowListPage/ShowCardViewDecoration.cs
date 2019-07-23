@@ -5,10 +5,10 @@ using Android.Support.V7.Widget;
 using Android.Views;
 
 namespace Movolira {
-	internal class MovieCardViewDecoration : RecyclerView.ItemDecoration {
+	internal class ShowCardViewDecoration : RecyclerView.ItemDecoration {
 		private readonly Context _app_context;
 
-		public MovieCardViewDecoration(Context app_context) {
+		public ShowCardViewDecoration(Context app_context) {
 			_app_context = app_context;
 		}
 

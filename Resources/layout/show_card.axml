@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/movie_card_backdrop"
+            android:id="@+id/show_card_backdrop"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="H,1:1.5"
             android:scaleType="centerCrop" />
         <TextView
-            android:id="@+id/movie_card_genres"
-            app:layout_constraintBottom_toBottomOf="@id/movie_card_backdrop"
+            android:id="@+id/show_card_genres"
+            app:layout_constraintBottom_toBottomOf="@id/show_card_backdrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
@@ -31,8 +31,8 @@
             android:ellipsize="end"
             android:textSize="10sp" />
         <TextView
-            android:id="@+id/movie_card_title"
-            app:layout_constraintBottom_toTopOf="@id/movie_card_genres"
+            android:id="@+id/show_card_title"
+            app:layout_constraintBottom_toTopOf="@id/show_card_genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
@@ -46,9 +46,9 @@
             android:ellipsize="end"
             android:gravity="center" />
         <TextView
-            android:id="@+id/movie_card_rating"
-            app:layout_constraintBottom_toBottomOf="@id/movie_card_genres"
-            app:layout_constraintRight_toRightOf="@id/movie_card_genres"
+            android:id="@+id/show_card_rating"
+            app:layout_constraintBottom_toBottomOf="@id/show_card_genres"
+            app:layout_constraintRight_toRightOf="@id/show_card_genres"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosans_bold"

@@ -67,17 +67,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\Movie.cs" />
-    <Compile Include="Source\MovieListPage\MovieCardViewAdapter.cs" />
-    <Compile Include="Source\MovieListPage\MovieListFragment.cs" />
+    <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
+    <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
     <Compile Include="Source\ApiKeys.cs" />
     <Compile Include="Source\MainActivity.cs" />
-    <Compile Include="Source\MovieListPage\MovieCardViewDecoration.cs" />
-    <Compile Include="Source\MovieListPage\MovieCardViewHolder.cs" />
+    <Compile Include="Source\ShowListPage\ShowCardViewDecoration.cs" />
+    <Compile Include="Source\ShowListPage\ShowCardViewHolder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\MovieDetailsPage\MovieDetailsFragment.cs" />
-    <Compile Include="Source\MovieDataProvider.cs" />
-    <Compile Include="Source\MovieListPage\MovieListPagerHolder.cs" />
+    <Compile Include="Source\DataProvider.cs" />
+    <Compile Include="Source\ShowListPage\ShowListPagerHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml">
@@ -154,7 +154,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\movie_card.axml">
+    <AndroidResource Include="Resources\layout\show_card.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -170,7 +170,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\movie_list.axml">
+    <AndroidResource Include="Resources\layout\show_list.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -340,7 +340,7 @@
     <AndroidResource Include="Resources\drawable\loading_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\movie_list_pager.axml">
+    <AndroidResource Include="Resources\layout\show_list_pager.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

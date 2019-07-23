@@ -2,11 +2,8 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Support.Transitions;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
-using Android.Text;
-using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
 using Com.Bumptech.Glide;
@@ -44,14 +41,14 @@ namespace Movolira {
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
 			int runtime_hours = _movie.Runtime / 60;
 			int runtime_minutes = _movie.Runtime % 60;
-			runtime_view.Text = runtime_hours.ToString() + "h " + runtime_minutes.ToString() + "min";
+			runtime_view.Text = runtime_hours + "h " + runtime_minutes + "min";
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.movie_details_certification);
 			certification_view.Text = _movie.Certification;
 			double rating = _movie.Rating;
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
-			rating_view.Text = $"{rating*10:F0}%";
+			rating_view.Text = $"{rating * 10:F0}%";
 			TextView rating_outline = layout.FindViewById<TextView>(Resource.Id.movie_details_rating_outline);
-			rating_outline.Text = $"{rating*10:F0}%";
+			rating_outline.Text = $"{rating * 10:F0}%";
 			rating_outline.Paint.StrokeWidth = 2;
 			rating_outline.Paint.SetStyle(Paint.Style.Stroke);
 			Shader rating_text_shader;
@@ -84,12 +81,9 @@ namespace Movolira {
 			return layout;
 		}
 
-		private class OverviewViewSpanModifier : Java.Lang.Object, ViewTreeObserver.IOnGlobalLayoutListener {
-			private View _layout;
+		private class OverviewViewSpanModifier : Object, ViewTreeObserver.IOnGlobalLayoutListener {
+			private readonly View _layout;
 
-			public OverviewViewSpanModifier(View layout) {
-				_layout = layout;
-			}
 			public void OnGlobalLayout() {
 				_layout.ViewTreeObserver.RemoveOnGlobalLayoutListener(this);
 				ImageView poster_view = _layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
@@ -101,7 +95,7 @@ namespace Movolira {
 					if (constrained_text_height < 0) {
 						constrained_text_line_count = 0;
 					} else {
-						constrained_text_line_count = (int)Math.Round((double)constrained_text_height / overview_view.LineHeight);
+						constrained_text_line_count = (int) Math.Ceiling((double) constrained_text_height / overview_view.LineHeight);
 						if (constrained_text_line_count > overview_view.LineCount) {
 							constrained_text_line_count = overview_view.LineCount;
 						}
@@ -113,6 +107,10 @@ namespace Movolira {
 						overview_view.Visibility = ViewStates.Gone;
 					}
 				}
+			}
+
+			public OverviewViewSpanModifier(View layout) {
+				_layout = layout;
 			}
 		}
 	}

@@ -6,18 +6,18 @@ using Newtonsoft.Json;
 namespace Movolira {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
 	public class MainActivity : FragmentActivity {
-		public MovieDataProvider MovieDataProvider { get; private set; }
+		public DataProvider ShowDataProvider { get; private set; }
 
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
 			if (saved_app_state != null) {
-				MovieDataProvider = JsonConvert.DeserializeObject<MovieDataProvider>(saved_app_state.GetString("MovieDataProvider"));
+				ShowDataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_app_state.GetString("DataProvider"));
 			} else {
-				MovieDataProvider = new MovieDataProvider();
+				ShowDataProvider = new DataProvider();
 			}
 			SetContentView(Resource.Layout.main_activity);
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_frame) == null) {
-				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_frame, new MovieListFragment(), null).Commit();
+				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_frame, new ShowListFragment(), null).Commit();
 			}
 		}
 
@@ -30,8 +30,8 @@ namespace Movolira {
 		}
 
 		protected override void OnSaveInstanceState(Bundle new_app_state) {
-			new_app_state.PutString("MovieDataProvider", JsonConvert.SerializeObject(MovieDataProvider));
-			System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(MovieDataProvider));
+			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(ShowDataProvider));
+			System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(ShowDataProvider));
 			base.OnSaveInstanceState(new_app_state);
 		}
 	}

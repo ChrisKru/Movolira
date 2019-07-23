@@ -6,15 +6,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Movolira {
-	public class MovieDataProvider {
+	public class DataProvider {
+		private static HttpClient _http_client;
 		public Dictionary<string, JObject> HttpCache { get; }
 
 		[JsonConstructor]
-		public MovieDataProvider(Dictionary<string, JObject> HttpCache) {
+		public DataProvider(Dictionary<string, JObject> HttpCache) {
 			this.HttpCache = HttpCache;
 		}
 
-		public MovieDataProvider() {
+		public DataProvider() {
 			HttpCache = new Dictionary<string, JObject>();
 		}
 
@@ -26,12 +27,12 @@ namespace Movolira {
 			JObject popular_movies_json;
 			if (!HttpCache.TryGetValue("popular" + page_number, out popular_movies_json)) {
 				popular_movies_json = new JObject();
-				HttpClient http_client = new HttpClient();
-				http_client.MaxResponseContentBufferSize = 256000;
-				http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
-				http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
+				_http_client = new HttpClient();
+				_http_client.MaxResponseContentBufferSize = 256000;
+				_http_client.DefaultRequestHeaders.Add("trakt-api-version", "2");
+				_http_client.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
 				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
-				HttpResponseMessage popular_movies_response = http_client.GetAsync(popular_movies_uri).Result;
+				HttpResponseMessage popular_movies_response = _http_client.GetAsync(popular_movies_uri).Result;
 				if (popular_movies_response.IsSuccessStatusCode) {
 					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
 					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
@@ -72,10 +73,10 @@ namespace Movolira {
 		private JObject getMovieImagesJson(string movie_tmdb_id) {
 			JObject images_json;
 			if (!HttpCache.TryGetValue("images" + movie_tmdb_id, out images_json)) {
-				HttpClient http_client = new HttpClient();
-				http_client.MaxResponseContentBufferSize = 256000;
+				_http_client = new HttpClient();
+				_http_client.MaxResponseContentBufferSize = 256000;
 				Uri images_uri = new Uri("http://webservice.fanart.tv/v3/movies/" + movie_tmdb_id + "?api_key=" + ApiKeys.FANARTTV_KEY);
-				HttpResponseMessage images_response = http_client.GetAsync(images_uri).Result;
+				HttpResponseMessage images_response = _http_client.GetAsync(images_uri).Result;
 				if (images_response.IsSuccessStatusCode) {
 					string images_data = images_response.Content.ReadAsStringAsync().Result;
 					images_json = JObject.Parse(images_data);

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/movie_list_content_layout"
+        android:id="@+id/show_list_content_layout"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:spanCount="2" />
     <ImageView
-        android:id="@+id/movie_list_loading"
+        android:id="@+id/show_list_loading"
         android:background="@drawable/loading"
         android:layout_width="100dp"
         android:layout_height="100dp"
