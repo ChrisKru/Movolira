@@ -12,12 +12,12 @@ namespace Movolira {
 		public int Votes { get; }
 		public string Certification { get; }
 		public string Overview { get; }
-		public string PosterUrl { get; }
-		public string BackdropUrl { get; }
+		public string PosterUrl { get; set; }
+		public string BackdropUrl { get; set; }
 
 		[JsonConstructor]
 		public Movie(string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating, int Votes,
-		             string Certification, string Overview, string PosterUrl, string BackdropUrl) {
+		             string Certification, string Overview) {
 			this.TraktID = TraktID;
 			this.TMDB_ID = TMDB_ID;
 			this.Title = Title;
@@ -28,8 +28,6 @@ namespace Movolira {
 			this.Votes = Votes;
 			this.Certification = Certification;
 			this.Overview = Overview;
-			this.PosterUrl = PosterUrl;
-			this.BackdropUrl = BackdropUrl;
 		}
 	}
 }

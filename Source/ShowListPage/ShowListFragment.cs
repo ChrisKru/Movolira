@@ -56,7 +56,7 @@ namespace Movolira {
 
 		private void fillAdapter() {
 			_is_loading = true;
-			_shows = _main_activity.ShowDataProvider.getPopularMovies(_current_page);
+			_shows = _main_activity.DataProvider.getPopularMovies(_current_page);
 			_main_activity.RunOnUiThread(() => {
 				_cards_view_adapter.Shows = _shows;
 				_cards_view_adapter.CurrentPage = _current_page;

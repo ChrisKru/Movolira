@@ -6,14 +6,14 @@ using Newtonsoft.Json;
 namespace Movolira {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
 	public class MainActivity : FragmentActivity {
-		public DataProvider ShowDataProvider { get; private set; }
+		public DataProvider DataProvider { get; private set; }
 
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
 			if (saved_app_state != null) {
-				ShowDataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_app_state.GetString("DataProvider"));
+				DataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_app_state.GetString("DataProvider"));
 			} else {
-				ShowDataProvider = new DataProvider();
+				DataProvider = new DataProvider();
 			}
 			SetContentView(Resource.Layout.main_activity);
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_frame) == null) {
@@ -30,8 +30,8 @@ namespace Movolira {
 		}
 
 		protected override void OnSaveInstanceState(Bundle new_app_state) {
-			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(ShowDataProvider));
-			System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(ShowDataProvider));
+			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
+			System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(DataProvider));
 			base.OnSaveInstanceState(new_app_state);
 		}
 	}

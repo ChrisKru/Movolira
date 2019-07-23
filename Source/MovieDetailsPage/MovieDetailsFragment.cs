@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
@@ -26,9 +27,10 @@ namespace Movolira {
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
-			Glide.With(Activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
 			ImageView poster_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
-			Glide.With(Activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
+			Glide.With(_main_activity).Clear(backdrop_view);
+			Glide.With(_main_activity).Clear(poster_view);
+			Task.Run(() => loadImages(backdrop_view, poster_view));
 			TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 			title_view.Text = _movie.Title;
 			TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
@@ -79,6 +81,16 @@ namespace Movolira {
 			overview_unconstrained.Text = "";
 			layout.ViewTreeObserver.AddOnGlobalLayoutListener(new OverviewViewSpanModifier(layout));
 			return layout;
+		}
+
+		private void loadImages(ImageView backdrop_view, ImageView poster_view) {
+			if (_movie.PosterUrl == null || _movie.BackdropUrl == null) {
+				_main_activity.DataProvider.getMovieImages(_movie);
+			}
+			_main_activity.RunOnUiThread(() => {
+				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
+				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
+			});
 		}
 
 		private class OverviewViewSpanModifier : Object, ViewTreeObserver.IOnGlobalLayoutListener {

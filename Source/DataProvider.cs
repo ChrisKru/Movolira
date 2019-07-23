@@ -67,14 +67,19 @@ namespace Movolira {
 				int votes = movie_jtoken["votes"].Value<int>();
 				string certification = movie_jtoken["certification"].Value<string>();
 				string overview = movie_jtoken["overview"].Value<string>();
-				JObject images_json = getMovieImagesJson(tmdb_id);
-				string poster_url = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
-				string backdrop_url = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
-				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview, poster_url,
-					backdrop_url);
+				//JObject images_json = getMovieImagesJson(tmdb_id);
+				//string poster_url = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
+				//string backdrop_url = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
+				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
 				movies.Add(movie);
 			}
 			return movies;
+		}
+
+		public void getMovieImages(Movie movie) {
+			JObject images_json = getMovieImagesJson(movie.TMDB_ID);
+			movie.PosterUrl = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
+			movie.BackdropUrl = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
 		}
 
 		private JObject getMovieImagesJson(string movie_tmdb_id) {

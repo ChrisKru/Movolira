@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Com.Bumptech.Glide;
 using Com.Bumptech.Glide.Load.Resource.Drawable;
+using AsyncTaskLoader = Android.Content.AsyncTaskLoader;
 
 namespace Movolira {
 	internal class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -54,6 +56,8 @@ namespace Movolira {
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Movie show = Shows[position];
+				Glide.With(_main_activity).Clear(card_holder.BackdropImage);
+				Task.Run(() => loadPoster(card_holder, show));
 				card_holder.TitleText.Text = show.Title;
 				card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() + show.Genres[0].Substring(1);
 				if (show.Genres.Length > 1) {
@@ -68,8 +72,16 @@ namespace Movolira {
 				} else {
 					card_holder.RatingText.Background = ContextCompat.GetDrawable(_main_activity, Resource.Drawable.card_rating_good);
 				}
-				Glide.With(_main_activity).Load(show.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(card_holder.BackdropImage);
 			}
+		}
+
+		private void loadPoster(ShowCardViewHolder card_holder, Movie show) {
+			if (show.PosterUrl == null) {
+				_main_activity.DataProvider.getMovieImages(show);
+			}
+			_main_activity.RunOnUiThread(() => {
+				Glide.With(_main_activity).Load(show.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(card_holder.BackdropImage);
+			});
 		}
 
 		public override int GetItemViewType(int position) {
