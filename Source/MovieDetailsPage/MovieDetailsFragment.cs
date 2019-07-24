@@ -74,6 +74,8 @@ namespace Movolira {
 				rating_star.SetImageResource(Resource.Drawable.rating_star_good);
 			}
 			rating_view.Paint.SetShader(rating_text_shader);
+			TextView vote_count_view = layout.FindViewById<TextView>(Resource.Id.movie_details_vote_count);
+			vote_count_view.Text = _movie.Votes + " votes";
 			TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 			overview_view.Text = _movie.Overview;
 			overview_view.Visibility = ViewStates.Visible;

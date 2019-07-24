@@ -9,13 +9,13 @@
         android:id="@+id/show_list_prev_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prev"
+        android:text="@string/show_list_pager_prev_button"
         app:layout_constraintLeft_toLeftOf="parent" />
     <Button
         android:id="@+id/show_list_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="@string/show_list_pager_next_button"
         android:paddingLeft="10dp"
         app:layout_constraintLeft_toRightOf="@id/show_list_prev_button" />
 </android.support.constraint.ConstraintLayout>

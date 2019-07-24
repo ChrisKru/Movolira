@@ -18,6 +18,6 @@
     <color name="rating_bad_gradient_start">#ff4d4d</color>
     <color name="rating_bad_gradient_end">#ff0000</color>
     <!--ShowDetails-->
-    <color name="details_title">#232323</color>
-    <color name="details_text">#636363</color>
+    <color name="show_details_title">#232323</color>
+    <color name="show_details_text">#636363</color>
 </resources>

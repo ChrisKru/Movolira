@@ -1,4 +1,11 @@
 <resources>
+    <!--app-->
     <string name="app_name">Movolira</string>
-    <string name="action_settings">Settings</string>
+    <!--ShowListPager-->
+    <string name="show_list_pager_prev_button">prev</string>
+    <string name="show_list_pager_next_button">next</string>
+    <!--ShowDetails-->
+    <string name="show_details_runtime_title">Runtime: </string>
+    <string name="show_details_release_date_title">Released: </string>
+    <string name="show_details_certification_title">Rated: </string>
 </resources>

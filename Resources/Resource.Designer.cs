@@ -1565,12 +1565,6 @@ namespace Movolira
 			// aapt resource value: 0x7f0b0070
 			public const int design_tint_password_toggle = 2131427440;
 			
-			// aapt resource value: 0x7f0b0059
-			public const int details_text = 2131427417;
-			
-			// aapt resource value: 0x7f0b0058
-			public const int details_title = 2131427416;
-			
 			// aapt resource value: 0x7f0b0016
 			public const int dim_foreground_disabled_material_dark = 2131427350;
 			
@@ -1711,6 +1705,12 @@ namespace Movolira
 			
 			// aapt resource value: 0x7f0b0038
 			public const int secondary_text_disabled_material_light = 2131427384;
+			
+			// aapt resource value: 0x7f0b0059
+			public const int show_details_text = 2131427417;
+			
+			// aapt resource value: 0x7f0b0058
+			public const int show_details_title = 2131427416;
 			
 			// aapt resource value: 0x7f0b0039
 			public const int switch_thumb_disabled_material_dark = 2131427385;
@@ -2751,8 +2751,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090037
 			public const int SYM = 2131296311;
 			
-			// aapt resource value: 0x7f0900bc
-			public const int action0 = 2131296444;
+			// aapt resource value: 0x7f0900bf
+			public const int action0 = 2131296447;
 			
 			// aapt resource value: 0x7f090089
 			public const int action_bar = 2131296393;
@@ -2775,17 +2775,17 @@ namespace Movolira
 			// aapt resource value: 0x7f090067
 			public const int action_bar_title = 2131296359;
 			
-			// aapt resource value: 0x7f0900b9
-			public const int action_container = 2131296441;
+			// aapt resource value: 0x7f0900bc
+			public const int action_container = 2131296444;
 			
 			// aapt resource value: 0x7f09008a
 			public const int action_context_bar = 2131296394;
 			
-			// aapt resource value: 0x7f0900c0
-			public const int action_divider = 2131296448;
+			// aapt resource value: 0x7f0900c3
+			public const int action_divider = 2131296451;
 			
-			// aapt resource value: 0x7f0900ba
-			public const int action_image = 2131296442;
+			// aapt resource value: 0x7f0900bd
+			public const int action_image = 2131296445;
 			
 			// aapt resource value: 0x7f090003
 			public const int action_menu_divider = 2131296259;
@@ -2802,11 +2802,11 @@ namespace Movolira
 			// aapt resource value: 0x7f090069
 			public const int action_mode_close_button = 2131296361;
 			
-			// aapt resource value: 0x7f0900bb
-			public const int action_text = 2131296443;
+			// aapt resource value: 0x7f0900be
+			public const int action_text = 2131296446;
 			
-			// aapt resource value: 0x7f0900c9
-			public const int actions = 2131296457;
+			// aapt resource value: 0x7f0900cc
+			public const int actions = 2131296460;
 			
 			// aapt resource value: 0x7f09006a
 			public const int activity_chooser_view_content = 2131296362;
@@ -2844,8 +2844,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090070
 			public const int buttonPanel = 2131296368;
 			
-			// aapt resource value: 0x7f0900bd
-			public const int cancel_action = 2131296445;
+			// aapt resource value: 0x7f0900c0
+			public const int cancel_action = 2131296448;
 			
 			// aapt resource value: 0x7f090045
 			public const int center = 2131296325;
@@ -2862,8 +2862,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090080
 			public const int checkbox = 2131296384;
 			
-			// aapt resource value: 0x7f0900c5
-			public const int chronometer = 2131296453;
+			// aapt resource value: 0x7f0900c8
+			public const int chronometer = 2131296456;
 			
 			// aapt resource value: 0x7f09004e
 			public const int clip_horizontal = 2131296334;
@@ -2925,8 +2925,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090030
 			public const int end = 2131296304;
 			
-			// aapt resource value: 0x7f0900cb
-			public const int end_padder = 2131296459;
+			// aapt resource value: 0x7f0900ce
+			public const int end_padder = 2131296462;
 			
 			// aapt resource value: 0x7f09003f
 			public const int enterAlways = 2131296319;
@@ -2973,8 +2973,8 @@ namespace Movolira
 			// aapt resource value: 0x7f09006f
 			public const int icon = 2131296367;
 			
-			// aapt resource value: 0x7f0900ca
-			public const int icon_group = 2131296458;
+			// aapt resource value: 0x7f0900cd
+			public const int icon_group = 2131296461;
 			
 			// aapt resource value: 0x7f09003a
 			public const int ifRoom = 2131296314;
@@ -2982,8 +2982,8 @@ namespace Movolira
 			// aapt resource value: 0x7f09006c
 			public const int image = 2131296364;
 			
-			// aapt resource value: 0x7f0900c6
-			public const int info = 2131296454;
+			// aapt resource value: 0x7f0900c9
+			public const int info = 2131296457;
 			
 			// aapt resource value: 0x7f090057
 			public const int invisible = 2131296343;
@@ -3012,17 +3012,23 @@ namespace Movolira
 			// aapt resource value: 0x7f09006e
 			public const int list_item = 2131296366;
 			
+			// aapt resource value: 0x7f0900a7
+			public const int main_activity_frame = 2131296423;
+			
 			// aapt resource value: 0x7f0900a6
-			public const int main_activity_frame = 2131296422;
+			public const int main_activity_layout = 2131296422;
 			
-			// aapt resource value: 0x7f0900d6
-			public const int masked = 2131296470;
+			// aapt resource value: 0x7f0900a8
+			public const int main_activity_navigation = 2131296424;
 			
-			// aapt resource value: 0x7f0900bf
-			public const int media_actions = 2131296447;
+			// aapt resource value: 0x7f0900d9
+			public const int masked = 2131296473;
 			
-			// aapt resource value: 0x7f0900d4
-			public const int message = 2131296468;
+			// aapt resource value: 0x7f0900c2
+			public const int media_actions = 2131296450;
+			
+			// aapt resource value: 0x7f0900d7
+			public const int message = 2131296471;
 			
 			// aapt resource value: 0x7f090031
 			public const int middle = 2131296305;
@@ -3030,65 +3036,74 @@ namespace Movolira
 			// aapt resource value: 0x7f090053
 			public const int mini = 2131296339;
 			
-			// aapt resource value: 0x7f0900a7
-			public const int movie_details_backdrop = 2131296423;
-			
-			// aapt resource value: 0x7f0900b5
-			public const int movie_details_certification = 2131296437;
-			
-			// aapt resource value: 0x7f0900b2
-			public const int movie_details_certification_title = 2131296434;
-			
-			// aapt resource value: 0x7f0900ab
-			public const int movie_details_genres = 2131296427;
+			// aapt resource value: 0x7f0900a9
+			public const int movie_details_backdrop = 2131296425;
 			
 			// aapt resource value: 0x7f0900b7
-			public const int movie_details_overview = 2131296439;
-			
-			// aapt resource value: 0x7f0900b6
-			public const int movie_details_overview_constraint_top = 2131296438;
-			
-			// aapt resource value: 0x7f0900b8
-			public const int movie_details_overview_unconstrained = 2131296440;
-			
-			// aapt resource value: 0x7f0900a9
-			public const int movie_details_poster = 2131296425;
-			
-			// aapt resource value: 0x7f0900a8
-			public const int movie_details_poster_constraint_top = 2131296424;
-			
-			// aapt resource value: 0x7f0900ad
-			public const int movie_details_rating = 2131296429;
-			
-			// aapt resource value: 0x7f0900ac
-			public const int movie_details_rating_outline = 2131296428;
-			
-			// aapt resource value: 0x7f0900af
-			public const int movie_details_rating_star = 2131296431;
-			
-			// aapt resource value: 0x7f0900b3
-			public const int movie_details_release_date = 2131296435;
-			
-			// aapt resource value: 0x7f0900b1
-			public const int movie_details_release_date_title = 2131296433;
+			public const int movie_details_certification = 2131296439;
 			
 			// aapt resource value: 0x7f0900b4
-			public const int movie_details_runtime = 2131296436;
+			public const int movie_details_certification_title = 2131296436;
 			
-			// aapt resource value: 0x7f0900b0
-			public const int movie_details_runtime_title = 2131296432;
+			// aapt resource value: 0x7f0900ad
+			public const int movie_details_genres = 2131296429;
+			
+			// aapt resource value: 0x7f0900b9
+			public const int movie_details_overview = 2131296441;
+			
+			// aapt resource value: 0x7f0900b8
+			public const int movie_details_overview_constraint_top = 2131296440;
+			
+			// aapt resource value: 0x7f0900ba
+			public const int movie_details_overview_unconstrained = 2131296442;
+			
+			// aapt resource value: 0x7f0900ab
+			public const int movie_details_poster = 2131296427;
 			
 			// aapt resource value: 0x7f0900aa
-			public const int movie_details_title = 2131296426;
+			public const int movie_details_poster_constraint_top = 2131296426;
+			
+			// aapt resource value: 0x7f0900af
+			public const int movie_details_rating = 2131296431;
 			
 			// aapt resource value: 0x7f0900ae
-			public const int movie_details_vote_count = 2131296430;
+			public const int movie_details_rating_outline = 2131296430;
+			
+			// aapt resource value: 0x7f0900b1
+			public const int movie_details_rating_star = 2131296433;
+			
+			// aapt resource value: 0x7f0900b5
+			public const int movie_details_release_date = 2131296437;
+			
+			// aapt resource value: 0x7f0900b3
+			public const int movie_details_release_date_title = 2131296435;
+			
+			// aapt resource value: 0x7f0900b6
+			public const int movie_details_runtime = 2131296438;
+			
+			// aapt resource value: 0x7f0900b2
+			public const int movie_details_runtime_title = 2131296434;
+			
+			// aapt resource value: 0x7f0900ac
+			public const int movie_details_title = 2131296428;
+			
+			// aapt resource value: 0x7f0900b0
+			public const int movie_details_vote_count = 2131296432;
 			
 			// aapt resource value: 0x7f090028
 			public const int multiply = 2131296296;
 			
 			// aapt resource value: 0x7f0900a0
 			public const int navigation_header_container = 2131296416;
+			
+			// aapt resource value: 0x7f0900da
+			public const int navigation_menu_movies = 2131296474;
+			
+			// aapt resource value: 0x7f0900db
+			public const int navigation_menu_shows = 2131296475;
+			
+			// aapt resource value: 0x7f0900bb
+			public const int navigation_toolbar = 2131296443;
 			
 			// aapt resource value: 0x7f09003b
 			public const int never = 2131296315;
@@ -3099,14 +3114,14 @@ namespace Movolira
 			// aapt resource value: 0x7f09001e
 			public const int normal = 2131296286;
 			
-			// aapt resource value: 0x7f0900c8
-			public const int notification_background = 2131296456;
+			// aapt resource value: 0x7f0900cb
+			public const int notification_background = 2131296459;
 			
-			// aapt resource value: 0x7f0900c2
-			public const int notification_main_column = 2131296450;
+			// aapt resource value: 0x7f0900c5
+			public const int notification_main_column = 2131296453;
 			
-			// aapt resource value: 0x7f0900c1
-			public const int notification_main_column_container = 2131296449;
+			// aapt resource value: 0x7f0900c4
+			public const int notification_main_column_container = 2131296452;
 			
 			// aapt resource value: 0x7f09005c
 			public const int packed = 2131296348;
@@ -3141,11 +3156,11 @@ namespace Movolira
 			// aapt resource value: 0x7f09004a
 			public const int right = 2131296330;
 			
-			// aapt resource value: 0x7f0900c7
-			public const int right_icon = 2131296455;
+			// aapt resource value: 0x7f0900ca
+			public const int right_icon = 2131296458;
 			
-			// aapt resource value: 0x7f0900c3
-			public const int right_side = 2131296451;
+			// aapt resource value: 0x7f0900c6
+			public const int right_side = 2131296454;
 			
 			// aapt resource value: 0x7f09000c
 			public const int save_image_matrix = 2131296268;
@@ -3219,29 +3234,29 @@ namespace Movolira
 			// aapt resource value: 0x7f090025
 			public const int showTitle = 2131296293;
 			
-			// aapt resource value: 0x7f0900cc
-			public const int show_card_backdrop = 2131296460;
-			
-			// aapt resource value: 0x7f0900cd
-			public const int show_card_genres = 2131296461;
-			
 			// aapt resource value: 0x7f0900cf
-			public const int show_card_rating = 2131296463;
-			
-			// aapt resource value: 0x7f0900ce
-			public const int show_card_title = 2131296462;
+			public const int show_card_backdrop = 2131296463;
 			
 			// aapt resource value: 0x7f0900d0
-			public const int show_list_content_layout = 2131296464;
-			
-			// aapt resource value: 0x7f0900d1
-			public const int show_list_loading = 2131296465;
-			
-			// aapt resource value: 0x7f0900d3
-			public const int show_list_next_button = 2131296467;
+			public const int show_card_genres = 2131296464;
 			
 			// aapt resource value: 0x7f0900d2
-			public const int show_list_prev_button = 2131296466;
+			public const int show_card_rating = 2131296466;
+			
+			// aapt resource value: 0x7f0900d1
+			public const int show_card_title = 2131296465;
+			
+			// aapt resource value: 0x7f0900d3
+			public const int show_list_content_layout = 2131296467;
+			
+			// aapt resource value: 0x7f0900d4
+			public const int show_list_loading = 2131296468;
+			
+			// aapt resource value: 0x7f0900d6
+			public const int show_list_next_button = 2131296470;
+			
+			// aapt resource value: 0x7f0900d5
+			public const int show_list_prev_button = 2131296469;
 			
 			// aapt resource value: 0x7f090098
 			public const int smallLabel = 2131296408;
@@ -3282,8 +3297,8 @@ namespace Movolira
 			// aapt resource value: 0x7f09004b
 			public const int start = 2131296331;
 			
-			// aapt resource value: 0x7f0900be
-			public const int status_bar_latest_event_content = 2131296446;
+			// aapt resource value: 0x7f0900c1
+			public const int status_bar_latest_event_content = 2131296449;
 			
 			// aapt resource value: 0x7f090083
 			public const int submenuarrow = 2131296387;
@@ -3318,8 +3333,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090015
 			public const int textinput_error = 2131296277;
 			
-			// aapt resource value: 0x7f0900c4
-			public const int time = 2131296452;
+			// aapt resource value: 0x7f0900c7
+			public const int time = 2131296455;
 			
 			// aapt resource value: 0x7f09001c
 			public const int title = 2131296284;
@@ -3366,8 +3381,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900d5
-			public const int visible = 2131296469;
+			// aapt resource value: 0x7f0900d8
+			public const int visible = 2131296472;
 			
 			// aapt resource value: 0x7f09003c
 			public const int withText = 2131296316;
@@ -3561,73 +3576,79 @@ namespace Movolira
 			public const int movie_details = 2131034153;
 			
 			// aapt resource value: 0x7f05002a
-			public const int notification_action = 2131034154;
+			public const int navigation_header = 2131034154;
 			
 			// aapt resource value: 0x7f05002b
-			public const int notification_action_tombstone = 2131034155;
+			public const int navigation_toolbar = 2131034155;
 			
 			// aapt resource value: 0x7f05002c
-			public const int notification_media_action = 2131034156;
+			public const int notification_action = 2131034156;
 			
 			// aapt resource value: 0x7f05002d
-			public const int notification_media_cancel_action = 2131034157;
+			public const int notification_action_tombstone = 2131034157;
 			
 			// aapt resource value: 0x7f05002e
-			public const int notification_template_big_media = 2131034158;
+			public const int notification_media_action = 2131034158;
 			
 			// aapt resource value: 0x7f05002f
-			public const int notification_template_big_media_custom = 2131034159;
+			public const int notification_media_cancel_action = 2131034159;
 			
 			// aapt resource value: 0x7f050030
-			public const int notification_template_big_media_narrow = 2131034160;
+			public const int notification_template_big_media = 2131034160;
 			
 			// aapt resource value: 0x7f050031
-			public const int notification_template_big_media_narrow_custom = 2131034161;
+			public const int notification_template_big_media_custom = 2131034161;
 			
 			// aapt resource value: 0x7f050032
-			public const int notification_template_custom_big = 2131034162;
+			public const int notification_template_big_media_narrow = 2131034162;
 			
 			// aapt resource value: 0x7f050033
-			public const int notification_template_icon_group = 2131034163;
+			public const int notification_template_big_media_narrow_custom = 2131034163;
 			
 			// aapt resource value: 0x7f050034
-			public const int notification_template_lines_media = 2131034164;
+			public const int notification_template_custom_big = 2131034164;
 			
 			// aapt resource value: 0x7f050035
-			public const int notification_template_media = 2131034165;
+			public const int notification_template_icon_group = 2131034165;
 			
 			// aapt resource value: 0x7f050036
-			public const int notification_template_media_custom = 2131034166;
+			public const int notification_template_lines_media = 2131034166;
 			
 			// aapt resource value: 0x7f050037
-			public const int notification_template_part_chronometer = 2131034167;
+			public const int notification_template_media = 2131034167;
 			
 			// aapt resource value: 0x7f050038
-			public const int notification_template_part_time = 2131034168;
+			public const int notification_template_media_custom = 2131034168;
 			
 			// aapt resource value: 0x7f050039
-			public const int select_dialog_item_material = 2131034169;
+			public const int notification_template_part_chronometer = 2131034169;
 			
 			// aapt resource value: 0x7f05003a
-			public const int select_dialog_multichoice_material = 2131034170;
+			public const int notification_template_part_time = 2131034170;
 			
 			// aapt resource value: 0x7f05003b
-			public const int select_dialog_singlechoice_material = 2131034171;
+			public const int select_dialog_item_material = 2131034171;
 			
 			// aapt resource value: 0x7f05003c
-			public const int show_card = 2131034172;
+			public const int select_dialog_multichoice_material = 2131034172;
 			
 			// aapt resource value: 0x7f05003d
-			public const int show_list = 2131034173;
+			public const int select_dialog_singlechoice_material = 2131034173;
 			
 			// aapt resource value: 0x7f05003e
-			public const int show_list_pager = 2131034174;
+			public const int show_card = 2131034174;
 			
 			// aapt resource value: 0x7f05003f
-			public const int support_simple_spinner_dropdown_item = 2131034175;
+			public const int show_list = 2131034175;
 			
 			// aapt resource value: 0x7f050040
-			public const int tooltip = 2131034176;
+			public const int show_list_pager = 2131034176;
+			
+			// aapt resource value: 0x7f050041
+			public const int support_simple_spinner_dropdown_item = 2131034177;
+			
+			// aapt resource value: 0x7f050042
+			public const int tooltip = 2131034178;
 			
 			static Layout()
 			{
@@ -3635,6 +3656,22 @@ namespace Movolira
 			}
 			
 			private Layout()
+			{
+			}
+		}
+		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f0f0000
+			public const int navigation_menu = 2131689472;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
 			{
 			}
 		}
@@ -3751,9 +3788,6 @@ namespace Movolira
 			// aapt resource value: 0x7f0c0010
 			public const int abc_toolbar_collapse_description = 2131492880;
 			
-			// aapt resource value: 0x7f0c0028
-			public const int action_settings = 2131492904;
-			
 			// aapt resource value: 0x7f0c0027
 			public const int app_name = 2131492903;
 			
@@ -3783,6 +3817,21 @@ namespace Movolira
 			
 			// aapt resource value: 0x7f0c0011
 			public const int search_menu_title = 2131492881;
+			
+			// aapt resource value: 0x7f0c002c
+			public const int show_details_certification_title = 2131492908;
+			
+			// aapt resource value: 0x7f0c002b
+			public const int show_details_release_date_title = 2131492907;
+			
+			// aapt resource value: 0x7f0c002a
+			public const int show_details_runtime_title = 2131492906;
+			
+			// aapt resource value: 0x7f0c0029
+			public const int show_list_pager_next_button = 2131492905;
+			
+			// aapt resource value: 0x7f0c0028
+			public const int show_list_pager_prev_button = 2131492904;
 			
 			// aapt resource value: 0x7f0c0026
 			public const int status_bar_notification_info_overflow = 2131492902;
