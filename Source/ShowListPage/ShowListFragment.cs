@@ -102,7 +102,7 @@ namespace Movolira {
 			Bundle frag_args = new Bundle();
 			frag_args.PutString("movie", JsonConvert.SerializeObject(_shows[position]));
 			details_fragment.Arguments = frag_args;
-			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_frame, details_fragment)
+			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 			_is_loading = false;
 		}

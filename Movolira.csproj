@@ -66,6 +66,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\MenuAdapter.cs" />
     <Compile Include="Source\Movie.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
     <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
+    <Folder Include="Resources\menu\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\card_rating_good.xml" />
@@ -345,17 +347,17 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\navigation_header.axml">
+    <AndroidResource Include="Resources\layout\main_activity_toolbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\navigation_menu.axml">
+    <AndroidResource Include="Resources\layout\menu_group.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\navigation_toolbar.axml">
+    <AndroidResource Include="Resources\layout\menu_child.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

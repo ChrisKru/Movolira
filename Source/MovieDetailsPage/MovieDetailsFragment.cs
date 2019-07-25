@@ -98,6 +98,10 @@ namespace Movolira {
 		private class OverviewViewSpanModifier : Object, ViewTreeObserver.IOnGlobalLayoutListener {
 			private readonly View _layout;
 
+			public OverviewViewSpanModifier(View layout) {
+				_layout = layout;
+			}
+
 			public void OnGlobalLayout() {
 				_layout.ViewTreeObserver.RemoveOnGlobalLayoutListener(this);
 				ImageView poster_view = _layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
@@ -121,10 +125,6 @@ namespace Movolira {
 						overview_view.Visibility = ViewStates.Gone;
 					}
 				}
-			}
-
-			public OverviewViewSpanModifier(View layout) {
-				_layout = layout;
 			}
 		}
 	}
