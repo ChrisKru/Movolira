@@ -1,6 +1,11 @@
 <resources>
     <!--app-->
     <string name="app_name">Movolira</string>
+    <!--menu-->
+    <string name="menu_movies">Movies</string>
+    <string name="menu_movies_popular">Most Popular</string>
+    <string name="menu_shows">TV Shows</string>
+    <string name="menu_shows_popular">Most Popular</string>
     <!--ShowListPager-->
     <string name="show_list_pager_prev_button">prev</string>
     <string name="show_list_pager_next_button">next</string>
