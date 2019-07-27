@@ -30,30 +30,27 @@ namespace Movolira {
 			}
 		}
 
-		public List<Movie> getPopularMovies(int page_number) {
-			return getMoviesFromJson(getPopularMoviesJson(page_number));
-		}
-
-		private JObject getPopularMoviesJson(int page_number) {
-			JObject popular_movies_json;
-			if (!HttpCache.TryGetValue("popular" + page_number, out popular_movies_json)) {
-				popular_movies_json = new JObject();
-				Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
-				HttpResponseMessage popular_movies_response = HTTP_CLIENT.GetAsync(popular_movies_uri).Result;
-				if (popular_movies_response.IsSuccessStatusCode) {
-					string popular_movies_data = popular_movies_response.Content.ReadAsStringAsync().Result;
-					JArray popular_movies_json_array = JArray.Parse(popular_movies_data);
-					popular_movies_json.Add("data", popular_movies_json_array);
-					HttpCache.Add("popular" + page_number, popular_movies_json);
+		private JObject getMoviesJson(int page_number, string cache_id, Uri movies_uri) {
+			JObject movies_json;
+			if (!HttpCache.TryGetValue(cache_id + page_number, out movies_json)) {
+				movies_json = new JObject();
+				HttpResponseMessage movies_response = HTTP_CLIENT.GetAsync(movies_uri).Result;
+				if (movies_response.IsSuccessStatusCode) {
+					string movies_data = movies_response.Content.ReadAsStringAsync().Result;
+					JArray movies_json_array = JArray.Parse(movies_data);
+					movies_json.Add("data", movies_json_array);
+					HttpCache.Add(cache_id + page_number, movies_json);
 				} else {
 					//HANDLE RESPONSE FAILED
 					return null;
 				}
 			}
-			return popular_movies_json;
+			return movies_json;
 		}
 
-		private List<Movie> getMoviesFromJson(JObject movies_json) {
+		public List<Movie> getPopularMovies(int page_number) {
+			Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
+			JObject movies_json = getMoviesJson(page_number, "popular", popular_movies_uri);
 			var movies = new List<Movie>();
 			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
 			foreach (JToken movie_jtoken in movies_jtokens) {
@@ -67,9 +64,28 @@ namespace Movolira {
 				int votes = movie_jtoken["votes"].Value<int>();
 				string certification = movie_jtoken["certification"].Value<string>();
 				string overview = movie_jtoken["overview"].Value<string>();
-				//JObject images_json = getMovieImagesJson(tmdb_id);
-				//string poster_url = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
-				//string backdrop_url = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
+				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+				movies.Add(movie);
+			}
+			return movies;
+		}
+
+		public List<Movie> getTrendingMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=30" + "&page=" + page_number);
+			JObject movies_json = getMoviesJson(page_number, "trending", trending_movies_uri);
+			var movies = new List<Movie>();
+			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+			foreach (JToken movie_jtoken in movies_jtokens) {
+				string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+				string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+				string title = movie_jtoken["movie"]["title"].Value<string>();
+				var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+				string release_date = movie_jtoken["movie"]["released"].Value<string>();
+				int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+				double rating = movie_jtoken["movie"]["rating"].Value<double>();
+				int votes = movie_jtoken["movie"]["votes"].Value<int>();
+				string certification = movie_jtoken["movie"]["certification"].Value<string>();
+				string overview = movie_jtoken["movie"]["overview"].Value<string>();
 				Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
 				movies.Add(movie);
 			}

@@ -4,6 +4,7 @@
     <!--menu-->
     <string name="menu_movies">Movies</string>
     <string name="menu_movies_popular">Most Popular</string>
+    <string name="menu_movies_trending">Trending</string>
     <string name="menu_shows">TV Shows</string>
     <string name="menu_shows_popular">Most Popular</string>
     <!--ShowListPager-->

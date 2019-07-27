@@ -66,6 +66,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\IBackButtonHandler.cs" />
     <Compile Include="Source\Movie.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
     <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
@@ -401,16 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\main_activity_toolbar.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\menu_group.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\menu_child.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

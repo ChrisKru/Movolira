@@ -1,5 +1,7 @@
-﻿using Android.Animation;
+﻿using System.Threading.Tasks;
+using Android.Animation;
 using Android.App;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
@@ -8,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using Java.Lang;
 using Newtonsoft.Json;
+using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using v7ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 
@@ -15,8 +18,29 @@ namespace Movolira {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
 	public class MainActivity : AppCompatActivity {
 		public DataProvider DataProvider { get; private set; }
+		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
 		private v7ActionBarDrawerToggle _drawer_toggle;
+		private ImageView _loading_view;
+
+		public void setIsLoading(bool is_loading) {
+			IsLoading = is_loading;
+			if (is_loading) {
+				_loading_view.Visibility = ViewStates.Visible;
+			} else {
+				Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
+			}
+		}
+
+		public void changeContentFragment(string subtype) {
+			RunOnUiThread(() => setIsLoading(true));
+			ShowListFragment content_fragment = new ShowListFragment();
+			Bundle fragment_args = new Bundle();
+			fragment_args.PutString("subtype", subtype);
+			content_fragment.Arguments = fragment_args;
+			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
+				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
+		}
 
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
@@ -26,6 +50,8 @@ namespace Movolira {
 				DataProvider = new DataProvider();
 			}
 			SetContentView(Resource.Layout.main_activity);
+			_loading_view = FindViewById<ImageView>(Resource.Id.show_list_loading);
+			((AnimationDrawable) _loading_view.Background).Start();
 			Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
 			SetSupportActionBar(toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -38,12 +64,16 @@ namespace Movolira {
 			menu_transition.EnableTransitionType(LayoutTransitionType.Appearing);
 			menu_transition.EnableTransitionType(LayoutTransitionType.Disappearing);
 			menu.LayoutTransition = menu_transition;
-			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(menu);
+			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(this, _drawer_layout);
 			for (int i_menu_children = 0; i_menu_children < menu.ChildCount; ++i_menu_children) {
 				menu.GetChildAt(i_menu_children).SetOnClickListener(menu_on_click_listener);
 			}
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
-				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, new ShowListFragment(), null).Commit();
+				ShowListFragment content_frag = new ShowListFragment();
+				Bundle frag_args = new Bundle();
+				frag_args.PutString("subtype", "popular");
+				content_frag.Arguments = frag_args;
+				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
 			}
 		}
 
@@ -57,7 +87,15 @@ namespace Movolira {
 				_drawer_layout.CloseDrawer(GravityCompat.Start);
 			} else if (SupportFragmentManager.BackStackEntryCount > 0) {
 				SupportFragmentManager.PopBackStack();
-			} else {
+			} else{
+				var fragments = SupportFragmentManager.Fragments;
+				for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
+					if (SupportFragmentManager.Fragments[i_fragment] is IBackButtonHandler back_button_handler) {
+						if (back_button_handler.handleBackButtonPress()) {
+							return;
+						}
+					}
+				}
 				base.OnBackPressed();
 			}
 		}
@@ -68,33 +106,61 @@ namespace Movolira {
 		}
 
 		private class MenuOnClickListener : Object, View.IOnClickListener {
-			private readonly LinearLayout _menu;
+			private readonly DrawerLayout _drawer;
+			private readonly MainActivity _main_activity;
 
-			public MenuOnClickListener(LinearLayout menu) {
-				_menu = menu;
+			public MenuOnClickListener(MainActivity main_activity, DrawerLayout drawer) {
+				_main_activity = main_activity;
+				_drawer = drawer;
 			}
 
 			public void OnClick(View clicked_view) {
 				if (clicked_view.Id == Resource.Id.menu_movies) {
-					View menu_movies_popular = _menu.FindViewById(Resource.Id.menu_movies_popular);
-					ImageView expandable_icon = _menu.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon);
-					if (menu_movies_popular.Visibility == ViewStates.Visible) {
-						menu_movies_popular.Visibility = ViewStates.Gone;
-						expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
-					} else {
-						menu_movies_popular.Visibility = ViewStates.Visible;
-						expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
-					}
+					toggleMoviesGroup();
 				} else if (clicked_view.Id == Resource.Id.menu_shows) {
-					View menu_shows_popular = _menu.FindViewById(Resource.Id.menu_shows_popular);
-					ImageView expandable_icon = _menu.FindViewById<ImageView>(Resource.Id.menu_shows_expandable_icon);
-					if (menu_shows_popular.Visibility == ViewStates.Visible) {
-						menu_shows_popular.Visibility = ViewStates.Gone;
-						expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
-					} else {
-						menu_shows_popular.Visibility = ViewStates.Visible;
-						expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
-					}
+					toggleShowsGroup();
+				} else if (clicked_view.Id == Resource.Id.menu_movies_popular) {
+					_drawer.CloseDrawer(GravityCompat.Start);
+					collapseAllGroups();
+					Task.Run(() => _main_activity.changeContentFragment("popular"));
+				} else if (clicked_view.Id == Resource.Id.menu_movies_trending) {
+					_drawer.CloseDrawer(GravityCompat.Start);
+					collapseAllGroups();
+					Task.Run(() => _main_activity.changeContentFragment("trending"));
+				}
+			}
+
+			private void collapseAllGroups() {
+				_drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon).SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				_drawer.FindViewById(Resource.Id.menu_movies_popular).Visibility = ViewStates.Gone;
+				_drawer.FindViewById(Resource.Id.menu_movies_trending).Visibility = ViewStates.Gone;
+				_drawer.FindViewById<ImageView>(Resource.Id.menu_shows_expandable_icon).SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				_drawer.FindViewById(Resource.Id.menu_shows_popular).Visibility = ViewStates.Gone;
+			}
+
+			private void toggleMoviesGroup() {
+				View menu_movies_popular = _drawer.FindViewById(Resource.Id.menu_movies_popular);
+				ImageView expandable_icon = _drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon);
+				if (menu_movies_popular.Visibility == ViewStates.Visible) {
+					menu_movies_popular.Visibility = ViewStates.Gone;
+					_drawer.FindViewById(Resource.Id.menu_movies_trending).Visibility = ViewStates.Gone;
+					expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				} else {
+					menu_movies_popular.Visibility = ViewStates.Visible;
+					_drawer.FindViewById(Resource.Id.menu_movies_trending).Visibility = ViewStates.Visible;
+					expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
+				}
+			}
+
+			private void toggleShowsGroup() {
+				View menu_shows_popular = _drawer.FindViewById(Resource.Id.menu_shows_popular);
+				ImageView expandable_icon = _drawer.FindViewById<ImageView>(Resource.Id.menu_shows_expandable_icon);
+				if (menu_shows_popular.Visibility == ViewStates.Visible) {
+					menu_shows_popular.Visibility = ViewStates.Gone;
+					expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				} else {
+					menu_shows_popular.Visibility = ViewStates.Visible;
+					expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
 				}
 			}
 		}

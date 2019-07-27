@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using Math = System.Math;
 
 namespace Movolira {
-	public class MovieDetailsFragment : Fragment {
+	public class MovieDetailsFragment : Fragment, IBackButtonHandler {
 		private MainActivity _main_activity;
 		private Movie _movie;
 
@@ -24,6 +24,7 @@ namespace Movolira {
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
+			_main_activity.setIsLoading(false);
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
@@ -93,6 +94,10 @@ namespace Movolira {
 				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
 				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
 			});
+		}
+
+		public bool handleBackButtonPress() {
+			return false;
 		}
 
 		private class OverviewViewSpanModifier : Object, ViewTreeObserver.IOnGlobalLayoutListener {
