@@ -1,7 +1,5 @@
-﻿using Android.App;
-
-namespace Movolira {
-	interface IBackButtonHandler {
+﻿namespace Movolira {
+	internal interface IBackButtonHandler {
 		bool handleBackButtonPress();
 	}
 }

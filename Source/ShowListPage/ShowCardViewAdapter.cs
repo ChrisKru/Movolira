@@ -8,7 +8,6 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Com.Bumptech.Glide;
 using Com.Bumptech.Glide.Load.Resource.Drawable;
-using AsyncTaskLoader = Android.Content.AsyncTaskLoader;
 
 namespace Movolira {
 	internal class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -75,9 +74,13 @@ namespace Movolira {
 			}
 		}
 
-		private void loadPoster(ShowCardViewHolder card_holder, Movie show) {
+		private async void loadPoster(ShowCardViewHolder card_holder, Movie show) {
 			if (show.PosterUrl == null) {
-				_main_activity.DataProvider.getMovieImages(show);
+				await _main_activity.DataProvider.getMovieImages(show);
+				while (show.PosterUrl == null) {
+					await Task.Delay(1000);
+					await _main_activity.DataProvider.getMovieImages(show);
+				}
 			}
 			_main_activity.RunOnUiThread(() => {
 				Glide.With(_main_activity).Load(show.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(card_holder.BackdropImage);

@@ -9,7 +9,7 @@ using Android.Views;
 using Newtonsoft.Json;
 
 namespace Movolira {
-	public class ShowListFragment : Fragment, IBackButtonHandler{
+	public class ShowListFragment : Fragment, IBackButtonHandler {
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
 		private int _current_page = 1;
@@ -51,12 +51,20 @@ namespace Movolira {
 			return _frag_layout;
 		}
 
-		private void fillAdapter() {
+		private async void fillAdapter() {
 			string subtype = Arguments.GetString("subtype");
 			if (subtype == "popular") {
-				_shows = _main_activity.DataProvider.getPopularMovies(_current_page);
+				_shows = await _main_activity.DataProvider.getPopularMovies(_current_page);
+				while (_shows.Count == 0) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getPopularMovies(_current_page);
+				}
 			} else if (subtype == "trending") {
-				_shows = _main_activity.DataProvider.getTrendingMovies(_current_page);
+				_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
+				while (_shows.Count == 0) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
+				}
 			}
 			_main_activity.RunOnUiThread(() => {
 				_cards_view_adapter.Shows = _shows;
