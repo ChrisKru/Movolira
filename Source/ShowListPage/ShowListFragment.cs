@@ -53,17 +53,41 @@ namespace Movolira {
 
 		private async void fillAdapter() {
 			string subtype = Arguments.GetString("subtype");
-			if (subtype == "popular") {
-				_shows = await _main_activity.DataProvider.getPopularMovies(_current_page);
-				while (_shows.Count == 0) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getPopularMovies(_current_page);
-				}
-			} else if (subtype == "trending") {
+			if (subtype == "trending") {
 				_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
-				while (_shows.Count == 0) {
+				while (_shows == null) {
 					await Task.Delay(1000);
 					_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
+				}
+			} else if (subtype == "most_popular") {
+				_shows = await _main_activity.DataProvider.getMostPopularMovies(_current_page);
+				while (_shows == null) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getMostPopularMovies(_current_page);
+				}
+			} else if (subtype == "most_watched") {
+				_shows = await _main_activity.DataProvider.getMostWatchedMovies(_current_page);
+				while (_shows == null) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getMostWatchedMovies(_current_page);
+				}
+			} else if (subtype == "most_collected") {
+				_shows = await _main_activity.DataProvider.getMostCollectedMovies(_current_page);
+				while (_shows == null) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getMostCollectedMovies(_current_page);
+				}
+			} else if (subtype == "most_anticipated") {
+				_shows = await _main_activity.DataProvider.getMostAnticipatedMovies(_current_page);
+				while (_shows == null) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getMostAnticipatedMovies(_current_page);
+				}
+			} else if (subtype == "box_office") {
+				_shows = await _main_activity.DataProvider.getBoxOfficeMovies(_current_page);
+				while (_shows == null) {
+					await Task.Delay(1000);
+					_shows = await _main_activity.DataProvider.getBoxOfficeMovies(_current_page);
 				}
 			}
 			_main_activity.RunOnUiThread(() => {
@@ -93,6 +117,9 @@ namespace Movolira {
 		}
 
 		private void OnPrevButtonClick(object sender, EventArgs args) {
+			if (_main_activity.IsLoading) {
+				return;
+			}
 			_main_activity.setIsLoading(true);
 			_current_page -= 1;
 			Task.Run(() => fillAdapter());

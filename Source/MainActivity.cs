@@ -51,6 +51,7 @@ namespace Movolira {
 			SetContentView(Resource.Layout.main_activity);
 			_loading_view = FindViewById<ImageView>(Resource.Id.show_list_loading);
 			((AnimationDrawable) _loading_view.Background).Start();
+			setIsLoading(true);
 			Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
 			SetSupportActionBar(toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -60,8 +61,10 @@ namespace Movolira {
 			_drawer_layout.AddDrawerListener(_drawer_toggle);
 			LinearLayout menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
 			LayoutTransition menu_transition = new LayoutTransition();
-			menu_transition.EnableTransitionType(LayoutTransitionType.Appearing);
-			menu_transition.EnableTransitionType(LayoutTransitionType.Disappearing);
+			//menu_transition.EnableTransitionType(LayoutTransitionType.Appearing);
+			//menu_transition.EnableTransitionType(LayoutTransitionType.Disappearing);
+			//menu_transition.EnableTransitionType(LayoutTransitionType.ChangeAppearing);
+			//menu_transition.EnableTransitionType(LayoutTransitionType.ChangeDisappearing);
 			menu.LayoutTransition = menu_transition;
 			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(this, _drawer_layout);
 			for (int i_menu_children = 0; i_menu_children < menu.ChildCount; ++i_menu_children) {
@@ -70,7 +73,7 @@ namespace Movolira {
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
 				Bundle frag_args = new Bundle();
-				frag_args.PutString("subtype", "popular");
+				frag_args.PutString("subtype", "most_popular");
 				content_frag.Arguments = frag_args;
 				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
 			}

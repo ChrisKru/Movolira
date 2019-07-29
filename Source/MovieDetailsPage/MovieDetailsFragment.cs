@@ -30,21 +30,38 @@ namespace Movolira {
 			Glide.With(_main_activity).Clear(backdrop_view);
 			Glide.With(_main_activity).Clear(poster_view);
 			Task.Run(() => loadImages(backdrop_view, poster_view));
-			TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
-			title_view.Text = _movie.Title;
-			TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
-			genres_view.Text = _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
-			if (_movie.Genres.Length > 1) {
-				genres_view.Text += " " + _movie.Genres[1].First().ToString().ToUpper() + _movie.Genres[1].Substring(1);
+			if (_movie.Title != null) {
+				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
+				title_view.Text = _movie.Title;
+			}
+			if (_movie.Genres.Length > 0) {
+				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
+				genres_view.Text = _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
+				if (_movie.Genres.Length > 1) {
+					genres_view.Text += " " + _movie.Genres[1].First().ToString().ToUpper() + _movie.Genres[1].Substring(1);
+				}
 			}
 			TextView release_date_view = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
-			release_date_view.Text = _movie.ReleaseDate;
+			if (_movie.ReleaseDate != null) {
+				release_date_view.Text = _movie.ReleaseDate;
+			} else {
+				release_date_view.Text = "Unknown";
+			}
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
-			int runtime_hours = _movie.Runtime / 60;
-			int runtime_minutes = _movie.Runtime % 60;
-			runtime_view.Text = runtime_hours + "h " + runtime_minutes + "min";
+			if (_movie.Runtime > 0) {
+				int runtime_hours = _movie.Runtime / 60;
+				int runtime_minutes = _movie.Runtime % 60;
+				runtime_view.Text = runtime_hours + "h " + runtime_minutes + "min";
+			} else {
+				runtime_view.Text = "Unknown";
+			}
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.movie_details_certification);
-			certification_view.Text = _movie.Certification;
+			if (_movie.Certification != null) {
+				certification_view.Text = _movie.Certification;
+			} else {
+				certification_view.Text = "Unknown";
+			}
+
 			double rating = _movie.Rating;
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
 			rating_view.Text = $"{rating * 10:F0}%";
@@ -75,25 +92,38 @@ namespace Movolira {
 			rating_view.Paint.SetShader(rating_text_shader);
 			TextView vote_count_view = layout.FindViewById<TextView>(Resource.Id.movie_details_vote_count);
 			vote_count_view.Text = _movie.Votes + " votes";
-			TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
-			overview_view.Text = _movie.Overview;
-			overview_view.Visibility = ViewStates.Visible;
-			TextView overview_unconstrained = layout.FindViewById<TextView>(Resource.Id.movie_details_overview_unconstrained);
-			overview_unconstrained.Text = "";
+
+			if (_movie.Overview != null) {
+				TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
+				overview_view.Text = _movie.Overview;
+				overview_view.Visibility = ViewStates.Visible;
+				TextView overview_unconstrained = layout.FindViewById<TextView>(Resource.Id.movie_details_overview_unconstrained);
+				overview_unconstrained.Text = "";
+			}
+
 			layout.ViewTreeObserver.AddOnGlobalLayoutListener(new OverviewViewSpanModifier(layout));
 			return layout;
 		}
 
 		private async void loadImages(ImageView backdrop_view, ImageView poster_view) {
-			if (_movie.PosterUrl == null || _movie.BackdropUrl == null) {
+			if (_movie.PosterUrl == null) {
 				await _main_activity.DataProvider.getMovieImages(_movie);
-				while (_movie.PosterUrl == null || _movie.BackdropUrl == null) {
+				while (_movie.PosterUrl == null) {
 					await Task.Delay(1000);
 					await _main_activity.DataProvider.getMovieImages(_movie);
 				}
 			}
 			_main_activity.RunOnUiThread(() => {
 				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
+			});
+			if (_movie.BackdropUrl == null) {
+				await _main_activity.DataProvider.getMovieImages(_movie);
+				while (_movie.BackdropUrl == null) {
+					await Task.Delay(1000);
+					await _main_activity.DataProvider.getMovieImages(_movie);
+				}
+			}
+			_main_activity.RunOnUiThread(() => {
 				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
 			});
 		}

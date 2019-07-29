@@ -33,6 +33,159 @@ namespace Movolira {
 			}
 		}
 
+		public async Task<List<Movie>> getTrendingMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=30" + "&page=" + page_number);
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "trending", trending_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["movie"]["title"].Value<string>();
+					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["movie"]["released"].Value<string>();
+					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+					double rating = movie_jtoken["movie"]["rating"].Value<double>();
+					int votes = movie_jtoken["movie"]["votes"].Value<int>();
+					string certification = movie_jtoken["movie"]["certification"].Value<string>();
+					string overview = movie_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
+		public async Task<List<Movie>> getMostPopularMovies(int page_number) {
+			Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "most_popular", popular_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["title"].Value<string>();
+					var genres = movie_jtoken["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["released"].Value<string>();
+					int runtime = movie_jtoken["runtime"].Value<int>();
+					double rating = movie_jtoken["rating"].Value<double>();
+					int votes = movie_jtoken["votes"].Value<int>();
+					string certification = movie_jtoken["certification"].Value<string>();
+					string overview = movie_jtoken["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
+		public async Task<List<Movie>> getMostWatchedMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/watched?extended=full&limit=30" + "&page=" + page_number);
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "most_watched", trending_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["movie"]["title"].Value<string>();
+					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["movie"]["released"].Value<string>();
+					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+					double rating = movie_jtoken["movie"]["rating"].Value<double>();
+					int votes = movie_jtoken["movie"]["votes"].Value<int>();
+					string certification = movie_jtoken["movie"]["certification"].Value<string>();
+					string overview = movie_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
+		public async Task<List<Movie>> getMostCollectedMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/collected?extended=full&limit=30" + "&page=" + page_number);
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "most_collected", trending_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["movie"]["title"].Value<string>();
+					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["movie"]["released"].Value<string>();
+					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+					double rating = movie_jtoken["movie"]["rating"].Value<double>();
+					int votes = movie_jtoken["movie"]["votes"].Value<int>();
+					string certification = movie_jtoken["movie"]["certification"].Value<string>();
+					string overview = movie_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
+		public async Task<List<Movie>> getMostAnticipatedMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/anticipated?extended=full&limit=30" + "&page=" + page_number);
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "most_anticipated", trending_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["movie"]["title"].Value<string>();
+					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["movie"]["released"].Value<string>();
+					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+					double rating = movie_jtoken["movie"]["rating"].Value<double>();
+					int votes = movie_jtoken["movie"]["votes"].Value<int>();
+					string certification = movie_jtoken["movie"]["certification"].Value<string>();
+					string overview = movie_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
+		public async Task<List<Movie>> getBoxOfficeMovies(int page_number) {
+			if (page_number > 1) {
+				return new List<Movie>();
+			}
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/boxoffice?extended=full");
+			List<Movie> movies = null;
+			JObject movies_json = await getMoviesJson(page_number, "box_office", trending_movies_uri);
+			if (movies_json != null) {
+				movies = new List<Movie>();
+				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
+				foreach (JToken movie_jtoken in movies_jtokens) {
+					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = movie_jtoken["movie"]["title"].Value<string>();
+					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = movie_jtoken["movie"]["released"].Value<string>();
+					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
+					double rating = movie_jtoken["movie"]["rating"].Value<double>();
+					int votes = movie_jtoken["movie"]["votes"].Value<int>();
+					string certification = movie_jtoken["movie"]["certification"].Value<string>();
+					string overview = movie_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
+					movies.Add(movie);
+				}
+			}
+			return movies;
+		}
+
 		private async Task<JObject> getMoviesJson(int page_number, string cache_id, Uri movies_uri) {
 			JObject movies_json;
 			try {
@@ -57,59 +210,21 @@ namespace Movolira {
 			return movies_json;
 		}
 
-		public async Task<List<Movie>> getPopularMovies(int page_number) {
-			Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
-			var movies = new List<Movie>();
-			JObject movies_json = await getMoviesJson(page_number, "popular", popular_movies_uri);
-			if (movies_json != null) {
-				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
-				foreach (JToken movie_jtoken in movies_jtokens) {
-					string trakt_id = movie_jtoken["ids"]["trakt"].Value<string>();
-					string tmdb_id = movie_jtoken["ids"]["tmdb"].Value<string>();
-					string title = movie_jtoken["title"].Value<string>();
-					var genres = movie_jtoken["genres"].Select(genre => (string) genre).ToArray();
-					string release_date = movie_jtoken["released"].Value<string>();
-					int runtime = movie_jtoken["runtime"].Value<int>();
-					double rating = movie_jtoken["rating"].Value<double>();
-					int votes = movie_jtoken["votes"].Value<int>();
-					string certification = movie_jtoken["certification"].Value<string>();
-					string overview = movie_jtoken["overview"].Value<string>();
-					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
-					movies.Add(movie);
-				}
-			}
-			return movies;
-		}
-
-		public async Task<List<Movie>> getTrendingMovies(int page_number) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=30" + "&page=" + page_number);
-			var movies = new List<Movie>();
-			JObject movies_json = await getMoviesJson(page_number, "trending", trending_movies_uri);
-			if (movies_json != null) {
-				IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
-				foreach (JToken movie_jtoken in movies_jtokens) {
-					string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
-					string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
-					string title = movie_jtoken["movie"]["title"].Value<string>();
-					var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
-					string release_date = movie_jtoken["movie"]["released"].Value<string>();
-					int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
-					double rating = movie_jtoken["movie"]["rating"].Value<double>();
-					int votes = movie_jtoken["movie"]["votes"].Value<int>();
-					string certification = movie_jtoken["movie"]["certification"].Value<string>();
-					string overview = movie_jtoken["movie"]["overview"].Value<string>();
-					Movie movie = new Movie(trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification, overview);
-					movies.Add(movie);
-				}
-			}
-			return movies;
-		}
-
 		public async Task<bool> getMovieImages(Movie movie) {
 			JObject images_json = await getMovieImagesJson(movie.TMDB_ID);
 			if (images_json != null) {
-				movie.PosterUrl = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
-				movie.BackdropUrl = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
+				if (images_json["movieposter"] != null) {
+					movie.PosterUrl = images_json["movieposter"].Children().ToList()[0]["url"].Value<string>();
+					movie.PosterUrl.Replace("/fanart/", "/preview/");
+				} else {
+					movie.PosterUrl = "";
+				}
+				if (images_json["moviethumb"] != null) {
+					movie.BackdropUrl = images_json["moviethumb"].Children().ToList()[0]["url"].Value<string>();
+					movie.PosterUrl.Replace("/fanart/", "/preview/");
+				} else {
+					movie.BackdropUrl = "";
+				}
 				return true;
 			}
 			return false;

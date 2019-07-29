@@ -57,10 +57,14 @@ namespace Movolira {
 				Movie show = Shows[position];
 				Glide.With(_main_activity).Clear(card_holder.BackdropImage);
 				Task.Run(() => loadPoster(card_holder, show));
-				card_holder.TitleText.Text = show.Title;
-				card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() + show.Genres[0].Substring(1);
-				if (show.Genres.Length > 1) {
-					card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() + show.Genres[1].Substring(1);
+				if (show.Title != null) {
+					card_holder.TitleText.Text = show.Title;
+				}
+				if (show.Genres.Length > 0) {
+					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() + show.Genres[0].Substring(1);
+					if (show.Genres.Length > 1) {
+						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() + show.Genres[1].Substring(1);
+					}
 				}
 				double rating = show.Rating;
 				card_holder.RatingText.Text = $"{rating * 10:F0}%";
