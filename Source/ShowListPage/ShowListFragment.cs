@@ -6,15 +6,17 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Bumptech.Glide.Integration.RecyclerView;
+using Bumptech.Glide.Util;
 using Newtonsoft.Json;
 
 namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
+		private ShowCardPreloadModelProvider _cards_view_preload_model_provider;
 		private int _current_page = 1;
 		private View _frag_layout;
-
 		private MainActivity _main_activity;
 		private List<Movie> _shows;
 
@@ -31,15 +33,15 @@ namespace Movolira {
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
-			_cards_view_adapter.ShowCardClickEvent += OnShowCardClick;
-			_cards_view_adapter.NextButtonClickEvent += OnNextButtonClick;
-			_cards_view_adapter.PrevButtonClickEvent += OnPrevButtonClick;
-			_cards_view_adapter.CurrentPage = _current_page;
 			if (_shows.Count == 0) {
 				Task.Run(() => fillAdapter());
 			} else {
 				_main_activity.setIsLoading(false);
 			}
+			_cards_view_adapter.ShowCardClickEvent += OnShowCardClick;
+			_cards_view_adapter.NextButtonClickEvent += OnNextButtonClick;
+			_cards_view_adapter.PrevButtonClickEvent += OnPrevButtonClick;
+			_cards_view_adapter.CurrentPage = _current_page;
 			_cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
 			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
@@ -48,6 +50,11 @@ namespace Movolira {
 			_cards_view.SetAdapter(_cards_view_adapter);
 			ShowCardViewDecoration cards_decoration = new ShowCardViewDecoration(_main_activity);
 			_cards_view.AddItemDecoration(cards_decoration);
+			ViewPreloadSizeProvider preload_size_provider = new ViewPreloadSizeProvider();
+			_cards_view_preload_model_provider = new ShowCardPreloadModelProvider(_shows, _main_activity);
+			var cards_view_preloader = new RecyclerViewPreloader<Movie>(_main_activity, _cards_view_preload_model_provider,
+				preload_size_provider, span_count * 3);
+			_cards_view.AddOnScrollListener(cards_view_preloader);
 			return _frag_layout;
 		}
 
@@ -55,41 +62,21 @@ namespace Movolira {
 			string subtype = Arguments.GetString("subtype");
 			if (subtype == "trending") {
 				_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
-				}
 			} else if (subtype == "most_popular") {
 				_shows = await _main_activity.DataProvider.getMostPopularMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getMostPopularMovies(_current_page);
-				}
 			} else if (subtype == "most_watched") {
 				_shows = await _main_activity.DataProvider.getMostWatchedMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getMostWatchedMovies(_current_page);
-				}
 			} else if (subtype == "most_collected") {
 				_shows = await _main_activity.DataProvider.getMostCollectedMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getMostCollectedMovies(_current_page);
-				}
 			} else if (subtype == "most_anticipated") {
 				_shows = await _main_activity.DataProvider.getMostAnticipatedMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getMostAnticipatedMovies(_current_page);
-				}
 			} else if (subtype == "box_office") {
 				_shows = await _main_activity.DataProvider.getBoxOfficeMovies(_current_page);
-				while (_shows == null) {
-					await Task.Delay(1000);
-					_shows = await _main_activity.DataProvider.getBoxOfficeMovies(_current_page);
-				}
 			}
+			if (_shows == null) {
+				return;
+			}
+			_cards_view_preload_model_provider.Shows = _shows;
 			_main_activity.RunOnUiThread(() => {
 				_cards_view_adapter.Shows = _shows;
 				_cards_view_adapter.CurrentPage = _current_page;

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Android.Content;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Com.Bumptech.Glide;
-using Com.Bumptech.Glide.Load.Resource.Drawable;
+using Bumptech.Glide;
+using Bumptech.Glide.Load.Resource.Drawable;
 
 namespace Movolira {
 	internal class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -27,10 +25,10 @@ namespace Movolira {
 		public event EventHandler PrevButtonClickEvent;
 		public event EventHandler<int> ShowCardClickEvent;
 
-		public ShowCardViewAdapter(List<Movie> shows, Context main_activity) {
+		public ShowCardViewAdapter(List<Movie> shows, MainActivity main_activity) {
 			Shows = shows;
 			CurrentPage = 1;
-			_main_activity = (MainActivity) main_activity;
+			_main_activity = main_activity;
 		}
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent_view, int view_type) {
@@ -55,8 +53,9 @@ namespace Movolira {
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Movie show = Shows[position];
-				Glide.With(_main_activity).Clear(card_holder.BackdropImage);
-				Task.Run(() => loadPoster(card_holder, show));
+				Glide.With(_main_activity).Load(show.PosterUrl)
+					.Thumbnail(Glide.With(_main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/"))
+						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(card_holder.BackdropImage);
 				if (show.Title != null) {
 					card_holder.TitleText.Text = show.Title;
 				}
@@ -76,19 +75,6 @@ namespace Movolira {
 					card_holder.RatingText.Background = ContextCompat.GetDrawable(_main_activity, Resource.Drawable.card_rating_good);
 				}
 			}
-		}
-
-		private async void loadPoster(ShowCardViewHolder card_holder, Movie show) {
-			if (show.PosterUrl == null) {
-				await _main_activity.DataProvider.getMovieImages(show);
-				while (show.PosterUrl == null) {
-					await Task.Delay(1000);
-					await _main_activity.DataProvider.getMovieImages(show);
-				}
-			}
-			_main_activity.RunOnUiThread(() => {
-				Glide.With(_main_activity).Load(show.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(card_holder.BackdropImage);
-			});
 		}
 
 		public override int GetItemViewType(int position) {

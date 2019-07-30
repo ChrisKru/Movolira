@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
@@ -7,8 +6,8 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
-using Com.Bumptech.Glide;
-using Com.Bumptech.Glide.Load.Resource.Drawable;
+using Bumptech.Glide;
+using Bumptech.Glide.Load.Resource.Drawable;
 using Newtonsoft.Json;
 
 namespace Movolira {
@@ -27,9 +26,10 @@ namespace Movolira {
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
 			ImageView poster_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
-			Glide.With(_main_activity).Clear(backdrop_view);
-			Glide.With(_main_activity).Clear(poster_view);
-			Task.Run(() => loadImages(backdrop_view, poster_view));
+			Glide.With(_main_activity).Load(_movie.PosterUrl).Thumbnail(Glide.With(_main_activity)
+				.Load(_movie.PosterUrl.Replace("/fanart/", "/preview/")).Transition(DrawableTransitionOptions.WithCrossFade())).Into(poster_view);
+			Glide.With(_main_activity).Load(_movie.BackdropUrl).Thumbnail(Glide.With(_main_activity)
+				.Load(_movie.BackdropUrl.Replace("/fanart/", "/preview/")).Transition(DrawableTransitionOptions.WithCrossFade())).Into(backdrop_view);
 			if (_movie.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 				title_view.Text = _movie.Title;
@@ -103,29 +103,6 @@ namespace Movolira {
 
 			layout.ViewTreeObserver.AddOnGlobalLayoutListener(new OverviewViewSpanModifier(layout));
 			return layout;
-		}
-
-		private async void loadImages(ImageView backdrop_view, ImageView poster_view) {
-			if (_movie.PosterUrl == null) {
-				await _main_activity.DataProvider.getMovieImages(_movie);
-				while (_movie.PosterUrl == null) {
-					await Task.Delay(1000);
-					await _main_activity.DataProvider.getMovieImages(_movie);
-				}
-			}
-			_main_activity.RunOnUiThread(() => {
-				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(poster_view);
-			});
-			if (_movie.BackdropUrl == null) {
-				await _main_activity.DataProvider.getMovieImages(_movie);
-				while (_movie.BackdropUrl == null) {
-					await Task.Delay(1000);
-					await _main_activity.DataProvider.getMovieImages(_movie);
-				}
-			}
-			_main_activity.RunOnUiThread(() => {
-				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Into(backdrop_view);
-			});
 		}
 
 		public bool handleBackButtonPress() {
