@@ -92,18 +92,23 @@
     </None>
     <AndroidResource Include="Resources\font\opensans_regular.ttf" />
     <AndroidResource Include="Resources\font\opensans_bold.ttf" />
+    <AndroidResource Include="Resources\font\exo_bold.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\font\notosans_bold.ttf">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\font\notosans_regular.ttf">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\main_activity.axml">
       <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_collapse_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_expand_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png">
       <SubType>Designer</SubType>
@@ -117,8 +122,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\mipmap-hdpi\ic_movie.png" />
-    <AndroidResource Include="Resources\mipmap-hdpi\ic_show.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_movie.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_show.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_collapse_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_expand_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -131,8 +150,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\mipmap-mdpi\ic_movie.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\ic_show.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_movie.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_show.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_collapse_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_expand_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -145,8 +178,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\mipmap-xhdpi\ic_movie.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\ic_show.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_movie.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_show.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_collapse_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_expand_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -159,8 +206,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_movie.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_show.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_movie.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_show.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_collapse_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_expand_arrow.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -173,8 +234,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_movie.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_show.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_movie.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_show.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\ic_launcher_background.xml" />
     <AndroidResource Include="Resources\values\strings.xml" />
@@ -421,37 +488,58 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-hdpi\ic_collapse_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-hdpi\ic_expand_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-mdpi\ic_collapse_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-mdpi\ic_expand_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xhdpi\ic_collapse_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xhdpi\ic_expand_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_collapse_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_expand_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_collapse_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_expand_arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\main_activity_drawer_menu.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_star_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_star_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_star_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_star_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_star_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_star_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_star_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_star_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_star_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_star_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_star_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_star_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_star_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_star_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_star_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout-land\movie_details.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

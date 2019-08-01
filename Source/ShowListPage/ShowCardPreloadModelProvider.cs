@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
+using Bumptech.Glide.Request;
 using Java.Lang;
 using Java.Util;
 using IList = System.Collections.IList;
@@ -27,8 +30,12 @@ namespace Movolira {
 		}
 
 		public RequestBuilder GetPreloadRequestBuilder(Object poster_url) {
-			return Glide.With(_main_activity).Load(poster_url).Thumbnail(Glide.With(_main_activity)
-				.Load(((string) poster_url).Replace("/fanart/", "/preview/")).Transition(DrawableTransitionOptions.WithCrossFade()));
+			RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
+			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
+			return Glide.With(_main_activity).Load(poster_url).Apply(image_load_options)
+				.Transition(DrawableTransitionOptions.WithCrossFade())
+				.Thumbnail(Glide.With(_main_activity).Load(((string) poster_url).Replace("/fanart/", "/preview/"))
+					.Apply(thumbnail_options).Transition(DrawableTransitionOptions.WithCrossFade()));
 		}
 	}
 }

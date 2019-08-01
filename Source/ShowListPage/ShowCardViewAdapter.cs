@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Android.Support.V4.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
+using Bumptech.Glide.Request;
 
 namespace Movolira {
 	internal class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -53,8 +55,10 @@ namespace Movolira {
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Movie show = Shows[position];
-				Glide.With(_main_activity).Load(show.PosterUrl)
-					.Thumbnail(Glide.With(_main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/"))
+				RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
+				RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
+				Glide.With(_main_activity).Load(show.PosterUrl).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
+					.Thumbnail(Glide.With(_main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
 						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(card_holder.BackdropImage);
 				if (show.Title != null) {
 					card_holder.TitleText.Text = show.Title;
@@ -64,15 +68,6 @@ namespace Movolira {
 					if (show.Genres.Length > 1) {
 						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() + show.Genres[1].Substring(1);
 					}
-				}
-				double rating = show.Rating;
-				card_holder.RatingText.Text = $"{rating * 10:F0}%";
-				if (rating < 3) {
-					card_holder.RatingText.Background = ContextCompat.GetDrawable(_main_activity, Resource.Drawable.card_rating_bad);
-				} else if (rating < 7) {
-					card_holder.RatingText.Background = ContextCompat.GetDrawable(_main_activity, Resource.Drawable.card_rating_average);
-				} else {
-					card_holder.RatingText.Background = ContextCompat.GetDrawable(_main_activity, Resource.Drawable.card_rating_good);
 				}
 			}
 		}

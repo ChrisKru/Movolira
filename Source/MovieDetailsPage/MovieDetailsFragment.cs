@@ -1,14 +1,20 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.V4.App;
-using Android.Support.V4.Content;
+using Android.Text;
+using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
 using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
+using Bumptech.Glide.Request;
 using Newtonsoft.Json;
+using Orientation = Android.Content.Res.Orientation;
 
 namespace Movolira {
 	public class MovieDetailsFragment : Fragment, IBackButtonHandler {
@@ -25,11 +31,18 @@ namespace Movolira {
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
-			ImageView poster_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_poster);
-			Glide.With(_main_activity).Load(_movie.PosterUrl).Thumbnail(Glide.With(_main_activity)
-				.Load(_movie.PosterUrl.Replace("/fanart/", "/preview/")).Transition(DrawableTransitionOptions.WithCrossFade())).Into(poster_view);
-			Glide.With(_main_activity).Load(_movie.BackdropUrl).Thumbnail(Glide.With(_main_activity)
-				.Load(_movie.BackdropUrl.Replace("/fanart/", "/preview/")).Transition(DrawableTransitionOptions.WithCrossFade())).Into(backdrop_view);
+			RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
+			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
+			if (_main_activity.Resources.Configuration.Orientation == Orientation.Portrait) {
+				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Apply(image_load_options)
+					.Thumbnail(Glide.With(_main_activity).Load(_movie.BackdropUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
+						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(backdrop_view);
+			} else {
+				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Apply(image_load_options)
+					.Thumbnail(Glide.With(_main_activity).Load(_movie.PosterUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
+						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(backdrop_view);
+			}
+			
 			if (_movie.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 				title_view.Text = _movie.Title;
@@ -38,70 +51,74 @@ namespace Movolira {
 				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);
 				genres_view.Text = _movie.Genres[0].First().ToString().ToUpper() + _movie.Genres[0].Substring(1);
 				if (_movie.Genres.Length > 1) {
-					genres_view.Text += " " + _movie.Genres[1].First().ToString().ToUpper() + _movie.Genres[1].Substring(1);
+					genres_view.Text += "\n" + _movie.Genres[1].First().ToString().ToUpper() + _movie.Genres[1].Substring(1);
 				}
 			}
 			TextView release_date_view = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
+			string release_date_title = "Released\n";
+			release_date_view.Text = release_date_title;
 			if (_movie.ReleaseDate != null) {
-				release_date_view.Text = _movie.ReleaseDate;
+				release_date_view.Text += _movie.ReleaseDate;
 			} else {
-				release_date_view.Text = "Unknown";
+				release_date_view.Text += "-";
 			}
+			SpannableStringBuilder release_date_styled_string = new SpannableStringBuilder(release_date_view.Text);
+			release_date_styled_string.SetSpan(new RelativeSizeSpan(1.2f), release_date_title.Length, release_date_styled_string.Length(),
+				SpanTypes.ExclusiveExclusive);
+			release_date_view.TextFormatted = release_date_styled_string;
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
+			string runtime_title = "Runtime\n";
+			runtime_view.Text = runtime_title;
 			if (_movie.Runtime > 0) {
 				int runtime_hours = _movie.Runtime / 60;
 				int runtime_minutes = _movie.Runtime % 60;
-				runtime_view.Text = runtime_hours + "h " + runtime_minutes + "min";
+				runtime_view.Text += runtime_hours + "h " + runtime_minutes + "min";
 			} else {
-				runtime_view.Text = "Unknown";
+				runtime_view.Text += "-";
 			}
+			SpannableStringBuilder runtime_styled_string = new SpannableStringBuilder(runtime_view.Text);
+			runtime_styled_string.SetSpan(new RelativeSizeSpan(1.2f), runtime_title.Length, runtime_styled_string.Length(),
+				SpanTypes.ExclusiveExclusive);
+			runtime_view.TextFormatted = runtime_styled_string;
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.movie_details_certification);
+			string certification_title = "Rated\n";
+			certification_view.Text = certification_title;
 			if (_movie.Certification != null) {
-				certification_view.Text = _movie.Certification;
+				certification_view.Text += _movie.Certification;
 			} else {
-				certification_view.Text = "Unknown";
+				certification_view.Text += "-";
 			}
-
-			double rating = _movie.Rating;
+			SpannableStringBuilder certification_styled_string = new SpannableStringBuilder(certification_view.Text);
+			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length, certification_styled_string.Length(),
+				SpanTypes.ExclusiveExclusive);
+			certification_view.TextFormatted = certification_styled_string;
+			int rating = (int) Math.Round(_movie.Rating);
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
-			rating_view.Text = $"{rating * 10:F0}%";
-			TextView rating_outline = layout.FindViewById<TextView>(Resource.Id.movie_details_rating_outline);
-			rating_outline.Text = $"{rating * 10:F0}%";
-			rating_outline.Paint.StrokeWidth = 2;
-			rating_outline.Paint.SetStyle(Paint.Style.Stroke);
-			Shader rating_text_shader;
-			Rect rating_text_bounds = new Rect();
-			ImageView rating_star = layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star);
-			rating_view.Paint.GetTextBounds(rating_view.Text.ToCharArray(), 0, rating_view.Length(), rating_text_bounds);
-			if (rating < 3) {
-				rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_view.LineHeight,
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_bad_gradient_start)),
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_bad_gradient_end)), Shader.TileMode.Clamp);
-				rating_star.SetImageResource(Resource.Drawable.rating_star_bad);
-			} else if (rating < 7) {
-				rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_view.LineHeight,
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_average_gradient_start)),
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_average_gradient_end)), Shader.TileMode.Clamp);
-				rating_star.SetImageResource(Resource.Drawable.rating_star_average);
-			} else {
-				rating_text_shader = new LinearGradient(0, 0, rating_text_bounds.Width(), rating_view.LineHeight,
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_good_gradient_start)),
-					new Color(ContextCompat.GetColor(_main_activity, Resource.Color.rating_good_gradient_end)), Shader.TileMode.Clamp);
-				rating_star.SetImageResource(Resource.Drawable.rating_star_good);
-			}
-			rating_view.Paint.SetShader(rating_text_shader);
+			rating_view.Text = $"{_movie.Rating * 10:F0}%";
 			TextView vote_count_view = layout.FindViewById<TextView>(Resource.Id.movie_details_vote_count);
 			vote_count_view.Text = _movie.Votes + " votes";
-
+			var rating_stars = new List<ImageView> {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_1),
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_2),
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_3),
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_4),
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_5)
+			};
+			int i_rating_stars = 0;
+			while (rating >= 2) {
+				rating_stars[i_rating_stars].SetImageResource(Resource.Mipmap.ic_star_full);
+				rating -= 2;
+				++i_rating_stars;
+			}
+			while (rating >= 1) {
+				rating_stars[i_rating_stars].SetImageResource(Resource.Mipmap.ic_star_half);
+				--rating;
+				++i_rating_stars;
+			}
 			if (_movie.Overview != null) {
 				TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 				overview_view.Text = _movie.Overview;
-				overview_view.Visibility = ViewStates.Visible;
-				TextView overview_unconstrained = layout.FindViewById<TextView>(Resource.Id.movie_details_overview_unconstrained);
-				overview_unconstrained.Text = "";
 			}
-
-			layout.ViewTreeObserver.AddOnGlobalLayoutListener(new OverviewViewSpanModifier(layout));
 			return layout;
 		}
 

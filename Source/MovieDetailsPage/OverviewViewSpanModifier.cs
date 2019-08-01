@@ -3,6 +3,7 @@ using Android.Widget;
 using Java.Lang;
 using Math = System.Math;
 
+/*
 namespace Movolira {
 	public class OverviewViewSpanModifier : Object, ViewTreeObserver.IOnGlobalLayoutListener {
 		private readonly View _layout;
@@ -36,4 +37,4 @@ namespace Movolira {
 			}
 		}
 	}
-}
+}*/
