@@ -6,6 +6,7 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Newtonsoft.Json;
@@ -76,7 +77,10 @@ namespace Movolira {
 				show_data = await _main_activity.DataProvider.getBoxOfficeMovies();
 			}
 			if (show_data == null) {
-				_main_activity.RunOnUiThread(() => _main_activity.setIsLoading(false));
+				_main_activity.RunOnUiThread(() => {
+					_main_activity.setIsLoading(false);
+					_main_activity.showNetworkError();
+				});
 				return;
 			}
 			var new_shows = show_data.Item1;

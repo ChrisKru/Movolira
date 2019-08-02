@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
+using Android.Content;
 using Android.Graphics.Drawables;
+using Android.Net;
 using Android.OS;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
@@ -9,6 +11,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
+using ConnectivityManager = Android.Net.ConnectivityManager;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using v7ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
@@ -28,6 +31,15 @@ namespace Movolira {
 				_loading_view.Visibility = ViewStates.Visible;
 			} else {
 				Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
+			}
+		}
+
+		public void showNetworkError() {
+			ConnectivityManager network_manager = GetSystemService(ConnectivityService) as ConnectivityManager;
+			if (network_manager.ActiveNetworkInfo == null) {
+				Toast.MakeText(this, "No internet connection", ToastLength.Short).Show();
+			} else {
+				Toast.MakeText(this, "Server error", ToastLength.Short).Show();
 			}
 		}
 

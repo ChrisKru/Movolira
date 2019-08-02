@@ -63,6 +63,13 @@ namespace Movolira {
 					pager_holder.NextButton.Alpha = 1f;
 					pager_holder.NextButton.Enabled = true;
 				}
+				if (!pager_holder.NextButton.Enabled && !pager_holder.PrevButton.Enabled) {
+					pager_holder.NextButton.Visibility = ViewStates.Gone;
+					pager_holder.PrevButton.Visibility = ViewStates.Gone;
+				} else {
+					pager_holder.NextButton.Visibility = ViewStates.Visible;
+					pager_holder.PrevButton.Visibility = ViewStates.Visible;
+				}
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Movie show = Shows[position];
