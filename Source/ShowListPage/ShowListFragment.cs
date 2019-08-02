@@ -14,10 +14,10 @@ namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
-		private ShowCardPreloadModelProvider _cards_view_preload_model_provider;
-		private int _current_page = 1;
+		private int _current_page_number = 1;
 		private View _frag_layout;
 		private MainActivity _main_activity;
+		private ShowCardPreloadModelProvider _preload_model_provider;
 		private List<Movie> _shows;
 
 		public override void OnCreate(Bundle saved_instance_state) {
@@ -34,52 +34,60 @@ namespace Movolira {
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
 			if (_shows.Count == 0) {
-				Task.Run(() => fillAdapter());
+				Task.Run(() => fillAdapter(_current_page_number));
 			} else {
 				_main_activity.setIsLoading(false);
 			}
 			_cards_view_adapter.ShowCardClickEvent += OnShowCardClick;
 			_cards_view_adapter.NextButtonClickEvent += OnNextButtonClick;
 			_cards_view_adapter.PrevButtonClickEvent += OnPrevButtonClick;
-			_cards_view_adapter.CurrentPage = _current_page;
+			_cards_view_adapter.CurrentPageNumber = _current_page_number;
 			_cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
 			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
 			int span_count = (int) Math.Floor(display_width_pixels / display_dpi / 1.2);
 			((GridLayoutManager) _cards_view.GetLayoutManager()).SpanCount = span_count;
+			((GridLayoutManager) _cards_view.GetLayoutManager()).SetSpanSizeLookup(new ShowListSpanSizeLookup(span_count, _cards_view_adapter));
 			_cards_view.SetAdapter(_cards_view_adapter);
 			ShowCardViewDecoration cards_decoration = new ShowCardViewDecoration(_main_activity);
 			_cards_view.AddItemDecoration(cards_decoration);
 			ViewPreloadSizeProvider preload_size_provider = new ViewPreloadSizeProvider();
-			_cards_view_preload_model_provider = new ShowCardPreloadModelProvider(_shows, _main_activity);
-			var cards_view_preloader = new RecyclerViewPreloader<Movie>(_main_activity, _cards_view_preload_model_provider,
+			_preload_model_provider = new ShowCardPreloadModelProvider(_shows, _main_activity);
+			var cards_view_preloader = new RecyclerViewPreloader<Movie>(_main_activity, _preload_model_provider,
 				preload_size_provider, span_count * 3);
 			_cards_view.AddOnScrollListener(cards_view_preloader);
 			return _frag_layout;
 		}
 
-		private async void fillAdapter() {
+		private async void fillAdapter(int new_page_number) {
 			string subtype = Arguments.GetString("subtype");
+			Tuple<List<Movie>, int> show_data = null;
 			if (subtype == "trending") {
-				_shows = await _main_activity.DataProvider.getTrendingMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getTrendingMovies(new_page_number);
 			} else if (subtype == "most_popular") {
-				_shows = await _main_activity.DataProvider.getMostPopularMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getMostPopularMovies(new_page_number);
 			} else if (subtype == "most_watched") {
-				_shows = await _main_activity.DataProvider.getMostWatchedMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getMostWatchedMovies(new_page_number);
 			} else if (subtype == "most_collected") {
-				_shows = await _main_activity.DataProvider.getMostCollectedMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getMostCollectedMovies(new_page_number);
 			} else if (subtype == "most_anticipated") {
-				_shows = await _main_activity.DataProvider.getMostAnticipatedMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getMostAnticipatedMovies(new_page_number);
 			} else if (subtype == "box_office") {
-				_shows = await _main_activity.DataProvider.getBoxOfficeMovies(_current_page);
+				show_data = await _main_activity.DataProvider.getBoxOfficeMovies();
 			}
-			if (_shows == null) {
+			if (show_data == null) {
+				_main_activity.RunOnUiThread(() => _main_activity.setIsLoading(false));
 				return;
 			}
-			_cards_view_preload_model_provider.Shows = _shows;
+			var new_shows = show_data.Item1;
+			int max_item_count = show_data.Item2;
+			_shows = new_shows;
+			_current_page_number = new_page_number;
+			_preload_model_provider.Shows = new_shows;
 			_main_activity.RunOnUiThread(() => {
-				_cards_view_adapter.Shows = _shows;
-				_cards_view_adapter.CurrentPage = _current_page;
+				_cards_view_adapter.Shows = new_shows;
+				_cards_view_adapter.CurrentPageNumber = new_page_number;
+				_cards_view_adapter.MaxItemCount = max_item_count;
 				_cards_view_adapter.NotifyDataSetChanged();
 				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
 				_main_activity.setIsLoading(false);
@@ -99,8 +107,8 @@ namespace Movolira {
 				return;
 			}
 			_main_activity.setIsLoading(true);
-			_current_page += 1;
-			Task.Run(() => fillAdapter());
+			int new_page_number = _current_page_number + 1;
+			Task.Run(() => fillAdapter(new_page_number));
 		}
 
 		private void OnPrevButtonClick(object sender, EventArgs args) {
@@ -108,12 +116,12 @@ namespace Movolira {
 				return;
 			}
 			_main_activity.setIsLoading(true);
-			_current_page -= 1;
-			Task.Run(() => fillAdapter());
+			int new_page_number = _current_page_number - 1;
+			Task.Run(() => fillAdapter(new_page_number));
 		}
 
 		public bool handleBackButtonPress() {
-			if (_current_page > 1) {
+			if (_current_page_number > 1) {
 				OnPrevButtonClick(null, null);
 				return true;
 			}

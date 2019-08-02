@@ -61,10 +61,7 @@ namespace Movolira {
 			_drawer_layout.AddDrawerListener(_drawer_toggle);
 			LinearLayout menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
 			LayoutTransition menu_transition = new LayoutTransition();
-			//menu_transition.EnableTransitionType(LayoutTransitionType.Appearing);
-			//menu_transition.EnableTransitionType(LayoutTransitionType.Disappearing);
-			//menu_transition.EnableTransitionType(LayoutTransitionType.ChangeAppearing);
-			//menu_transition.EnableTransitionType(LayoutTransitionType.ChangeDisappearing);
+			menu_transition.DisableTransitionType(LayoutTransitionType.Disappearing);
 			menu.LayoutTransition = menu_transition;
 			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(this, _drawer_layout);
 			for (int i_menu_children = 0; i_menu_children < menu.ChildCount; ++i_menu_children) {

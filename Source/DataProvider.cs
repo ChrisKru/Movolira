@@ -10,7 +10,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Movolira {
 	public class DataProvider {
-		private const int HTTP_RETRY_COUNT = 3;
+		public const int SHOWS_PER_PAGE = 30;
+		private const int HTTP_RETRY_COUNT = 5;
+		private const int HTTP_RETRY_DELAY = 500;
 
 		private static HttpClient HTTP_CLIENT;
 
@@ -36,15 +38,15 @@ namespace Movolira {
 			}
 		}
 
-		public async Task<List<Movie>> getTrendingMovies(int page_number) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=30" + "&page=" + page_number);
+		public async Task<Tuple<List<Movie>, int>> getTrendingMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
 			List<Movie> movies = null;
 			JObject movies_json = await getMoviesJson(page_number, "trending", trending_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
 			}
-			if (!movies_json.ContainsKey("data")) {
+			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
 				return null;
 			}
 			movies = new List<Movie>();
@@ -64,19 +66,22 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int page_count = movies_json["page_count"].Value<int>();
+			int page_item_count = movies_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
-		public async Task<List<Movie>> getMostPopularMovies(int page_number) {
-			Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=30" + "&page=" + page_number);
+		public async Task<Tuple<List<Movie>, int>> getMostPopularMovies(int page_number) {
+			Uri popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
 			List<Movie> movies = null;
 			JObject movies_json = await getMoviesJson(page_number, "most_popular", popular_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
 			}
-			if (!movies_json.ContainsKey("data")) {
+			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
 				return null;
 			}
 			movies = new List<Movie>();
@@ -96,19 +101,22 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int page_count = movies_json["page_count"].Value<int>();
+			int page_item_count = movies_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
-		public async Task<List<Movie>> getMostWatchedMovies(int page_number) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/watched?extended=full&limit=30" + "&page=" + page_number);
+		public async Task<Tuple<List<Movie>, int>> getMostWatchedMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/watched?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
 			List<Movie> movies = null;
 			JObject movies_json = await getMoviesJson(page_number, "most_watched", trending_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
 			}
-			if (!movies_json.ContainsKey("data")) {
+			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
 				return null;
 			}
 			movies = new List<Movie>();
@@ -128,19 +136,22 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int page_count = movies_json["page_count"].Value<int>();
+			int page_item_count = movies_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
-		public async Task<List<Movie>> getMostCollectedMovies(int page_number) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/collected?extended=full&limit=30" + "&page=" + page_number);
+		public async Task<Tuple<List<Movie>, int>> getMostCollectedMovies(int page_number) {
+			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/collected?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
 			List<Movie> movies = null;
 			JObject movies_json = await getMoviesJson(page_number, "most_collected", trending_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
 			}
-			if (!movies_json.ContainsKey("data")) {
+			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
 				return null;
 			}
 			movies = new List<Movie>();
@@ -160,19 +171,23 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int page_count = movies_json["page_count"].Value<int>();
+			int page_item_count = movies_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
-		public async Task<List<Movie>> getMostAnticipatedMovies(int page_number) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/anticipated?extended=full&limit=30" + "&page=" + page_number);
+		public async Task<Tuple<List<Movie>, int>> getMostAnticipatedMovies(int page_number) {
+			Uri trending_movies_uri =
+				new Uri("https://api.trakt.tv/movies/anticipated?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
 			List<Movie> movies = null;
 			JObject movies_json = await getMoviesJson(page_number, "most_anticipated", trending_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
 			}
-			if (!movies_json.ContainsKey("data")) {
+			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
 				return null;
 			}
 			movies = new List<Movie>();
@@ -192,17 +207,17 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int page_count = movies_json["page_count"].Value<int>();
+			int page_item_count = movies_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
-		public async Task<List<Movie>> getBoxOfficeMovies(int page_number) {
-			if (page_number > 1) {
-				return new List<Movie>();
-			}
+		public async Task<Tuple<List<Movie>, int>> getBoxOfficeMovies() {
 			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/boxoffice?extended=full");
 			List<Movie> movies = null;
-			JObject movies_json = await getMoviesJson(page_number, "box_office", trending_movies_uri);
+			JObject movies_json = await getMoviesJson(1, "box_office", trending_movies_uri);
 			var images_loading_tasks = new List<Task>();
 			if (movies_json == null) {
 				return null;
@@ -227,8 +242,9 @@ namespace Movolira {
 				movies.Add(movie);
 				images_loading_tasks.Add(getMovieImages(movie));
 			}
+			int item_count = 10;
 			await Task.WhenAll(images_loading_tasks);
-			return movies;
+			return Tuple.Create(movies, item_count);
 		}
 
 		private async Task<JObject> getMoviesJson(int page_number, string cache_id, Uri movies_uri) {
@@ -237,21 +253,28 @@ namespace Movolira {
 				movies_json = await BlobCache.LocalMachine.GetObject<JObject>(cache_id + page_number);
 			} catch (Exception cache_exception) {
 				movies_json = new JObject();
-
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage movies_response;
 					try {
 						movies_response = await HTTP_CLIENT.GetAsync(movies_uri);
 					} catch (Exception response_exception) {
+						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
 					if (!movies_response.IsSuccessStatusCode) {
+						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
 					string movies_data = movies_response.Content.ReadAsStringAsync().Result;
-					movies_response.Dispose();
 					JArray movies_json_array = JArray.Parse(movies_data);
 					movies_json.Add("data", movies_json_array);
+					movies_response.Headers.TryGetValues("X-Pagination-Page-Count", out var page_count_header);
+					movies_response.Headers.TryGetValues("X-Pagination-Item-Count", out var page_item_count_header);
+					string page_count = page_count_header?.FirstOrDefault();
+					string page_item_count = page_item_count_header?.FirstOrDefault();
+					movies_json.Add("page_count", page_count);
+					movies_json.Add("page_item_count", page_item_count);
+					movies_response.Dispose();
 					await BlobCache.LocalMachine.InsertObject(cache_id + page_number, movies_json, new DateTimeOffset(DateTime.Now.AddDays(1)));
 					break;
 				}
@@ -291,9 +314,11 @@ namespace Movolira {
 					try {
 						images_response = await HTTP_CLIENT.GetAsync(images_uri);
 					} catch (Exception exception) {
+						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
 					if (!images_response.IsSuccessStatusCode) {
+						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
 					string images_data = images_response.Content.ReadAsStringAsync().Result;

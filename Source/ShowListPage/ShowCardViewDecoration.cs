@@ -16,6 +16,10 @@ namespace Movolira {
 			float display_density = _app_context.Resources.DisplayMetrics.Density;
 			int offset = (int) (display_density * 14);
 			int child_pos = parent_view.GetChildLayoutPosition(view);
+			int child_count = parent_view.GetAdapter().ItemCount;
+			if (child_pos == child_count - 1) {
+				return;
+			}
 			int span_count = ((GridLayoutManager) parent_view.GetLayoutManager()).SpanCount;
 			int child_column_pos = child_pos % span_count;
 			offset_rect.Bottom = offset;

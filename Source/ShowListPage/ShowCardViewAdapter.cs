@@ -10,7 +10,7 @@ using Bumptech.Glide.Load.Resource.Drawable;
 using Bumptech.Glide.Request;
 
 namespace Movolira {
-	internal class ShowCardViewAdapter : RecyclerView.Adapter {
+	public class ShowCardViewAdapter : RecyclerView.Adapter {
 		public override int ItemCount {
 			get {
 				if (Shows.Count > 0) {
@@ -21,7 +21,8 @@ namespace Movolira {
 		}
 
 		public List<Movie> Shows { get; set; }
-		public int CurrentPage { get; set; }
+		public int CurrentPageNumber { get; set; }
+		public int MaxItemCount { get; set; }
 		private readonly MainActivity _main_activity;
 		public event EventHandler NextButtonClickEvent;
 		public event EventHandler PrevButtonClickEvent;
@@ -29,7 +30,8 @@ namespace Movolira {
 
 		public ShowCardViewAdapter(List<Movie> shows, MainActivity main_activity) {
 			Shows = shows;
-			CurrentPage = 1;
+			CurrentPageNumber = 1;
+			MaxItemCount = 0;
 			_main_activity = main_activity;
 		}
 
@@ -47,10 +49,19 @@ namespace Movolira {
 		public override void OnBindViewHolder(RecyclerView.ViewHolder view_holder, int position) {
 			if (position == Shows.Count) {
 				ShowListPagerHolder pager_holder = view_holder as ShowListPagerHolder;
-				if (CurrentPage == 1) {
-					pager_holder.PrevButton.Visibility = ViewStates.Gone;
+				if (CurrentPageNumber == 1) {
+					pager_holder.PrevButton.Alpha = 0.5f;
+					pager_holder.PrevButton.Enabled = false;
 				} else {
-					pager_holder.PrevButton.Visibility = ViewStates.Visible;
+					pager_holder.PrevButton.Alpha = 1f;
+					pager_holder.PrevButton.Enabled = true;
+				}
+				if (CurrentPageNumber * DataProvider.SHOWS_PER_PAGE >= MaxItemCount) {
+					pager_holder.NextButton.Alpha = 0.5f;
+					pager_holder.NextButton.Enabled = false;
+				} else {
+					pager_holder.NextButton.Alpha = 1f;
+					pager_holder.NextButton.Enabled = true;
 				}
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;

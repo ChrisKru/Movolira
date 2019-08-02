@@ -9,13 +9,16 @@
         android:id="@+id/show_list_prev_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:text="@string/show_list_pager_prev_button"
+        android:drawableLeft="@drawable/ic_prev_button"
         app:layout_constraintLeft_toLeftOf="parent" />
     <Button
         android:id="@+id/show_list_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
         android:text="@string/show_list_pager_next_button"
-        android:paddingLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@id/show_list_prev_button" />
+        android:drawableRight="@drawable/ic_next_button"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
