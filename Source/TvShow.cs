@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 
 namespace Movolira {
-	public class Movie : Show {
+	public class TvShow : Show {
 		public string TraktID { get; }
-		public string TMDB_ID { get; }
-		public string ReleaseDate { get; }
+		public string TVDB_ID { get; }
+		public string AirDate { get; }
 		public int Runtime { get; }
 		public double Rating { get; }
 		public int Votes { get; }
@@ -13,11 +13,11 @@ namespace Movolira {
 		public string BackdropUrl { get; set; }
 
 		[JsonConstructor]
-		public Movie(ShowType Type, string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating, int Votes,
-		             string Certification, string Overview) : base(Type, Title, Genres) {
+		public TvShow(ShowType Type, string TraktID, string TVDB_ID, string Title, string[] Genres, string AirDate, int Runtime, double Rating,
+		              int Votes, string Certification, string Overview) : base(Type, Title, Genres) {
 			this.TraktID = TraktID;
-			this.TMDB_ID = TMDB_ID;
-			this.ReleaseDate = ReleaseDate;
+			this.TVDB_ID = TVDB_ID;
+			this.AirDate = AirDate;
 			this.Runtime = Runtime;
 			this.Rating = Rating;
 			this.Votes = Votes;

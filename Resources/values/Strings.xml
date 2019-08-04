@@ -9,8 +9,12 @@
     <string name="menu_movies_most_collected">Most Collected</string>
     <string name="menu_movies_most_anticipated">Most Anticipated</string>
     <string name="menu_movies_box_office">Box Office</string>
-    <string name="menu_shows">TV Shows</string>
-    <string name="menu_shows_popular">Most Popular</string>
+    <string name="menu_tv_shows">Tv Shows</string>
+    <string name="menu_tv_shows_trending">Trending</string>
+    <string name="menu_tv_shows_most_popular">Most Popular</string>
+    <string name="menu_tv_shows_most_watched">Most Watched</string>
+    <string name="menu_tv_shows_most_collected">Most Collected</string>
+    <string name="menu_tv_shows_most_anticipated">Most Anticipated</string>
     <!--ShowListPager-->
     <string name="show_list_pager_prev_button">prev</string>
     <string name="show_list_pager_next_button">next</string>

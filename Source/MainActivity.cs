@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
-using Android.Content;
 using Android.Graphics.Drawables;
 using Android.Net;
 using Android.OS;
@@ -11,7 +10,6 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
-using ConnectivityManager = Android.Net.ConnectivityManager;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using v7ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
@@ -43,10 +41,11 @@ namespace Movolira {
 			}
 		}
 
-		public void changeContentFragment(string subtype) {
+		public void changeContentFragment(string type, string subtype) {
 			RunOnUiThread(() => setIsLoading(true));
 			ShowListFragment content_fragment = new ShowListFragment();
 			Bundle fragment_args = new Bundle();
+			fragment_args.PutString("type", type);
 			fragment_args.PutString("subtype", subtype);
 			content_fragment.Arguments = fragment_args;
 			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
@@ -81,9 +80,10 @@ namespace Movolira {
 			}
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
-				Bundle frag_args = new Bundle();
-				frag_args.PutString("subtype", "most_popular");
-				content_frag.Arguments = frag_args;
+				Bundle fragment_args = new Bundle();
+				fragment_args.PutString("type", "movies");
+				fragment_args.PutString("subtype", "most_popular");
+				content_frag.Arguments = fragment_args;
 				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
 			}
 		}

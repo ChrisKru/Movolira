@@ -72,6 +72,7 @@
     <Compile Include="Source\IBackButtonHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
+    <Compile Include="Source\Show.cs" />
     <Compile Include="Source\ShowListPage\ShowCardPreloadModelProvider.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
     <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="Source\DataProvider.cs" />
     <Compile Include="Source\ShowListPage\ShowListPagerHolder.cs" />
     <Compile Include="Source\ShowListPage\ShowListSpanSizeLookup.cs" />
+    <Compile Include="Source\TvShow.cs" />
+    <Compile Include="Source\TvShowDetailsPage\TvShowDetailsFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml">
@@ -527,6 +530,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_next_button.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\tv_show_details.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout-land\tv_show_details.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,10 +10,10 @@ using IList = System.Collections.IList;
 
 namespace Movolira {
 	public class ShowCardPreloadModelProvider : Object, ListPreloader.IPreloadModelProvider {
-		public List<Movie> Shows { get; set; }
+		public List<Show> Shows { get; set; }
 		private readonly MainActivity _main_activity;
 
-		public ShowCardPreloadModelProvider(List<Movie> shows, MainActivity main_activity) {
+		public ShowCardPreloadModelProvider(List<Show> shows, MainActivity main_activity) {
 			Shows = shows;
 			_main_activity = main_activity;
 		}
@@ -32,10 +32,9 @@ namespace Movolira {
 		public RequestBuilder GetPreloadRequestBuilder(Object poster_url) {
 			RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
-			return Glide.With(_main_activity).Load(poster_url).Apply(image_load_options)
-				.Transition(DrawableTransitionOptions.WithCrossFade())
-				.Thumbnail(Glide.With(_main_activity).Load(((string) poster_url).Replace("/fanart/", "/preview/"))
-					.Apply(thumbnail_options).Transition(DrawableTransitionOptions.WithCrossFade()));
+			return Glide.With(_main_activity).Load(poster_url).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
+				.Thumbnail(Glide.With(_main_activity).Load(((string) poster_url).Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
+					.Transition(DrawableTransitionOptions.WithCrossFade()));
 		}
 	}
 }

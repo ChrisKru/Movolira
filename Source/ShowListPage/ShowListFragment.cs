@@ -6,7 +6,6 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Newtonsoft.Json;
@@ -19,7 +18,7 @@ namespace Movolira {
 		private View _frag_layout;
 		private MainActivity _main_activity;
 		private ShowCardPreloadModelProvider _preload_model_provider;
-		private List<Movie> _shows;
+		private List<Show> _shows;
 
 		public override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
@@ -27,7 +26,7 @@ namespace Movolira {
 
 		public override void OnAttach(Context activity) {
 			_main_activity = (MainActivity) activity;
-			_shows = new List<Movie>();
+			_shows = new List<Show>();
 			base.OnAttach(activity);
 		}
 
@@ -61,21 +60,37 @@ namespace Movolira {
 		}
 
 		private async void fillAdapter(int new_page_number) {
+			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
-			Tuple<List<Movie>, int> show_data = null;
-			if (subtype == "trending") {
-				show_data = await _main_activity.DataProvider.getTrendingMovies(new_page_number);
-			} else if (subtype == "most_popular") {
-				show_data = await _main_activity.DataProvider.getMostPopularMovies(new_page_number);
-			} else if (subtype == "most_watched") {
-				show_data = await _main_activity.DataProvider.getMostWatchedMovies(new_page_number);
-			} else if (subtype == "most_collected") {
-				show_data = await _main_activity.DataProvider.getMostCollectedMovies(new_page_number);
-			} else if (subtype == "most_anticipated") {
-				show_data = await _main_activity.DataProvider.getMostAnticipatedMovies(new_page_number);
-			} else if (subtype == "box_office") {
-				show_data = await _main_activity.DataProvider.getBoxOfficeMovies();
+			Tuple<List<Show>, int> show_data = null;
+			if (type == "movies") {
+				if (subtype == "trending") {
+					show_data = await _main_activity.DataProvider.getTrendingMovies(new_page_number);
+				} else if (subtype == "most_popular") {
+					show_data = await _main_activity.DataProvider.getMostPopularMovies(new_page_number);
+				} else if (subtype == "most_watched") {
+					show_data = await _main_activity.DataProvider.getMostWatchedMovies(new_page_number);
+				} else if (subtype == "most_collected") {
+					show_data = await _main_activity.DataProvider.getMostCollectedMovies(new_page_number);
+				} else if (subtype == "most_anticipated") {
+					show_data = await _main_activity.DataProvider.getMostAnticipatedMovies(new_page_number);
+				} else if (subtype == "box_office") {
+					show_data = await _main_activity.DataProvider.getBoxOfficeMovies();
+				}
+			} else if (type == "tv_shows") {
+				if (subtype == "trending") {
+					show_data = await _main_activity.DataProvider.getTrendingTvShows(new_page_number);
+				} else if (subtype == "most_popular") {
+					show_data = await _main_activity.DataProvider.getMostPopularTvShows(new_page_number);
+				} else if (subtype == "most_watched") {
+					show_data = await _main_activity.DataProvider.getMostWatchedTvShows(new_page_number);
+				} else if (subtype == "most_collected") {
+					show_data = await _main_activity.DataProvider.getMostCollectedTvShows(new_page_number);
+				} else if (subtype == "most_anticipated") {
+					show_data = await _main_activity.DataProvider.getMostAnticipatedTvShows(new_page_number);
+				}
 			}
+
 			if (show_data == null) {
 				_main_activity.RunOnUiThread(() => {
 					_main_activity.setIsLoading(false);
@@ -133,10 +148,18 @@ namespace Movolira {
 		}
 
 		private void moveToShowDetailsFrag(int position) {
-			MovieDetailsFragment details_fragment = new MovieDetailsFragment();
-			Bundle frag_args = new Bundle();
-			frag_args.PutString("movie", JsonConvert.SerializeObject(_shows[position]));
-			details_fragment.Arguments = frag_args;
+			Fragment details_fragment;
+			Bundle fragment_args = new Bundle();
+			if (_shows[position].Type == ShowType.Movie) {
+				details_fragment = new MovieDetailsFragment();
+				Movie movie = _shows[position] as Movie;
+				fragment_args.PutString("movie", JsonConvert.SerializeObject(movie));
+			} else {
+				details_fragment = new TvShowDetailsFragment();
+				TvShow tv_show = _shows[position] as TvShow;
+				fragment_args.PutString("tv_show", JsonConvert.SerializeObject(tv_show));
+			}
+			details_fragment.Arguments = fragment_args;
 			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}

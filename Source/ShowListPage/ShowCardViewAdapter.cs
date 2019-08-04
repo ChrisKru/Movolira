@@ -20,7 +20,7 @@ namespace Movolira {
 			}
 		}
 
-		public List<Movie> Shows { get; set; }
+		public List<Show> Shows { get; set; }
 		public int CurrentPageNumber { get; set; }
 		public int MaxItemCount { get; set; }
 		private readonly MainActivity _main_activity;
@@ -28,7 +28,7 @@ namespace Movolira {
 		public event EventHandler PrevButtonClickEvent;
 		public event EventHandler<int> ShowCardClickEvent;
 
-		public ShowCardViewAdapter(List<Movie> shows, MainActivity main_activity) {
+		public ShowCardViewAdapter(List<Show> shows, MainActivity main_activity) {
 			Shows = shows;
 			CurrentPageNumber = 1;
 			MaxItemCount = 0;
@@ -72,7 +72,7 @@ namespace Movolira {
 				}
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
-				Movie show = Shows[position];
+				Show show = Shows[position];
 				RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
 				RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
 				Glide.With(_main_activity).Load(show.PosterUrl).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
