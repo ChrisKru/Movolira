@@ -87,6 +87,12 @@ namespace Movolira {
 			View menu_movies_trending = _drawer.FindViewById(Resource.Id.menu_movies_trending);
 			ImageView expandable_icon = _drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon);
 			if (menu_movies_trending.Visibility == ViewStates.Visible) {
+				menu_movies_trending.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Invisible;
 				menu_movies_trending.Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Gone;
@@ -95,6 +101,12 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Gone;
 				expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
 			} else {
+				menu_movies_trending.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Invisible;
 				menu_movies_trending.Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Visible;
@@ -109,6 +121,11 @@ namespace Movolira {
 			View menu_tv_shows_trending = _drawer.FindViewById(Resource.Id.menu_tv_shows_trending);
 			ImageView expandable_icon = _drawer.FindViewById<ImageView>(Resource.Id.menu_tv_shows_expandable_icon);
 			if (menu_tv_shows_trending.Visibility == ViewStates.Visible) {
+				menu_tv_shows_trending.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_collected).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_anticipated).Visibility = ViewStates.Invisible;
 				menu_tv_shows_trending.Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Gone;
@@ -116,6 +133,11 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_anticipated).Visibility = ViewStates.Gone;
 				expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
 			} else {
+				menu_tv_shows_trending.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_collected).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_anticipated).Visibility = ViewStates.Invisible;
 				menu_tv_shows_trending.Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Visible;
