@@ -317,19 +317,21 @@ namespace Movolira {
 				return null;
 			}
 			tv_shows = new List<Show>();
-			IList<JToken> movies_jtokens = tv_shows_json["data"].Children().ToList();
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = movie_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = movie_jtoken["show"]["title"].Value<string>();
-				var genres = movie_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = movie_jtoken["show"]["first_aired"].Value<string>();
-				air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				int runtime = movie_jtoken["show"]["runtime"].Value<int>();
-				double rating = movie_jtoken["show"]["rating"].Value<double>();
-				int votes = movie_jtoken["show"]["votes"].Value<int>();
-				string certification = movie_jtoken["show"]["certification"].Value<string>();
-				string overview = movie_jtoken["show"]["overview"].Value<string>();
+			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
+			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
+				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
+				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
+				string title = tv_show_jtoken["show"]["title"].Value<string>();
+				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
+				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
+				if (air_date != null) {
+					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+				}
+				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
+				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
+				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
+				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
+				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
 					overview);
 				tv_shows.Add(tv_show);
@@ -355,19 +357,21 @@ namespace Movolira {
 				return null;
 			}
 			tv_shows = new List<Show>();
-			IList<JToken> movies_jtokens = tv_shows_json["data"].Children().ToList();
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["ids"]["trakt"].Value<string>();
-				string tvdb_id = movie_jtoken["ids"]["tvdb"].Value<string>();
-				string title = movie_jtoken["title"].Value<string>();
-				var genres = movie_jtoken["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = movie_jtoken["first_aired"].Value<string>();
-				air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				int runtime = movie_jtoken["runtime"].Value<int>();
-				double rating = movie_jtoken["rating"].Value<double>();
-				int votes = movie_jtoken["votes"].Value<int>();
-				string certification = movie_jtoken["certification"].Value<string>();
-				string overview = movie_jtoken["overview"].Value<string>();
+			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
+			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
+				string trakt_id = tv_show_jtoken["ids"]["trakt"].Value<string>();
+				string tvdb_id = tv_show_jtoken["ids"]["tvdb"].Value<string>();
+				string title = tv_show_jtoken["title"].Value<string>();
+				var genres = tv_show_jtoken["genres"].Select(genre => (string) genre).ToArray();
+				string air_date = tv_show_jtoken["first_aired"].Value<string>();
+				if (air_date != null) {
+					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+				}
+				int runtime = tv_show_jtoken["runtime"].Value<int>();
+				double rating = tv_show_jtoken["rating"].Value<double>();
+				int votes = tv_show_jtoken["votes"].Value<int>();
+				string certification = tv_show_jtoken["certification"].Value<string>();
+				string overview = tv_show_jtoken["overview"].Value<string>();
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
 					overview);
 				tv_shows.Add(tv_show);
@@ -393,19 +397,21 @@ namespace Movolira {
 				return null;
 			}
 			tv_shows = new List<Show>();
-			IList<JToken> movies_jtokens = tv_shows_json["data"].Children().ToList();
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = movie_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = movie_jtoken["show"]["title"].Value<string>();
-				var genres = movie_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = movie_jtoken["show"]["first_aired"].Value<string>();
-				air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				int runtime = movie_jtoken["show"]["runtime"].Value<int>();
-				double rating = movie_jtoken["show"]["rating"].Value<double>();
-				int votes = movie_jtoken["show"]["votes"].Value<int>();
-				string certification = movie_jtoken["show"]["certification"].Value<string>();
-				string overview = movie_jtoken["show"]["overview"].Value<string>();
+			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
+			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
+				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
+				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
+				string title = tv_show_jtoken["show"]["title"].Value<string>();
+				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
+				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
+				if (air_date != null) {
+					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+				}
+				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
+				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
+				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
+				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
+				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
 					overview);
 				tv_shows.Add(tv_show);
@@ -431,19 +437,21 @@ namespace Movolira {
 				return null;
 			}
 			tv_shows = new List<Show>();
-			IList<JToken> movies_jtokens = tv_shows_json["data"].Children().ToList();
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = movie_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = movie_jtoken["show"]["title"].Value<string>();
-				var genres = movie_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = movie_jtoken["show"]["first_aired"].Value<string>();
-				air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				int runtime = movie_jtoken["show"]["runtime"].Value<int>();
-				double rating = movie_jtoken["show"]["rating"].Value<double>();
-				int votes = movie_jtoken["show"]["votes"].Value<int>();
-				string certification = movie_jtoken["show"]["certification"].Value<string>();
-				string overview = movie_jtoken["show"]["overview"].Value<string>();
+			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
+			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
+				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
+				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
+				string title = tv_show_jtoken["show"]["title"].Value<string>();
+				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
+				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
+				if (air_date != null) {
+					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+				}
+				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
+				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
+				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
+				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
+				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
 					overview);
 				tv_shows.Add(tv_show);
@@ -469,19 +477,21 @@ namespace Movolira {
 				return null;
 			}
 			tv_shows = new List<Show>();
-			IList<JToken> movies_jtokens = tv_shows_json["data"].Children().ToList();
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = movie_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = movie_jtoken["show"]["title"].Value<string>();
-				var genres = movie_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = movie_jtoken["show"]["first_aired"].Value<string>();
-				air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				int runtime = movie_jtoken["show"]["runtime"].Value<int>();
-				double rating = movie_jtoken["show"]["rating"].Value<double>();
-				int votes = movie_jtoken["show"]["votes"].Value<int>();
-				string certification = movie_jtoken["show"]["certification"].Value<string>();
-				string overview = movie_jtoken["show"]["overview"].Value<string>();
+			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
+			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
+				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
+				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
+				string title = tv_show_jtoken["show"]["title"].Value<string>();
+				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
+				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
+				if (air_date != null) {
+					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+				}
+				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
+				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
+				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
+				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
+				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
 					overview);
 				tv_shows.Add(tv_show);
@@ -580,6 +590,100 @@ namespace Movolira {
 				}
 			}
 			return movies_json;
+		}
+
+		public async Task<Tuple<List<Show>, int>> searchShows(int page_number, string query) {
+			List<Show> shows = null;
+			JObject search_json = await getSearchJson(page_number, query);
+			var images_loading_tasks = new List<Task>();
+			if (search_json == null) {
+				return null;
+			}
+			if (!search_json.ContainsKey("data") || !search_json.ContainsKey("page_count") || !search_json.ContainsKey("page_item_count")) {
+				return null;
+			}
+			shows = new List<Show>();
+			IList<JToken> search_jtokens = search_json["data"].Children().ToList();
+			foreach (JToken search_jtoken in search_jtokens) {
+				string type = search_jtoken["type"].Value<string>();
+				if (type == "show") {
+					string trakt_id = search_jtoken["show"]["ids"]["trakt"].Value<string>();
+					string tvdb_id = search_jtoken["show"]["ids"]["tvdb"].Value<string>();
+					string title = search_jtoken["show"]["title"].Value<string>();
+					var genres = search_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
+					string air_date = search_jtoken["show"]["first_aired"].Value<string>();
+					if (air_date != null) {
+						air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
+					}
+					int runtime = search_jtoken["show"]["runtime"].Value<int>();
+					double rating = search_jtoken["show"]["rating"].Value<double>();
+					int votes = search_jtoken["show"]["votes"].Value<int>();
+					string certification = search_jtoken["show"]["certification"].Value<string>();
+					string overview = search_jtoken["show"]["overview"].Value<string>();
+					TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
+						overview);
+					shows.Add(tv_show);
+					images_loading_tasks.Add(getTvShowImages(tv_show));
+				} else if (type == "movie") {
+					string trakt_id = search_jtoken["movie"]["ids"]["trakt"].Value<string>();
+					string tmdb_id = search_jtoken["movie"]["ids"]["tmdb"].Value<string>();
+					string title = search_jtoken["movie"]["title"].Value<string>();
+					var genres = search_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
+					string release_date = search_jtoken["movie"]["released"].Value<string>();
+					int runtime = search_jtoken["movie"]["runtime"].Value<int>();
+					double rating = search_jtoken["movie"]["rating"].Value<double>();
+					int votes = search_jtoken["movie"]["votes"].Value<int>();
+					string certification = search_jtoken["movie"]["certification"].Value<string>();
+					string overview = search_jtoken["movie"]["overview"].Value<string>();
+					Movie movie = new Movie(ShowType.Movie, trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification,
+						overview);
+					shows.Add(movie);
+					images_loading_tasks.Add(getMovieImages(movie));
+				}
+			}
+			int page_count = search_json["page_count"].Value<int>();
+			int page_item_count = search_json["page_item_count"].Value<int>();
+			int item_count = page_count * page_item_count;
+			await Task.WhenAll(images_loading_tasks);
+			return Tuple.Create(shows, item_count);
+		}
+
+		private async Task<JObject> getSearchJson(int page_number, string query) {
+			Uri search_uri = new Uri("https://api.trakt.tv/search/movie,show?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number +
+			                         "&query=" + query);
+			JObject search_json;
+			try {
+				search_json = await BlobCache.LocalMachine.GetObject<JObject>("search" + page_number + ";" + query);
+			} catch (Exception cache_exception) {
+				search_json = new JObject();
+				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
+					HttpResponseMessage search_response;
+					try {
+						search_response = await HTTP_CLIENT.GetAsync(search_uri);
+					} catch (Exception response_exception) {
+						await Task.Delay(HTTP_RETRY_DELAY);
+						continue;
+					}
+					if (!search_response.IsSuccessStatusCode) {
+						await Task.Delay(HTTP_RETRY_DELAY);
+						continue;
+					}
+					string search_data = search_response.Content.ReadAsStringAsync().Result;
+					JArray search_json_array = JArray.Parse(search_data);
+					search_json.Add("data", search_json_array);
+					search_response.Headers.TryGetValues("X-Pagination-Page-Count", out var page_count_header);
+					search_response.Headers.TryGetValues("X-Pagination-Item-Count", out var page_item_count_header);
+					string page_count = page_count_header?.FirstOrDefault();
+					string page_item_count = page_item_count_header?.FirstOrDefault();
+					search_json.Add("page_count", page_count);
+					search_json.Add("page_item_count", page_item_count);
+					search_response.Dispose();
+					await BlobCache.LocalMachine.InsertObject("search" + page_number + ";" + query, search_json,
+						new DateTimeOffset(DateTime.Now.AddDays(1)));
+					break;
+				}
+			}
+			return search_json;
 		}
 	}
 }

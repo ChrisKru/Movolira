@@ -15,6 +15,7 @@ namespace Movolira {
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
 		private int _current_page_number = 1;
+		private int _max_item_count = 0;
 		private View _frag_layout;
 		private MainActivity _main_activity;
 		private ShowCardPreloadModelProvider _preload_model_provider;
@@ -42,6 +43,7 @@ namespace Movolira {
 			_cards_view_adapter.NextButtonClickEvent += OnNextButtonClick;
 			_cards_view_adapter.PrevButtonClickEvent += OnPrevButtonClick;
 			_cards_view_adapter.CurrentPageNumber = _current_page_number;
+			_cards_view_adapter.MaxItemCount = _max_item_count;
 			_cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
 			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
@@ -89,6 +91,8 @@ namespace Movolira {
 				} else if (subtype == "most_anticipated") {
 					show_data = await _main_activity.DataProvider.getMostAnticipatedTvShows(new_page_number);
 				}
+			} else if (type == "search") {
+				show_data = await _main_activity.DataProvider.searchShows(new_page_number, subtype);
 			}
 
 			if (show_data == null) {
@@ -99,14 +103,14 @@ namespace Movolira {
 				return;
 			}
 			var new_shows = show_data.Item1;
-			int max_item_count = show_data.Item2;
+			_max_item_count = show_data.Item2;
 			_shows = new_shows;
 			_current_page_number = new_page_number;
 			_preload_model_provider.Shows = new_shows;
 			_main_activity.RunOnUiThread(() => {
 				_cards_view_adapter.Shows = new_shows;
 				_cards_view_adapter.CurrentPageNumber = new_page_number;
-				_cards_view_adapter.MaxItemCount = max_item_count;
+				_cards_view_adapter.MaxItemCount = _max_item_count;
 				_cards_view_adapter.NotifyDataSetChanged();
 				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
 				_main_activity.setIsLoading(false);

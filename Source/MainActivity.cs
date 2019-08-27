@@ -11,8 +11,8 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
-using v7ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 
 namespace Movolira {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
@@ -20,7 +20,7 @@ namespace Movolira {
 		public DataProvider DataProvider { get; private set; }
 		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
-		private v7ActionBarDrawerToggle _drawer_toggle;
+		private ActionBarDrawerToggle _drawer_toggle;
 		private ImageView _loading_view;
 
 		public void setIsLoading(bool is_loading) {
@@ -52,6 +52,10 @@ namespace Movolira {
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}
 
+		public void submitSearch(string query) {
+			changeContentFragment("search", query);
+		}
+
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
 			if (saved_app_state != null) {
@@ -67,16 +71,16 @@ namespace Movolira {
 			SetSupportActionBar(toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			_drawer_layout = FindViewById<DrawerLayout>(Resource.Id.main_activity_drawer_layout);
-			_drawer_toggle = new v7ActionBarDrawerToggle(this, _drawer_layout, toolbar, Android.Resource.Drawable.IcMenuDirections,
+			_drawer_toggle = new ActionBarDrawerToggle(this, _drawer_layout, toolbar, Android.Resource.Drawable.IcMenuDirections,
 				Android.Resource.Drawable.IcMenuDirections);
 			_drawer_layout.AddDrawerListener(_drawer_toggle);
-			LinearLayout menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
-			LayoutTransition menu_transition = new LayoutTransition();
-			menu_transition.DisableTransitionType(LayoutTransitionType.Disappearing);
-			menu.LayoutTransition = menu_transition;
+			LinearLayout drawer_menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
+			LayoutTransition drawer_menu_transition = new LayoutTransition();
+			drawer_menu_transition.DisableTransitionType(LayoutTransitionType.Disappearing);
+			drawer_menu.LayoutTransition = drawer_menu_transition;
 			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(this, _drawer_layout);
-			for (int i_menu_children = 0; i_menu_children < menu.ChildCount; ++i_menu_children) {
-				menu.GetChildAt(i_menu_children).SetOnClickListener(menu_on_click_listener);
+			for (int i_menu_children = 0; i_menu_children < drawer_menu.ChildCount; ++i_menu_children) {
+				drawer_menu.GetChildAt(i_menu_children).SetOnClickListener(menu_on_click_listener);
 			}
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
@@ -86,6 +90,15 @@ namespace Movolira {
 				content_frag.Arguments = fragment_args;
 				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
 			}
+		}
+
+		public override bool OnCreateOptionsMenu(IMenu menu) {
+			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
+			IMenuItem search_item = menu.FindItem(Resource.Id.toolbar_menu_search);
+			SearchView search_view = (SearchView) search_item.ActionView;
+			search_view.QueryHint = "Movie or TV show";
+			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
+			return true;
 		}
 
 		protected override void OnPostCreate(Bundle saved_app_state) {

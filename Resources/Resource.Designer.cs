@@ -4810,6 +4810,9 @@ namespace Movolira
 			// aapt resource value: 0x7f09007c
 			public const int title_template = 2131296380;
 			
+			// aapt resource value: 0x7f090101
+			public const int toolbar_menu_search = 2131296513;
+			
 			// aapt resource value: 0x7f09003e
 			public const int top = 2131296318;
 			
@@ -5185,6 +5188,22 @@ namespace Movolira
 			}
 		}
 		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f0f0000
+			public const int main_activity_toolbar_menu = 2131689472;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
+			{
+			}
+		}
+		
 		public partial class Mipmap
 		{
 			
@@ -5213,16 +5232,19 @@ namespace Movolira
 			public const int ic_movie = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int ic_show = 2130903048;
+			public const int ic_search = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int ic_star_empty = 2130903049;
+			public const int ic_show = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int ic_star_full = 2130903050;
+			public const int ic_star_empty = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int ic_star_half = 2130903051;
+			public const int ic_star_full = 2130903051;
+			
+			// aapt resource value: 0x7f03000c
+			public const int ic_star_half = 2130903052;
 			
 			static Mipmap()
 			{
