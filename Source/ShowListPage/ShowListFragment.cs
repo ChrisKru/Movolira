@@ -6,20 +6,21 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Newtonsoft.Json;
 
 namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
+		private MainActivity _main_activity;
+		private View _frag_layout;
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
-		private int _current_page_number = 1;
-		private int _max_item_count = 0;
-		private View _frag_layout;
-		private MainActivity _main_activity;
 		private ShowCardPreloadModelProvider _preload_model_provider;
 		private List<Show> _shows;
+		private int _current_page_number = 1;
+		private int _max_item_count;
 
 		public override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
@@ -32,6 +33,9 @@ namespace Movolira {
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
+			string type = Arguments.GetString("type");
+			string subtype = Arguments.GetString("subtype");
+			_main_activity.setToolbarTitle(type, subtype);
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
 			if (_shows.Count == 0) {
@@ -114,6 +118,10 @@ namespace Movolira {
 				_cards_view_adapter.NotifyDataSetChanged();
 				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
 				_main_activity.setIsLoading(false);
+				if (_shows.Count == 0) {
+					TextView no_results_text = _frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
+					no_results_text.Visibility = ViewStates.Visible;
+				}
 			});
 		}
 

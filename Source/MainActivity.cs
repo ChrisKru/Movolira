@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
 using Android.Graphics.Drawables;
@@ -22,6 +24,7 @@ namespace Movolira {
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private ImageView _loading_view;
+		private Toolbar _toolbar;
 
 		public void setIsLoading(bool is_loading) {
 			IsLoading = is_loading;
@@ -42,7 +45,9 @@ namespace Movolira {
 		}
 
 		public void changeContentFragment(string type, string subtype) {
-			RunOnUiThread(() => setIsLoading(true));
+			RunOnUiThread(() => {
+				setIsLoading(true);
+			});
 			ShowListFragment content_fragment = new ShowListFragment();
 			Bundle fragment_args = new Bundle();
 			fragment_args.PutString("type", type);
@@ -56,6 +61,19 @@ namespace Movolira {
 			changeContentFragment("search", query);
 		}
 
+		public void setToolbarTitle(string type, string subtype) {
+			if (type == "search") {
+				type = "Search";
+			} else {
+				TextInfo text_info = new CultureInfo("en-US", false).TextInfo;
+				type = type.Replace("_", " ");
+				type = text_info.ToTitleCase(type);
+				subtype = subtype.Replace("_", " ");
+				subtype = text_info.ToTitleCase(subtype);
+			}
+			_toolbar.Title = type + ": " + subtype;
+		}
+
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
 			if (saved_app_state != null) {
@@ -67,11 +85,11 @@ namespace Movolira {
 			_loading_view = FindViewById<ImageView>(Resource.Id.show_list_loading);
 			((AnimationDrawable) _loading_view.Background).Start();
 			setIsLoading(true);
-			Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
-			SetSupportActionBar(toolbar);
+			_toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
+			SetSupportActionBar(_toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			_drawer_layout = FindViewById<DrawerLayout>(Resource.Id.main_activity_drawer_layout);
-			_drawer_toggle = new ActionBarDrawerToggle(this, _drawer_layout, toolbar, Android.Resource.Drawable.IcMenuDirections,
+			_drawer_toggle = new ActionBarDrawerToggle(this, _drawer_layout, _toolbar, Android.Resource.Drawable.IcMenuDirections,
 				Android.Resource.Drawable.IcMenuDirections);
 			_drawer_layout.AddDrawerListener(_drawer_toggle);
 			LinearLayout drawer_menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
@@ -96,7 +114,7 @@ namespace Movolira {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
 			IMenuItem search_item = menu.FindItem(Resource.Id.toolbar_menu_search);
 			SearchView search_view = (SearchView) search_item.ActionView;
-			search_view.QueryHint = "Movie or TV show";
+			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
 			return true;
 		}

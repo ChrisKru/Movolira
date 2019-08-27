@@ -4438,8 +4438,8 @@ namespace Movolira
 			// aapt resource value: 0x7f0900be
 			public const int main_activity_toolbar = 2131296446;
 			
-			// aapt resource value: 0x7f090100
-			public const int masked = 2131296512;
+			// aapt resource value: 0x7f090101
+			public const int masked = 2131296513;
 			
 			// aapt resource value: 0x7f0900d8
 			public const int media_actions = 2131296472;
@@ -4501,8 +4501,8 @@ namespace Movolira
 			// aapt resource value: 0x7f0900b9
 			public const int menu_tv_shows_trending = 2131296441;
 			
-			// aapt resource value: 0x7f0900eb
-			public const int message = 2131296491;
+			// aapt resource value: 0x7f0900ec
+			public const int message = 2131296492;
 			
 			// aapt resource value: 0x7f090031
 			public const int middle = 2131296305;
@@ -4711,17 +4711,20 @@ namespace Movolira
 			// aapt resource value: 0x7f0900e6
 			public const int show_card_title = 2131296486;
 			
-			// aapt resource value: 0x7f0900e8
-			public const int show_list_content_layout = 2131296488;
+			// aapt resource value: 0x7f0900e9
+			public const int show_list_content_layout = 2131296489;
 			
 			// aapt resource value: 0x7f0900a8
 			public const int show_list_loading = 2131296424;
 			
-			// aapt resource value: 0x7f0900ea
-			public const int show_list_next_button = 2131296490;
+			// aapt resource value: 0x7f0900eb
+			public const int show_list_next_button = 2131296491;
 			
-			// aapt resource value: 0x7f0900e9
-			public const int show_list_prev_button = 2131296489;
+			// aapt resource value: 0x7f0900e8
+			public const int show_list_no_shows_text = 2131296488;
+			
+			// aapt resource value: 0x7f0900ea
+			public const int show_list_prev_button = 2131296490;
 			
 			// aapt resource value: 0x7f090098
 			public const int smallLabel = 2131296408;
@@ -4810,8 +4813,8 @@ namespace Movolira
 			// aapt resource value: 0x7f09007c
 			public const int title_template = 2131296380;
 			
-			// aapt resource value: 0x7f090101
-			public const int toolbar_menu_search = 2131296513;
+			// aapt resource value: 0x7f090102
+			public const int toolbar_menu_search = 2131296514;
 			
 			// aapt resource value: 0x7f09003e
 			public const int top = 2131296318;
@@ -4837,62 +4840,62 @@ namespace Movolira
 			// aapt resource value: 0x7f090013
 			public const int transition_transform = 2131296275;
 			
-			// aapt resource value: 0x7f0900fb
-			public const int tv_show_details_air_date = 2131296507;
-			
-			// aapt resource value: 0x7f0900ec
-			public const int tv_show_details_backdrop = 2131296492;
-			
-			// aapt resource value: 0x7f0900fd
-			public const int tv_show_details_certification = 2131296509;
-			
-			// aapt resource value: 0x7f0900ee
-			public const int tv_show_details_genres = 2131296494;
-			
-			// aapt resource value: 0x7f0900fe
-			public const int tv_show_details_overview = 2131296510;
-			
-			// aapt resource value: 0x7f0900f9
-			public const int tv_show_details_rating = 2131296505;
-			
-			// aapt resource value: 0x7f0900ef
-			public const int tv_show_details_rating_star_1 = 2131296495;
-			
-			// aapt resource value: 0x7f0900f1
-			public const int tv_show_details_rating_star_2 = 2131296497;
-			
-			// aapt resource value: 0x7f0900f0
-			public const int tv_show_details_rating_star_2_left = 2131296496;
-			
-			// aapt resource value: 0x7f0900f3
-			public const int tv_show_details_rating_star_3 = 2131296499;
-			
-			// aapt resource value: 0x7f0900f2
-			public const int tv_show_details_rating_star_3_left = 2131296498;
-			
-			// aapt resource value: 0x7f0900f5
-			public const int tv_show_details_rating_star_4 = 2131296501;
-			
-			// aapt resource value: 0x7f0900f4
-			public const int tv_show_details_rating_star_4_left = 2131296500;
-			
-			// aapt resource value: 0x7f0900f7
-			public const int tv_show_details_rating_star_5 = 2131296503;
-			
-			// aapt resource value: 0x7f0900f6
-			public const int tv_show_details_rating_star_5_left = 2131296502;
-			
-			// aapt resource value: 0x7f0900f8
-			public const int tv_show_details_rating_stars_bottom = 2131296504;
-			
 			// aapt resource value: 0x7f0900fc
-			public const int tv_show_details_runtime = 2131296508;
+			public const int tv_show_details_air_date = 2131296508;
 			
 			// aapt resource value: 0x7f0900ed
-			public const int tv_show_details_title = 2131296493;
+			public const int tv_show_details_backdrop = 2131296493;
+			
+			// aapt resource value: 0x7f0900fe
+			public const int tv_show_details_certification = 2131296510;
+			
+			// aapt resource value: 0x7f0900ef
+			public const int tv_show_details_genres = 2131296495;
+			
+			// aapt resource value: 0x7f0900ff
+			public const int tv_show_details_overview = 2131296511;
 			
 			// aapt resource value: 0x7f0900fa
-			public const int tv_show_details_vote_count = 2131296506;
+			public const int tv_show_details_rating = 2131296506;
+			
+			// aapt resource value: 0x7f0900f0
+			public const int tv_show_details_rating_star_1 = 2131296496;
+			
+			// aapt resource value: 0x7f0900f2
+			public const int tv_show_details_rating_star_2 = 2131296498;
+			
+			// aapt resource value: 0x7f0900f1
+			public const int tv_show_details_rating_star_2_left = 2131296497;
+			
+			// aapt resource value: 0x7f0900f4
+			public const int tv_show_details_rating_star_3 = 2131296500;
+			
+			// aapt resource value: 0x7f0900f3
+			public const int tv_show_details_rating_star_3_left = 2131296499;
+			
+			// aapt resource value: 0x7f0900f6
+			public const int tv_show_details_rating_star_4 = 2131296502;
+			
+			// aapt resource value: 0x7f0900f5
+			public const int tv_show_details_rating_star_4_left = 2131296501;
+			
+			// aapt resource value: 0x7f0900f8
+			public const int tv_show_details_rating_star_5 = 2131296504;
+			
+			// aapt resource value: 0x7f0900f7
+			public const int tv_show_details_rating_star_5_left = 2131296503;
+			
+			// aapt resource value: 0x7f0900f9
+			public const int tv_show_details_rating_stars_bottom = 2131296505;
+			
+			// aapt resource value: 0x7f0900fd
+			public const int tv_show_details_runtime = 2131296509;
+			
+			// aapt resource value: 0x7f0900ee
+			public const int tv_show_details_title = 2131296494;
+			
+			// aapt resource value: 0x7f0900fb
+			public const int tv_show_details_vote_count = 2131296507;
 			
 			// aapt resource value: 0x7f09002d
 			public const int uniform = 2131296301;
@@ -4906,8 +4909,8 @@ namespace Movolira
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900ff
-			public const int visible = 2131296511;
+			// aapt resource value: 0x7f090100
+			public const int visible = 2131296512;
 			
 			// aapt resource value: 0x7f09003c
 			public const int withText = 2131296316;
@@ -5418,20 +5421,23 @@ namespace Movolira
 			// aapt resource value: 0x7f0c0011
 			public const int search_menu_title = 2131492881;
 			
+			// aapt resource value: 0x7f0c003b
+			public const int show_details_certification_title = 2131492923;
+			
 			// aapt resource value: 0x7f0c003a
-			public const int show_details_certification_title = 2131492922;
+			public const int show_details_release_date_title = 2131492922;
 			
 			// aapt resource value: 0x7f0c0039
-			public const int show_details_release_date_title = 2131492921;
-			
-			// aapt resource value: 0x7f0c0038
-			public const int show_details_runtime_title = 2131492920;
-			
-			// aapt resource value: 0x7f0c0037
-			public const int show_list_pager_next_button = 2131492919;
+			public const int show_details_runtime_title = 2131492921;
 			
 			// aapt resource value: 0x7f0c0036
-			public const int show_list_pager_prev_button = 2131492918;
+			public const int show_list_no_shows_text = 2131492918;
+			
+			// aapt resource value: 0x7f0c0038
+			public const int show_list_pager_next_button = 2131492920;
+			
+			// aapt resource value: 0x7f0c0037
+			public const int show_list_pager_prev_button = 2131492919;
 			
 			// aapt resource value: 0x7f0c0026
 			public const int status_bar_notification_info_overflow = 2131492902;
