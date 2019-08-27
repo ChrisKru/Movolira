@@ -30,6 +30,7 @@ namespace Movolira {
 			_main_activity.setIsLoading(false);
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
+			
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
 			RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
@@ -46,6 +47,9 @@ namespace Movolira {
 			if (_movie.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 				title_view.Text = _movie.Title;
+				_main_activity.setToolbarTitle(_movie.Title);
+			} else {
+				_main_activity.setToolbarTitle("Movolira");
 			}
 			if (_movie.Genres.Length > 0) {
 				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.movie_details_genres);

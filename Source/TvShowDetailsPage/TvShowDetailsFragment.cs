@@ -46,6 +46,9 @@ namespace Movolira {
 			if (_tv_show.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_title);
 				title_view.Text = _tv_show.Title;
+				_main_activity.setToolbarTitle(_tv_show.Title);
+			} else {
+				_main_activity.setToolbarTitle("Movolira");
 			}
 			if (_tv_show.Genres.Length > 0) {
 				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_genres);

@@ -61,6 +61,10 @@ namespace Movolira {
 			changeContentFragment("search", query);
 		}
 
+		public void setToolbarTitle(string title) {
+			_toolbar.Title = title;
+		}
+
 		public void setToolbarTitle(string type, string subtype) {
 			if (type == "search") {
 				type = "Search";
