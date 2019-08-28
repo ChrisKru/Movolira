@@ -21,6 +21,7 @@ namespace Movolira {
 	public class MainActivity : AppCompatActivity {
 		public DataProvider DataProvider { get; private set; }
 		public bool IsLoading { get; private set; }
+		private int _loading_count = 0;
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private ImageView _loading_view;
@@ -29,9 +30,15 @@ namespace Movolira {
 		public void setIsLoading(bool is_loading) {
 			IsLoading = is_loading;
 			if (is_loading) {
+				++_loading_count;
 				_loading_view.Visibility = ViewStates.Visible;
 			} else {
-				Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
+				if (_loading_count > 0) {
+					--_loading_count;
+				}
+				if (_loading_count == 0) {
+					Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
+				}
 			}
 		}
 
@@ -53,8 +60,15 @@ namespace Movolira {
 			fragment_args.PutString("type", type);
 			fragment_args.PutString("subtype", subtype);
 			content_fragment.Arguments = fragment_args;
-			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
-				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
+			if (type == "movies" || type == "tv_shows") {
+				SupportFragmentManager.PopBackStack(null, (int)PopBackStackFlags.Inclusive);
+				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
+					.SetTransition(FragmentTransaction.TransitFragmentFade).Commit();
+			} else {
+				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
+					.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
+			}
+			
 		}
 
 		public void submitSearch(string query) {
@@ -132,6 +146,7 @@ namespace Movolira {
 			if (_drawer_layout.IsDrawerOpen(GravityCompat.Start)) {
 				_drawer_layout.CloseDrawer(GravityCompat.Start);
 			} else if (SupportFragmentManager.BackStackEntryCount > 0) {
+				clearLoading();
 				SupportFragmentManager.PopBackStack();
 			} else {
 				var fragments = SupportFragmentManager.Fragments;
@@ -149,6 +164,11 @@ namespace Movolira {
 		protected override void OnSaveInstanceState(Bundle new_app_state) {
 			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
 			base.OnSaveInstanceState(new_app_state);
+		}
+
+		private void clearLoading() {
+			_loading_count = 0;
+			Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
 		}
 	}
 }
