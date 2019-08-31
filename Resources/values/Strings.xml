@@ -15,6 +15,11 @@
     <string name="menu_tv_shows_most_watched">Most Watched</string>
     <string name="menu_tv_shows_most_collected">Most Collected</string>
     <string name="menu_tv_shows_most_anticipated">Most Anticipated</string>
+    <!--toolbar-->
+    <string name="filter_dialog_title">Filter Shows</string>
+    <string name="filter_dialog_filter">Filter</string>
+    <string name="filter_dialog_reset">Reset</string>
+    <string name="filter_dialog_cancel">Cancel</string>
     <!--ShowList-->
     <string name="show_list_no_shows_text">No results found</string>
     <!--ShowListPager-->

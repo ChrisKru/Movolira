@@ -68,14 +68,14 @@ namespace Movolira {
 		}
 
 		private void collapseAllGroups() {
-			_drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon).SetImageResource(Resource.Mipmap.ic_expand_arrow);
+			_drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon).SetImageResource(Resource.Drawable.ic_expand_arrow);
 			_drawer.FindViewById(Resource.Id.menu_movies_trending).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Gone;
-			_drawer.FindViewById<ImageView>(Resource.Id.menu_tv_shows_expandable_icon).SetImageResource(Resource.Mipmap.ic_expand_arrow);
+			_drawer.FindViewById<ImageView>(Resource.Id.menu_tv_shows_expandable_icon).SetImageResource(Resource.Drawable.ic_expand_arrow);
 			_drawer.FindViewById(Resource.Id.menu_tv_shows_trending).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Gone;
 			_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Gone;
@@ -99,7 +99,7 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Gone;
-				expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				expandable_icon.SetImageResource(Resource.Drawable.ic_expand_arrow);
 			} else {
 				menu_movies_trending.Visibility = ViewStates.Invisible;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Invisible;
@@ -113,7 +113,7 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Visible;
-				expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
+				expandable_icon.SetImageResource(Resource.Drawable.ic_collapse_arrow);
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_collected).Visibility = ViewStates.Gone;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_anticipated).Visibility = ViewStates.Gone;
-				expandable_icon.SetImageResource(Resource.Mipmap.ic_expand_arrow);
+				expandable_icon.SetImageResource(Resource.Drawable.ic_expand_arrow);
 			} else {
 				menu_tv_shows_trending.Visibility = ViewStates.Invisible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_popular).Visibility = ViewStates.Invisible;
@@ -143,7 +143,7 @@ namespace Movolira {
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_watched).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_collected).Visibility = ViewStates.Visible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_most_anticipated).Visibility = ViewStates.Visible;
-				expandable_icon.SetImageResource(Resource.Mipmap.ic_collapse_arrow);
+				expandable_icon.SetImageResource(Resource.Drawable.ic_collapse_arrow);
 			}
 		}
 	}

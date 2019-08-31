@@ -44,7 +44,7 @@
             android:id="@id/tv_show_details_rating_star_1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_star_empty"
+            android:src="@drawable/ic_star_empty"
             android:tint="?android:attr/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/tv_show_details_title"
             app:layout_constraintRight_toLeftOf="@+id/tv_show_details_rating_star_2_left" />
@@ -58,7 +58,7 @@
             android:id="@id/tv_show_details_rating_star_2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_star_empty"
+            android:src="@drawable/ic_star_empty"
             android:tint="?android:attr/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/tv_show_details_title"
             app:layout_constraintRight_toLeftOf="@+id/tv_show_details_rating_star_3_left" />
@@ -72,7 +72,7 @@
             android:id="@id/tv_show_details_rating_star_3"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_star_empty"
+            android:src="@drawable/ic_star_empty"
             android:tint="?android:attr/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/tv_show_details_title"
             app:layout_constraintRight_toLeftOf="@+id/tv_show_details_rating_star_4_left" />
@@ -86,7 +86,7 @@
             android:id="@id/tv_show_details_rating_star_4"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_star_empty"
+            android:src="@drawable/ic_star_empty"
             android:tint="?android:attr/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/tv_show_details_title"
             app:layout_constraintRight_toLeftOf="@+id/tv_show_details_rating_star_5_left" />
@@ -101,7 +101,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_star_empty"
+            android:src="@drawable/ic_star_empty"
             android:tint="?android:attr/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/tv_show_details_title"
             app:layout_constraintRight_toRightOf="parent" />

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
@@ -12,6 +11,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
+using AlertDialog = Android.App.AlertDialog;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -21,9 +21,10 @@ namespace Movolira {
 	public class MainActivity : AppCompatActivity {
 		public DataProvider DataProvider { get; private set; }
 		public bool IsLoading { get; private set; }
-		private int _loading_count = 0;
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
+		private AlertDialog _filter_dialog;
+		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
 
@@ -52,23 +53,20 @@ namespace Movolira {
 		}
 
 		public void changeContentFragment(string type, string subtype) {
-			RunOnUiThread(() => {
-				setIsLoading(true);
-			});
+			RunOnUiThread(() => { setIsLoading(true); });
 			ShowListFragment content_fragment = new ShowListFragment();
 			Bundle fragment_args = new Bundle();
 			fragment_args.PutString("type", type);
 			fragment_args.PutString("subtype", subtype);
 			content_fragment.Arguments = fragment_args;
 			if (type == "movies" || type == "tv_shows") {
-				SupportFragmentManager.PopBackStack(null, (int)PopBackStackFlags.Inclusive);
+				SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
 				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
 					.SetTransition(FragmentTransaction.TransitFragmentFade).Commit();
 			} else {
 				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
 					.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 			}
-			
 		}
 
 		public void submitSearch(string query) {
@@ -134,7 +132,18 @@ namespace Movolira {
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
+			AlertDialog.Builder dialog_builder = new AlertDialog.Builder(this);
+			dialog_builder.SetView(Resource.Layout.filter_dialog);
+			_filter_dialog = dialog_builder.Create();
 			return true;
+		}
+
+		public override bool OnOptionsItemSelected(IMenuItem menu_item) {
+			if (menu_item.ItemId == Resource.Id.toolbar_menu_filter) {
+				_filter_dialog.Show();
+				return true;
+			}
+			return base.OnOptionsItemSelected(menu_item);
 		}
 
 		protected override void OnPostCreate(Bundle saved_app_state) {

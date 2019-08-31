@@ -73,7 +73,8 @@ namespace Movolira {
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Show show = Shows[position];
-				RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
+				RequestOptions image_load_options = new RequestOptions().CenterCrop().Placeholder(new ColorDrawable(Color.Black))
+					.Error(new ColorDrawable(Color.LightGray));
 				RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
 				Glide.With(_main_activity).Load(show.PosterUrl).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
 					.Thumbnail(Glide.With(_main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)

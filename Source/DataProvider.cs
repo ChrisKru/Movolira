@@ -16,7 +16,6 @@ namespace Movolira {
 
 		private static HttpClient HTTP_CLIENT;
 
-
 		[JsonConstructor]
 		public DataProvider() {
 			initHttpClient();
@@ -281,13 +280,13 @@ namespace Movolira {
 			JObject images_json = null;
 			try {
 				images_json = await BlobCache.LocalMachine.GetObject<JObject>("images" + movie_tmdb_id);
-			} catch (Exception cache_exception) {
+			} catch (Exception) {
 				Uri images_uri = new Uri("http://webservice.fanart.tv/v3/movies/" + movie_tmdb_id + "?api_key=" + ApiKeys.FANARTTV_KEY);
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage images_response;
 					try {
 						images_response = await HTTP_CLIENT.GetAsync(images_uri);
-					} catch (Exception exception) {
+					} catch (Exception) {
 						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
@@ -533,13 +532,13 @@ namespace Movolira {
 			JObject images_json = null;
 			try {
 				images_json = await BlobCache.LocalMachine.GetObject<JObject>("images" + tv_show_tmdb_id);
-			} catch (Exception cache_exception) {
+			} catch (Exception) {
 				Uri images_uri = new Uri("http://webservice.fanart.tv/v3/tv/" + tv_show_tmdb_id + "?api_key=" + ApiKeys.FANARTTV_KEY);
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage images_response;
 					try {
 						images_response = await HTTP_CLIENT.GetAsync(images_uri);
-					} catch (Exception exception) {
+					} catch (Exception) {
 						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
@@ -561,13 +560,13 @@ namespace Movolira {
 			JObject movies_json;
 			try {
 				movies_json = await BlobCache.LocalMachine.GetObject<JObject>(cache_id + page_number);
-			} catch (Exception cache_exception) {
+			} catch (Exception) {
 				movies_json = new JObject();
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage movies_response;
 					try {
 						movies_response = await HTTP_CLIENT.GetAsync(movies_uri);
-					} catch (Exception response_exception) {
+					} catch (Exception) {
 						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}
@@ -654,13 +653,13 @@ namespace Movolira {
 			JObject search_json;
 			try {
 				search_json = await BlobCache.LocalMachine.GetObject<JObject>("search" + page_number + ";" + query);
-			} catch (Exception cache_exception) {
+			} catch (Exception) {
 				search_json = new JObject();
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage search_response;
 					try {
 						search_response = await HTTP_CLIENT.GetAsync(search_uri);
-					} catch (Exception response_exception) {
+					} catch (Exception) {
 						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
 					}

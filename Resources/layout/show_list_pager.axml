@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
+        android:theme="@style/ColoredButtonStyle"
         android:text="@string/show_list_pager_prev_button"
         android:drawableLeft="@drawable/ic_prev_button"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -18,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
+        android:theme="@style/ColoredButtonStyle"
         android:text="@string/show_list_pager_next_button"
         android:drawableRight="@drawable/ic_next_button"
         app:layout_constraintRight_toRightOf="parent" />

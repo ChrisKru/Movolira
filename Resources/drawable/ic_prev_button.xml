@@ -3,7 +3,7 @@
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@mipmap/ic_arrow_left"
+        android:drawable="@drawable/ic_arrow_left"
         android:width="16dp"
         android:height="16dp" />
 </layer-list>

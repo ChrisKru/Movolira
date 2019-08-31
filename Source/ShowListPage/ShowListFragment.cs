@@ -13,14 +13,14 @@ using Newtonsoft.Json;
 
 namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
-		private MainActivity _main_activity;
-		private View _frag_layout;
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
+		private int _current_page_number = 1;
+		private View _frag_layout;
+		private MainActivity _main_activity;
+		private int _max_item_count;
 		private ShowCardPreloadModelProvider _preload_model_provider;
 		private List<Show> _shows;
-		private int _current_page_number = 1;
-		private int _max_item_count;
 
 		public override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
@@ -66,6 +66,34 @@ namespace Movolira {
 		}
 
 		private async void fillAdapter(int new_page_number) {
+			var show_data = await getShowData(new_page_number);
+			if (show_data == null) {
+				_main_activity.RunOnUiThread(() => {
+					_main_activity.setIsLoading(false);
+					_main_activity.showNetworkError();
+				});
+				return;
+			}
+			var new_shows = show_data.Item1;
+			_max_item_count = show_data.Item2;
+			_shows = new_shows;
+			_current_page_number = new_page_number;
+			_preload_model_provider.Shows = new_shows;
+			_main_activity.RunOnUiThread(() => {
+				_cards_view_adapter.Shows = new_shows;
+				_cards_view_adapter.CurrentPageNumber = new_page_number;
+				_cards_view_adapter.MaxItemCount = _max_item_count;
+				_cards_view_adapter.NotifyDataSetChanged();
+				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
+				_main_activity.setIsLoading(false);
+				if (_shows.Count == 0) {
+					TextView no_results_text = _frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
+					no_results_text.Visibility = ViewStates.Visible;
+				}
+			});
+		}
+
+		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number) {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
 			Tuple<List<Show>, int> show_data = null;
@@ -98,31 +126,7 @@ namespace Movolira {
 			} else if (type == "search") {
 				show_data = await _main_activity.DataProvider.searchShows(new_page_number, subtype);
 			}
-
-			if (show_data == null) {
-				_main_activity.RunOnUiThread(() => {
-					_main_activity.setIsLoading(false);
-					_main_activity.showNetworkError();
-				});
-				return;
-			}
-			var new_shows = show_data.Item1;
-			_max_item_count = show_data.Item2;
-			_shows = new_shows;
-			_current_page_number = new_page_number;
-			_preload_model_provider.Shows = new_shows;
-			_main_activity.RunOnUiThread(() => {
-				_cards_view_adapter.Shows = new_shows;
-				_cards_view_adapter.CurrentPageNumber = new_page_number;
-				_cards_view_adapter.MaxItemCount = _max_item_count;
-				_cards_view_adapter.NotifyDataSetChanged();
-				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
-				_main_activity.setIsLoading(false);
-				if (_shows.Count == 0) {
-					TextView no_results_text = _frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
-					no_results_text.Visibility = ViewStates.Visible;
-				}
-			});
+			return show_data;
 		}
 
 		private void OnShowCardClick(object sender, int position) {
