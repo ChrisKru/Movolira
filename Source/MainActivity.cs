@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using AlertDialog = Android.App.AlertDialog;
+using Debug = System.Diagnostics.Debug;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -133,7 +134,32 @@ namespace Movolira {
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
 			AlertDialog.Builder dialog_builder = new AlertDialog.Builder(this);
-			dialog_builder.SetView(Resource.Layout.filter_dialog);
+			View filter_dialog_layout = LayoutInflater.Inflate(Resource.Layout.filter_dialog, null);
+			var runtime_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
+			TextView runtime_range_view = filter_dialog_layout.FindViewById<TextView>(Resource.Id.filter_dialog_runtime_range);
+			runtime_range_slider.SetSelectedMaxValue(runtime_range_slider.AbsoluteMaxValue);
+			runtime_range_slider.NotifyWhileDragging = true;
+			runtime_range_slider.LowerValueChanged += (a, b) => {
+				var updated_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
+				runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
+			};
+			runtime_range_slider.UpperValueChanged += (a, b) => {
+				var updated_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
+				runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
+			};
+			var rating_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
+			TextView rating_range_view = filter_dialog_layout.FindViewById<TextView>(Resource.Id.filter_dialog_rating_range);
+			rating_range_slider.SetSelectedMaxValue(rating_range_slider.AbsoluteMaxValue);
+			rating_range_slider.NotifyWhileDragging = true;
+			rating_range_slider.LowerValueChanged += (a, b) => {
+				var updated_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
+				rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
+			};
+			rating_range_slider.UpperValueChanged += (a, b) => {
+				var updated_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
+				rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
+			};
+			dialog_builder.SetView(filter_dialog_layout);
 			_filter_dialog = dialog_builder.Create();
 			return true;
 		}

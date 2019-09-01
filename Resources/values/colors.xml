@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <!--App-->
+    <color name="range_slider">#220024</color>
     <!--Drawables-->
     <color name="ic_cancel_button_tint">#636363</color>
     <color name="ic_reset_button_tint">#000000</color>
     <!--FilterDialog-->
-    <color name="filter_dialog_title">#232323</color>
+    <color name="filter_dialog_title">#220024</color>
     <!--Menu-->
     <color name="menu_text">#ffffff</color>
     <!--ShowCard-->

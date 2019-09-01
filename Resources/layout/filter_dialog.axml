@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/filter_dialog_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
@@ -18,6 +18,92 @@
         android:text="@string/filter_dialog_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+    <TextView
+        android:id="@+id/filter_dialog_runtime_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/filter_dialog_title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/filter_dialog_runtime_title"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_title"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/filter_dialog_runtime_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/filter_dialog_title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="60-300min"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_title"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <xamarin.rangeslider.RangeSliderControl
+        android:id="@+id/filter_dialog_runtime_range_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:materialUI="true"
+        app:alwaysActive="true"
+        app:activateOnDefaultValues="true"
+        app:showRangeLabels="false"
+        app:valuesAboveThumbs="false"
+        app:stepValueContinuously="true"
+        app:internalPadding="4dp"
+        app:barHeight="2dp"
+        app:absoluteMinValue="60"
+        app:absoluteMaxValue="300"
+        app:stepValue="15"
+        app:activeColor="@color/range_slider"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_runtime_range"/>
+    <TextView
+        android:id="@+id/filter_dialog_rating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/filter_dialog_title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/filter_dialog_rating_title"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_runtime_range_slider"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/filter_dialog_rating_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/filter_dialog_title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="0-100"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_runtime_range_slider"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <xamarin.rangeslider.RangeSliderControl
+        android:id="@+id/filter_dialog_rating_range_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:materialUI="true"
+        app:alwaysActive="true"
+        app:activateOnDefaultValues="true"
+        app:showRangeLabels="false"
+        app:valuesAboveThumbs="false"
+        app:stepValueContinuously="true"
+        app:internalPadding="4dp"
+        app:barHeight="2dp"
+        app:absoluteMinValue="0"
+        app:absoluteMaxValue="100"
+        app:stepValue="5"
+        app:activeColor="@color/range_slider"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_rating_range"/>
     <Button
         android:id="@+id/filter_dialog_cancel_button"
         android:layout_width="0dp"
@@ -26,7 +112,7 @@
         android:theme="@style/Widget.AppCompat.Button"
         android:text="@string/filter_dialog_cancel"
         android:drawableLeft="@drawable/ic_cancel_button"
-        app:layout_constraintTop_toBottomOf="@id/filter_dialog_title"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_rating_range_slider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/filter_dialog_reset_button" />
     <Button
@@ -36,7 +122,7 @@
         android:theme="@style/ColoredSecondaryButtonStyle"
         android:drawableLeft="@drawable/ic_reset_button"
         android:text="@string/filter_dialog_reset"
-        app:layout_constraintTop_toBottomOf="@id/filter_dialog_title"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_rating_range_slider"
         app:layout_constraintLeft_toRightOf="@id/filter_dialog_cancel_button"
         app:layout_constraintRight_toLeftOf="@+id/filter_dialog_filter_button" />
     <Button
@@ -47,7 +133,7 @@
         android:theme="@style/ColoredButtonStyle"
         android:drawableLeft="@drawable/ic_filter_button"
         android:text="@string/filter_dialog_filter"
-        app:layout_constraintTop_toBottomOf="@id/filter_dialog_title"
+        app:layout_constraintTop_toBottomOf="@id/filter_dialog_rating_range_slider"
         app:layout_constraintLeft_toRightOf="@id/filter_dialog_reset_button"
         app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
