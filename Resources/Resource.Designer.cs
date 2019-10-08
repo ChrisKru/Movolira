@@ -5337,11 +5337,11 @@ namespace Movolira
 			// aapt resource value: 0x7f0b00c4
 			public const int filter_dialog_filter_button = 2131427524;
 			
-			// aapt resource value: 0x7f0b00d5
-			public const int filter_dialog_genre_button_adventure = 2131427541;
-			
 			// aapt resource value: 0x7f0b00d4
-			public const int filter_dialog_genre_button_animation = 2131427540;
+			public const int filter_dialog_genre_button_adventure = 2131427540;
+			
+			// aapt resource value: 0x7f0b00d5
+			public const int filter_dialog_genre_button_animation = 2131427541;
 			
 			// aapt resource value: 0x7f0b00d6
 			public const int filter_dialog_genre_button_anime = 2131427542;

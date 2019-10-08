@@ -6,22 +6,6 @@
     app:flexWrap="wrap"
     app:justifyContent="center">
     <ToggleButton
-        android:id="@+id/filter_dialog_genre_button_animation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:checked="true"
-        android:textOn="@string/filter_dialog_genre_animation"
-        android:textOff="@string/filter_dialog_genre_animation"
-        android:textColor="@drawable/genre_button_text"
-        android:background="@drawable/genre_button" />
-    <ToggleButton
         android:id="@+id/filter_dialog_genre_button_adventure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

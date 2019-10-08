@@ -69,6 +69,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\FilterDialog.cs" />
     <Compile Include="Source\IBackButtonHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
@@ -494,7 +495,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="Source\FilterDialog\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\movie_details.axml">

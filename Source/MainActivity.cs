@@ -10,7 +10,6 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Java.IO;
 using Newtonsoft.Json;
 using Xamarin.RangeSlider;
 using AlertDialog = Android.App.AlertDialog;
@@ -26,10 +25,10 @@ namespace Movolira {
 		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
-		private AlertDialog _filter_dialog;
 		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
+		private FilterDialog _filter_dialog;
 
 		public void setIsLoading(bool is_loading) {
 			IsLoading = is_loading;
@@ -136,7 +135,7 @@ namespace Movolira {
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
 			buildSearchView(menu);
-			buildFilterDialog();
+			_filter_dialog = new FilterDialog(this);
 			return true;
 		}
 
@@ -147,66 +146,9 @@ namespace Movolira {
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
 		}
 
-		private void buildFilterDialog() {
-			AlertDialog.Builder dialog_builder = new AlertDialog.Builder(this);
-			View filter_dialog_layout = LayoutInflater.Inflate(Resource.Layout.filter_dialog, null);
-			buildDialogRuntimeRange(filter_dialog_layout);
-			buildDialogRatingRange(filter_dialog_layout);
-			buildYearsNumberPickers(filter_dialog_layout);
-			dialog_builder.SetView(filter_dialog_layout);
-			_filter_dialog = dialog_builder.Create();
-		}
-
-		private void buildDialogRuntimeRange(View filter_dialog_layout) {
-			RangeSliderControl runtime_range_slider =
-				filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
-			TextView runtime_range_view = filter_dialog_layout.FindViewById<TextView>(Resource.Id.filter_dialog_runtime_range);
-			runtime_range_slider.SetSelectedMaxValue(runtime_range_slider.AbsoluteMaxValue);
-			runtime_range_slider.NotifyWhileDragging = true;
-			runtime_range_slider.LowerValueChanged += (a, b) => {
-				RangeSliderControl updated_range_slider =
-					filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
-				runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
-			};
-			runtime_range_slider.UpperValueChanged += (a, b) => {
-				RangeSliderControl updated_range_slider =
-					filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
-				runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
-			};
-		}
-
-		private void buildDialogRatingRange(View filter_dialog_layout) {
-			RangeSliderControl rating_range_slider =
-				filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
-			TextView rating_range_view = filter_dialog_layout.FindViewById<TextView>(Resource.Id.filter_dialog_rating_range);
-			rating_range_slider.SetSelectedMaxValue(rating_range_slider.AbsoluteMaxValue);
-			rating_range_slider.NotifyWhileDragging = true;
-			rating_range_slider.LowerValueChanged += (a, b) => {
-				RangeSliderControl updated_range_slider =
-					filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
-				rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
-			};
-			rating_range_slider.UpperValueChanged += (a, b) => {
-				RangeSliderControl updated_range_slider =
-					filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
-				rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
-			};
-		}
-
-		private void buildYearsNumberPickers(View filter_dialog_layout) {
-			NumberPicker years_start_picker = filter_dialog_layout.FindViewById<NumberPicker>(Resource.Id.filter_dialog_years_start_picker);
-			years_start_picker.MinValue = 1900;
-			years_start_picker.MaxValue = 2050;
-			years_start_picker.Value = 1990;
-			NumberPicker years_end_picker = filter_dialog_layout.FindViewById<NumberPicker>(Resource.Id.filter_dialog_years_end_picker);
-			years_end_picker.MinValue = 1900;
-			years_end_picker.MaxValue = 2050;
-			years_end_picker.Value = 2020;
-		}
-
 		public override bool OnOptionsItemSelected(IMenuItem menu_item) {
 			if (menu_item.ItemId == Resource.Id.toolbar_menu_filter) {
-				_filter_dialog.Show();
+				_filter_dialog.showDialog();
 				return true;
 			}
 			return base.OnOptionsItemSelected(menu_item);
