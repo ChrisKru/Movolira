@@ -10,9 +10,11 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Java.IO;
 using Newtonsoft.Json;
 using Xamarin.RangeSlider;
 using AlertDialog = Android.App.AlertDialog;
+using Debug = System.Diagnostics.Debug;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -33,12 +35,15 @@ namespace Movolira {
 			IsLoading = is_loading;
 			if (is_loading) {
 				++_loading_count;
+				Debug.WriteLine("loading " + _loading_count);
 				_loading_view.Visibility = ViewStates.Visible;
 			} else {
 				if (_loading_count > 0) {
+					Debug.WriteLine("stopped " + _loading_count);
 					--_loading_count;
 				}
 				if (_loading_count == 0) {
+					Debug.WriteLine("canceled");
 					Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
 				}
 			}
@@ -61,6 +66,7 @@ namespace Movolira {
 			fragment_args.PutString("subtype", subtype);
 			content_fragment.Arguments = fragment_args;
 			if (type == "movies" || type == "tv_shows") {
+				RunOnUiThread(() => { setIsLoading(true); });
 				SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
 				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
 					.SetTransition(FragmentTransaction.TransitFragmentFade).Commit();

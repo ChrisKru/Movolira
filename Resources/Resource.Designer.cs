@@ -5325,158 +5325,158 @@ namespace Movolira
 			// aapt resource value: 0x7f0b005f
 			public const int filled = 2131427423;
 			
-			// aapt resource value: 0x7f0b00e6
-			public const int filter_dialog_all_genres_button = 2131427558;
+			// aapt resource value: 0x7f0b00c9
+			public const int filter_dialog_all_genres_button = 2131427529;
 			
-			// aapt resource value: 0x7f0b00f1
-			public const int filter_dialog_cancel_button = 2131427569;
+			// aapt resource value: 0x7f0b00c2
+			public const int filter_dialog_cancel_button = 2131427522;
 			
 			// aapt resource value: 0x7f0b00c1
 			public const int filter_dialog_content = 2131427521;
 			
-			// aapt resource value: 0x7f0b00f3
-			public const int filter_dialog_filter_button = 2131427571;
-			
-			// aapt resource value: 0x7f0b00c6
-			public const int filter_dialog_genre_button_adventure = 2131427526;
-			
-			// aapt resource value: 0x7f0b00c5
-			public const int filter_dialog_genre_button_animation = 2131427525;
-			
-			// aapt resource value: 0x7f0b00c7
-			public const int filter_dialog_genre_button_anime = 2131427527;
-			
-			// aapt resource value: 0x7f0b00c8
-			public const int filter_dialog_genre_button_comedy = 2131427528;
-			
-			// aapt resource value: 0x7f0b00c9
-			public const int filter_dialog_genre_button_crime = 2131427529;
-			
-			// aapt resource value: 0x7f0b00ca
-			public const int filter_dialog_genre_button_disaster = 2131427530;
-			
-			// aapt resource value: 0x7f0b00cb
-			public const int filter_dialog_genre_button_documentary = 2131427531;
-			
-			// aapt resource value: 0x7f0b00cc
-			public const int filter_dialog_genre_button_drama = 2131427532;
-			
-			// aapt resource value: 0x7f0b00cd
-			public const int filter_dialog_genre_button_eastern = 2131427533;
-			
-			// aapt resource value: 0x7f0b00ce
-			public const int filter_dialog_genre_button_family = 2131427534;
-			
-			// aapt resource value: 0x7f0b00cf
-			public const int filter_dialog_genre_button_fan_film = 2131427535;
-			
-			// aapt resource value: 0x7f0b00d0
-			public const int filter_dialog_genre_button_fantasy = 2131427536;
-			
-			// aapt resource value: 0x7f0b00d1
-			public const int filter_dialog_genre_button_film_noir = 2131427537;
-			
-			// aapt resource value: 0x7f0b00d2
-			public const int filter_dialog_genre_button_history = 2131427538;
-			
-			// aapt resource value: 0x7f0b00d3
-			public const int filter_dialog_genre_button_holiday = 2131427539;
-			
-			// aapt resource value: 0x7f0b00d4
-			public const int filter_dialog_genre_button_horror = 2131427540;
+			// aapt resource value: 0x7f0b00c4
+			public const int filter_dialog_filter_button = 2131427524;
 			
 			// aapt resource value: 0x7f0b00d5
-			public const int filter_dialog_genre_button_indie = 2131427541;
+			public const int filter_dialog_genre_button_adventure = 2131427541;
+			
+			// aapt resource value: 0x7f0b00d4
+			public const int filter_dialog_genre_button_animation = 2131427540;
 			
 			// aapt resource value: 0x7f0b00d6
-			public const int filter_dialog_genre_button_music = 2131427542;
+			public const int filter_dialog_genre_button_anime = 2131427542;
 			
 			// aapt resource value: 0x7f0b00d7
-			public const int filter_dialog_genre_button_musical = 2131427543;
+			public const int filter_dialog_genre_button_comedy = 2131427543;
 			
 			// aapt resource value: 0x7f0b00d8
-			public const int filter_dialog_genre_button_mystery = 2131427544;
+			public const int filter_dialog_genre_button_crime = 2131427544;
 			
 			// aapt resource value: 0x7f0b00d9
-			public const int filter_dialog_genre_button_none = 2131427545;
+			public const int filter_dialog_genre_button_disaster = 2131427545;
 			
 			// aapt resource value: 0x7f0b00da
-			public const int filter_dialog_genre_button_road = 2131427546;
+			public const int filter_dialog_genre_button_documentary = 2131427546;
 			
 			// aapt resource value: 0x7f0b00db
-			public const int filter_dialog_genre_button_romance = 2131427547;
+			public const int filter_dialog_genre_button_drama = 2131427547;
 			
 			// aapt resource value: 0x7f0b00dc
-			public const int filter_dialog_genre_button_science_fiction = 2131427548;
+			public const int filter_dialog_genre_button_eastern = 2131427548;
 			
 			// aapt resource value: 0x7f0b00dd
-			public const int filter_dialog_genre_button_short = 2131427549;
-			
-			// aapt resource value: 0x7f0b00df
-			public const int filter_dialog_genre_button_sporting_event = 2131427551;
+			public const int filter_dialog_genre_button_family = 2131427549;
 			
 			// aapt resource value: 0x7f0b00de
-			public const int filter_dialog_genre_button_sports = 2131427550;
+			public const int filter_dialog_genre_button_fan_film = 2131427550;
+			
+			// aapt resource value: 0x7f0b00df
+			public const int filter_dialog_genre_button_fantasy = 2131427551;
 			
 			// aapt resource value: 0x7f0b00e0
-			public const int filter_dialog_genre_button_suspense = 2131427552;
+			public const int filter_dialog_genre_button_film_noir = 2131427552;
 			
 			// aapt resource value: 0x7f0b00e1
-			public const int filter_dialog_genre_button_thriller = 2131427553;
+			public const int filter_dialog_genre_button_history = 2131427553;
 			
 			// aapt resource value: 0x7f0b00e2
-			public const int filter_dialog_genre_button_tv_movie = 2131427554;
+			public const int filter_dialog_genre_button_holiday = 2131427554;
 			
 			// aapt resource value: 0x7f0b00e3
-			public const int filter_dialog_genre_button_war = 2131427555;
+			public const int filter_dialog_genre_button_horror = 2131427555;
 			
 			// aapt resource value: 0x7f0b00e4
-			public const int filter_dialog_genre_button_western = 2131427556;
-			
-			// aapt resource value: 0x7f0b00c4
-			public const int filter_dialog_genre_buttons = 2131427524;
+			public const int filter_dialog_genre_button_indie = 2131427556;
 			
 			// aapt resource value: 0x7f0b00e5
-			public const int filter_dialog_none_genres_button = 2131427557;
+			public const int filter_dialog_genre_button_music = 2131427557;
 			
-			// aapt resource value: 0x7f0b00eb
-			public const int filter_dialog_rating_range = 2131427563;
-			
-			// aapt resource value: 0x7f0b00ec
-			public const int filter_dialog_rating_range_slider = 2131427564;
-			
-			// aapt resource value: 0x7f0b00ea
-			public const int filter_dialog_rating_title = 2131427562;
-			
-			// aapt resource value: 0x7f0b00f2
-			public const int filter_dialog_reset_button = 2131427570;
-			
-			// aapt resource value: 0x7f0b00e8
-			public const int filter_dialog_runtime_range = 2131427560;
-			
-			// aapt resource value: 0x7f0b00e9
-			public const int filter_dialog_runtime_range_slider = 2131427561;
+			// aapt resource value: 0x7f0b00e6
+			public const int filter_dialog_genre_button_musical = 2131427558;
 			
 			// aapt resource value: 0x7f0b00e7
-			public const int filter_dialog_runtime_title = 2131427559;
+			public const int filter_dialog_genre_button_mystery = 2131427559;
 			
-			// aapt resource value: 0x7f0b00c2
-			public const int filter_dialog_title = 2131427522;
+			// aapt resource value: 0x7f0b00e8
+			public const int filter_dialog_genre_button_none = 2131427560;
 			
-			// aapt resource value: 0x7f0b00c3
-			public const int filter_dialog_title_separator = 2131427523;
+			// aapt resource value: 0x7f0b00e9
+			public const int filter_dialog_genre_button_road = 2131427561;
 			
-			// aapt resource value: 0x7f0b00f0
-			public const int filter_dialog_years_end_picker = 2131427568;
+			// aapt resource value: 0x7f0b00ea
+			public const int filter_dialog_genre_button_romance = 2131427562;
 			
-			// aapt resource value: 0x7f0b00ef
-			public const int filter_dialog_years_end_title = 2131427567;
+			// aapt resource value: 0x7f0b00eb
+			public const int filter_dialog_genre_button_science_fiction = 2131427563;
+			
+			// aapt resource value: 0x7f0b00ec
+			public const int filter_dialog_genre_button_short = 2131427564;
 			
 			// aapt resource value: 0x7f0b00ee
-			public const int filter_dialog_years_start_picker = 2131427566;
+			public const int filter_dialog_genre_button_sporting_event = 2131427566;
 			
 			// aapt resource value: 0x7f0b00ed
-			public const int filter_dialog_years_start_title = 2131427565;
+			public const int filter_dialog_genre_button_sports = 2131427565;
+			
+			// aapt resource value: 0x7f0b00ef
+			public const int filter_dialog_genre_button_suspense = 2131427567;
+			
+			// aapt resource value: 0x7f0b00f0
+			public const int filter_dialog_genre_button_thriller = 2131427568;
+			
+			// aapt resource value: 0x7f0b00f1
+			public const int filter_dialog_genre_button_tv_movie = 2131427569;
+			
+			// aapt resource value: 0x7f0b00f2
+			public const int filter_dialog_genre_button_war = 2131427570;
+			
+			// aapt resource value: 0x7f0b00f3
+			public const int filter_dialog_genre_button_western = 2131427571;
+			
+			// aapt resource value: 0x7f0b00c7
+			public const int filter_dialog_genre_buttons = 2131427527;
+			
+			// aapt resource value: 0x7f0b00c8
+			public const int filter_dialog_none_genres_button = 2131427528;
+			
+			// aapt resource value: 0x7f0b00ce
+			public const int filter_dialog_rating_range = 2131427534;
+			
+			// aapt resource value: 0x7f0b00cf
+			public const int filter_dialog_rating_range_slider = 2131427535;
+			
+			// aapt resource value: 0x7f0b00cd
+			public const int filter_dialog_rating_title = 2131427533;
+			
+			// aapt resource value: 0x7f0b00c3
+			public const int filter_dialog_reset_button = 2131427523;
+			
+			// aapt resource value: 0x7f0b00cb
+			public const int filter_dialog_runtime_range = 2131427531;
+			
+			// aapt resource value: 0x7f0b00cc
+			public const int filter_dialog_runtime_range_slider = 2131427532;
+			
+			// aapt resource value: 0x7f0b00ca
+			public const int filter_dialog_runtime_title = 2131427530;
+			
+			// aapt resource value: 0x7f0b00c5
+			public const int filter_dialog_title = 2131427525;
+			
+			// aapt resource value: 0x7f0b00c6
+			public const int filter_dialog_title_separator = 2131427526;
+			
+			// aapt resource value: 0x7f0b00d3
+			public const int filter_dialog_years_end_picker = 2131427539;
+			
+			// aapt resource value: 0x7f0b00d2
+			public const int filter_dialog_years_end_title = 2131427538;
+			
+			// aapt resource value: 0x7f0b00d1
+			public const int filter_dialog_years_start_picker = 2131427537;
+			
+			// aapt resource value: 0x7f0b00d0
+			public const int filter_dialog_years_start_title = 2131427536;
 			
 			// aapt resource value: 0x7f0b005c
 			public const int @fixed = 2131427420;
@@ -6328,91 +6328,97 @@ namespace Movolira
 			public const int filter_dialog = 2131034154;
 			
 			// aapt resource value: 0x7f05002b
-			public const int main_activity = 2131034155;
+			public const int filter_dialog_content = 2131034155;
 			
 			// aapt resource value: 0x7f05002c
-			public const int main_activity_drawer_menu = 2131034156;
+			public const int filter_dialog_content_genres = 2131034156;
 			
 			// aapt resource value: 0x7f05002d
-			public const int main_activity_toolbar = 2131034157;
+			public const int main_activity = 2131034157;
 			
 			// aapt resource value: 0x7f05002e
-			public const int movie_details = 2131034158;
+			public const int main_activity_drawer_menu = 2131034158;
 			
 			// aapt resource value: 0x7f05002f
-			public const int mtrl_layout_snackbar = 2131034159;
+			public const int main_activity_toolbar = 2131034159;
 			
 			// aapt resource value: 0x7f050030
-			public const int mtrl_layout_snackbar_include = 2131034160;
+			public const int movie_details = 2131034160;
 			
 			// aapt resource value: 0x7f050031
-			public const int notification_action = 2131034161;
+			public const int mtrl_layout_snackbar = 2131034161;
 			
 			// aapt resource value: 0x7f050032
-			public const int notification_action_tombstone = 2131034162;
+			public const int mtrl_layout_snackbar_include = 2131034162;
 			
 			// aapt resource value: 0x7f050033
-			public const int notification_media_action = 2131034163;
+			public const int notification_action = 2131034163;
 			
 			// aapt resource value: 0x7f050034
-			public const int notification_media_cancel_action = 2131034164;
+			public const int notification_action_tombstone = 2131034164;
 			
 			// aapt resource value: 0x7f050035
-			public const int notification_template_big_media = 2131034165;
+			public const int notification_media_action = 2131034165;
 			
 			// aapt resource value: 0x7f050036
-			public const int notification_template_big_media_custom = 2131034166;
+			public const int notification_media_cancel_action = 2131034166;
 			
 			// aapt resource value: 0x7f050037
-			public const int notification_template_big_media_narrow = 2131034167;
+			public const int notification_template_big_media = 2131034167;
 			
 			// aapt resource value: 0x7f050038
-			public const int notification_template_big_media_narrow_custom = 2131034168;
+			public const int notification_template_big_media_custom = 2131034168;
 			
 			// aapt resource value: 0x7f050039
-			public const int notification_template_custom_big = 2131034169;
+			public const int notification_template_big_media_narrow = 2131034169;
 			
 			// aapt resource value: 0x7f05003a
-			public const int notification_template_icon_group = 2131034170;
+			public const int notification_template_big_media_narrow_custom = 2131034170;
 			
 			// aapt resource value: 0x7f05003b
-			public const int notification_template_lines_media = 2131034171;
+			public const int notification_template_custom_big = 2131034171;
 			
 			// aapt resource value: 0x7f05003c
-			public const int notification_template_media = 2131034172;
+			public const int notification_template_icon_group = 2131034172;
 			
 			// aapt resource value: 0x7f05003d
-			public const int notification_template_media_custom = 2131034173;
+			public const int notification_template_lines_media = 2131034173;
 			
 			// aapt resource value: 0x7f05003e
-			public const int notification_template_part_chronometer = 2131034174;
+			public const int notification_template_media = 2131034174;
 			
 			// aapt resource value: 0x7f05003f
-			public const int notification_template_part_time = 2131034175;
+			public const int notification_template_media_custom = 2131034175;
 			
 			// aapt resource value: 0x7f050040
-			public const int select_dialog_item_material = 2131034176;
+			public const int notification_template_part_chronometer = 2131034176;
 			
 			// aapt resource value: 0x7f050041
-			public const int select_dialog_multichoice_material = 2131034177;
+			public const int notification_template_part_time = 2131034177;
 			
 			// aapt resource value: 0x7f050042
-			public const int select_dialog_singlechoice_material = 2131034178;
+			public const int select_dialog_item_material = 2131034178;
 			
 			// aapt resource value: 0x7f050043
-			public const int show_card = 2131034179;
+			public const int select_dialog_multichoice_material = 2131034179;
 			
 			// aapt resource value: 0x7f050044
-			public const int show_list = 2131034180;
+			public const int select_dialog_singlechoice_material = 2131034180;
 			
 			// aapt resource value: 0x7f050045
-			public const int show_list_pager = 2131034181;
+			public const int show_card = 2131034181;
 			
 			// aapt resource value: 0x7f050046
-			public const int support_simple_spinner_dropdown_item = 2131034182;
+			public const int show_list = 2131034182;
 			
 			// aapt resource value: 0x7f050047
-			public const int tv_show_details = 2131034183;
+			public const int show_list_pager = 2131034183;
+			
+			// aapt resource value: 0x7f050048
+			public const int support_simple_spinner_dropdown_item = 2131034184;
+			
+			// aapt resource value: 0x7f050049
+			public const int tv_show_details = 2131034185;
 			
 			static Layout()
 			{

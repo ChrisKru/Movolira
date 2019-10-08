@@ -10,6 +10,7 @@ using Android.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Newtonsoft.Json;
+using Debug = System.Diagnostics.Debug;
 
 namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
@@ -38,6 +39,7 @@ namespace Movolira {
 			_main_activity.setToolbarTitle(type, subtype);
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
+			Debug.WriteLine("ping");
 			if (_shows.Count == 0) {
 				Task.Run(() => fillAdapter(_current_page_number));
 			} else {
