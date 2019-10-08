@@ -19,6 +19,8 @@
     <string name="filter_dialog_title">Filter Shows</string>
     <string name="filter_dialog_runtime_title">RUNTIME</string>
     <string name="filter_dialog_rating_title">RATING</string>
+    <string name="filter_dialog_years_start_title">FROM</string>
+    <string name="filter_dialog_years_end_title">TO</string>
     <string name="filter_dialog_filter">Filter</string>
     <string name="filter_dialog_reset">Reset</string>
     <string name="filter_dialog_cancel">Cancel</string>

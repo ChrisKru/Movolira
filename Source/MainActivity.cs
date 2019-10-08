@@ -159,6 +159,14 @@ namespace Movolira {
 				var updated_range_slider = filter_dialog_layout.FindViewById<Xamarin.RangeSlider.RangeSliderControl>(Resource.Id.filter_dialog_rating_range_slider);
 				rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
 			};
+			NumberPicker years_start_picker = filter_dialog_layout.FindViewById<NumberPicker>(Resource.Id.filter_dialog_years_start_picker);
+			years_start_picker.MinValue = 1900;
+			years_start_picker.MaxValue = 2050;
+			years_start_picker.Value = 1990;
+			NumberPicker years_end_picker = filter_dialog_layout.FindViewById<NumberPicker>(Resource.Id.filter_dialog_years_end_picker);
+			years_end_picker.MinValue = 1900;
+			years_end_picker.MaxValue = 2050;
+			years_end_picker.Value = 2020;
 			dialog_builder.SetView(filter_dialog_layout);
 			_filter_dialog = dialog_builder.Create();
 			return true;
