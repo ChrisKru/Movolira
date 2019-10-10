@@ -12,6 +12,7 @@ namespace Movolira {
 		public string Overview { get; }
 		public string BackdropUrl { get; set; }
 
+
 		[JsonConstructor]
 		public TvShow(ShowType Type, string TraktID, string TVDB_ID, string Title, string[] Genres, string AirDate, int Runtime, double Rating,
 		              int Votes, string Certification, string Overview) : base(Type, Title, Genres) {

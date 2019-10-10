@@ -17,19 +17,23 @@ using Newtonsoft.Json;
 using Orientation = Android.Content.Res.Orientation;
 
 namespace Movolira {
-	public class MovieDetailsFragment : Fragment, IBackButtonHandler {
+	public class MovieDetailsFragment : Fragment {
 		private MainActivity _main_activity;
 		private Movie _movie;
+
 
 		public override void OnAttach(Context main_activity) {
 			_main_activity = (MainActivity) main_activity;
 			base.OnAttach(main_activity);
 		}
 
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			_main_activity.setIsLoading(false);
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
+
+
 			buildBackdropView(layout);
 			buildTitleView(layout);
 			buildGenresView(layout);
@@ -38,14 +42,19 @@ namespace Movolira {
 			buildCertificationView(layout);
 			buildRatingView(layout);
 			buildOverviewView(layout);
+
+
 			return layout;
 		}
+
 
 		private void buildBackdropView(View layout) {
 			ImageView backdrop_view = layout.FindViewById<ImageView>(Resource.Id.movie_details_backdrop);
 			RequestOptions image_load_options = new RequestOptions().CenterCrop().Placeholder(new ColorDrawable(Color.Black))
 				.Error(new ColorDrawable(Color.LightGray));
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
+
+
 			if (_main_activity.Resources.Configuration.Orientation == Orientation.Portrait) {
 				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Apply(image_load_options)
 					.Thumbnail(Glide.With(_main_activity).Load(_movie.BackdropUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
@@ -57,6 +66,7 @@ namespace Movolira {
 			}
 		}
 
+
 		private void buildTitleView(View layout) {
 			if (_movie.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
@@ -66,6 +76,7 @@ namespace Movolira {
 				_main_activity.setToolbarTitle("Movolira");
 			}
 		}
+
 
 		private void buildGenresView(View layout) {
 			if (_movie.Genres.Length > 0) {
@@ -77,6 +88,7 @@ namespace Movolira {
 			}
 		}
 
+
 		private void buildReleaseDateView(View layout) {
 			TextView release_date_view = layout.FindViewById<TextView>(Resource.Id.movie_details_release_date);
 			string release_date_title = "Released\n";
@@ -86,11 +98,14 @@ namespace Movolira {
 			} else {
 				release_date_view.Text += "-";
 			}
+
+
 			SpannableStringBuilder release_date_styled_string = new SpannableStringBuilder(release_date_view.Text);
 			release_date_styled_string.SetSpan(new RelativeSizeSpan(1.2f), release_date_title.Length, release_date_styled_string.Length(),
 				SpanTypes.ExclusiveExclusive);
 			release_date_view.TextFormatted = release_date_styled_string;
 		}
+
 
 		private void buildRuntimeView(View layout) {
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.movie_details_runtime);
@@ -103,11 +118,14 @@ namespace Movolira {
 			} else {
 				runtime_view.Text += "-";
 			}
+
+
 			SpannableStringBuilder runtime_styled_string = new SpannableStringBuilder(runtime_view.Text);
 			runtime_styled_string.SetSpan(new RelativeSizeSpan(1.2f), runtime_title.Length, runtime_styled_string.Length(),
 				SpanTypes.ExclusiveExclusive);
 			runtime_view.TextFormatted = runtime_styled_string;
 		}
+
 
 		private void buildCertificationView(View layout) {
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.movie_details_certification);
@@ -118,18 +136,24 @@ namespace Movolira {
 			} else {
 				certification_view.Text += "-";
 			}
+
+
 			SpannableStringBuilder certification_styled_string = new SpannableStringBuilder(certification_view.Text);
 			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length, certification_styled_string.Length(),
 				SpanTypes.ExclusiveExclusive);
 			certification_view.TextFormatted = certification_styled_string;
 		}
 
+
 		private void buildRatingView(View layout) {
-			int rating = (int)Math.Round(_movie.Rating);
 			TextView rating_view = layout.FindViewById<TextView>(Resource.Id.movie_details_rating);
 			rating_view.Text = $"{_movie.Rating * 10:F0}%";
+
+
 			TextView vote_count_view = layout.FindViewById<TextView>(Resource.Id.movie_details_vote_count);
 			vote_count_view.Text = _movie.Votes + " votes";
+
+
 			var rating_stars = new List<ImageView> {
 				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_1),
 				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_2),
@@ -137,7 +161,10 @@ namespace Movolira {
 				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_4),
 				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_5)
 			};
+			int rating = (int) Math.Round(_movie.Rating);
 			int i_rating_stars = 0;
+
+
 			while (rating >= 2) {
 				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_full);
 				rating -= 2;
@@ -150,15 +177,12 @@ namespace Movolira {
 			}
 		}
 
+
 		private void buildOverviewView(View layout) {
 			if (_movie.Overview != null) {
 				TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 				overview_view.Text = _movie.Overview;
 			}
-		}
-
-		public bool handleBackButtonPress() {
-			return false;
 		}
 	}
 }

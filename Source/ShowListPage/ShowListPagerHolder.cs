@@ -8,6 +8,7 @@ namespace Movolira {
 		public Button NextButton { get; }
 		public Button PrevButton { get; }
 
+
 		public ShowListPagerHolder(View view, Action next_click_listener, Action prev_click_listener) : base(view) {
 			NextButton = view.FindViewById<Button>(Resource.Id.show_list_next_button);
 			NextButton.Click += (sender, args) => next_click_listener();

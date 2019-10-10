@@ -38,7 +38,6 @@
     <string name="filter_dialog_genre_music">MUSIC</string>
     <string name="filter_dialog_genre_musical">MUSICAL</string>
     <string name="filter_dialog_genre_mystery">MYSTERY</string>
-    <string name="filter_dialog_genre_none">NONE</string>
     <string name="filter_dialog_genre_road">ROAD</string>
     <string name="filter_dialog_genre_romance">ROMANCE</string>
     <string name="filter_dialog_genre_science_fiction">SCIENCE FICTION</string>

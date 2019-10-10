@@ -11,9 +11,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
-using Xamarin.RangeSlider;
-using AlertDialog = Android.App.AlertDialog;
-using Debug = System.Diagnostics.Debug;
+using Fragment = Android.Support.V4.App.Fragment;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -25,28 +23,27 @@ namespace Movolira {
 		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
+		private FilterDialog _filter_dialog;
 		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
-		private FilterDialog _filter_dialog;
+
 
 		public void setIsLoading(bool is_loading) {
 			IsLoading = is_loading;
 			if (is_loading) {
 				++_loading_count;
-				Debug.WriteLine("loading " + _loading_count);
 				_loading_view.Visibility = ViewStates.Visible;
 			} else {
 				if (_loading_count > 0) {
-					Debug.WriteLine("stopped " + _loading_count);
 					--_loading_count;
 				}
 				if (_loading_count == 0) {
-					Debug.WriteLine("canceled");
 					Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
 				}
 			}
 		}
+
 
 		public void showNetworkError() {
 			ConnectivityManager network_manager = GetSystemService(ConnectivityService) as ConnectivityManager;
@@ -57,6 +54,7 @@ namespace Movolira {
 			}
 		}
 
+
 		public void changeContentFragment(string type, string subtype) {
 			RunOnUiThread(() => { setIsLoading(true); });
 			ShowListFragment content_fragment = new ShowListFragment();
@@ -64,9 +62,13 @@ namespace Movolira {
 			fragment_args.PutString("type", type);
 			fragment_args.PutString("subtype", subtype);
 			content_fragment.Arguments = fragment_args;
+
+
 			if (type == "movies" || type == "tv_shows") {
-				RunOnUiThread(() => { setIsLoading(true); });
-				SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
+				if (SupportFragmentManager.BackStackEntryCount > 0) {
+					RunOnUiThread(() => { setIsLoading(true); });
+					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
+				}
 				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
 					.SetTransition(FragmentTransaction.TransitFragmentFade).Commit();
 			} else {
@@ -75,13 +77,25 @@ namespace Movolira {
 			}
 		}
 
+
 		public void submitSearch(string query) {
 			changeContentFragment("search", query);
 		}
 
+
+		public void submitFilter(string filter_query) {
+			Fragment top_fragment = SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame);
+			if (top_fragment is IFilterable filterable) {
+				setIsLoading(true);
+				filterable.filter(filter_query);
+			}
+		}
+
+
 		public void setToolbarTitle(string title) {
 			_toolbar.Title = title;
 		}
+
 
 		public void setToolbarTitle(string type, string subtype) {
 			if (type == "search") {
@@ -96,6 +110,7 @@ namespace Movolira {
 			_toolbar.Title = type + ": " + subtype;
 		}
 
+
 		protected override void OnCreate(Bundle saved_app_state) {
 			base.OnCreate(saved_app_state);
 			if (saved_app_state != null) {
@@ -104,12 +119,18 @@ namespace Movolira {
 				DataProvider = new DataProvider();
 			}
 			SetContentView(Resource.Layout.main_activity);
+
+
 			_loading_view = FindViewById<ImageView>(Resource.Id.show_list_loading);
 			((AnimationDrawable) _loading_view.Background).Start();
 			setIsLoading(true);
+
+
 			_toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
 			SetSupportActionBar(_toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+
+
 			_drawer_layout = FindViewById<DrawerLayout>(Resource.Id.main_activity_drawer_layout);
 			_drawer_toggle = new ActionBarDrawerToggle(this, _drawer_layout, _toolbar, Android.Resource.Drawable.IcMenuDirections,
 				Android.Resource.Drawable.IcMenuDirections);
@@ -122,6 +143,8 @@ namespace Movolira {
 			for (int i_menu_children = 0; i_menu_children < drawer_menu.ChildCount; ++i_menu_children) {
 				drawer_menu.GetChildAt(i_menu_children).SetOnClickListener(menu_on_click_listener);
 			}
+
+
 			if (SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
 				Bundle fragment_args = new Bundle();
@@ -132,6 +155,7 @@ namespace Movolira {
 			}
 		}
 
+
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
 			buildSearchView(menu);
@@ -139,12 +163,14 @@ namespace Movolira {
 			return true;
 		}
 
+
 		private void buildSearchView(IMenu menu) {
 			IMenuItem search_item = menu.FindItem(Resource.Id.toolbar_menu_search);
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
 		}
+
 
 		public override bool OnOptionsItemSelected(IMenuItem menu_item) {
 			if (menu_item.ItemId == Resource.Id.toolbar_menu_filter) {
@@ -154,10 +180,12 @@ namespace Movolira {
 			return base.OnOptionsItemSelected(menu_item);
 		}
 
+
 		protected override void OnPostCreate(Bundle saved_app_state) {
 			_drawer_toggle.SyncState();
 			base.OnPostCreate(saved_app_state);
 		}
+
 
 		public override void OnBackPressed() {
 			if (_drawer_layout.IsDrawerOpen(GravityCompat.Start)) {
@@ -165,6 +193,8 @@ namespace Movolira {
 			} else if (SupportFragmentManager.BackStackEntryCount > 0) {
 				clearLoading();
 				SupportFragmentManager.PopBackStack();
+
+
 			} else {
 				var fragments = SupportFragmentManager.Fragments;
 				for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
@@ -178,10 +208,12 @@ namespace Movolira {
 			}
 		}
 
+
 		protected override void OnSaveInstanceState(Bundle new_app_state) {
 			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
 			base.OnSaveInstanceState(new_app_state);
 		}
+
 
 		private void clearLoading() {
 			_loading_count = 0;

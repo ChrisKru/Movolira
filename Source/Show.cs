@@ -7,6 +7,7 @@ namespace Movolira {
 		public string[] Genres { get; }
 		public string PosterUrl { get; set; }
 
+
 		[JsonConstructor]
 		public Show(ShowType Type, string Title, string[] Genres) {
 			this.Type = Type;
@@ -14,6 +15,7 @@ namespace Movolira {
 			this.Genres = Genres;
 		}
 	}
+
 
 	public enum ShowType {
 		Movie,

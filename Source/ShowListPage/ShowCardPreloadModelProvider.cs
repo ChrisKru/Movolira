@@ -13,10 +13,12 @@ namespace Movolira {
 		public List<Show> Shows { get; set; }
 		private readonly MainActivity _main_activity;
 
+
 		public ShowCardPreloadModelProvider(List<Show> shows, MainActivity main_activity) {
 			Shows = shows;
 			_main_activity = main_activity;
 		}
+
 
 		public IList GetPreloadItems(int position) {
 			if (position >= Shows.Count) {
@@ -26,12 +28,17 @@ namespace Movolira {
 			if (poster_url == "") {
 				return Collections.EmptyList();
 			}
+
+
 			return Collections.SingletonList(poster_url);
 		}
+
 
 		public RequestBuilder GetPreloadRequestBuilder(Object poster_url) {
 			RequestOptions image_load_options = new RequestOptions().Placeholder(new ColorDrawable(Color.Black)).CenterCrop();
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
+
+
 			return Glide.With(_main_activity).Load(poster_url).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
 				.Thumbnail(Glide.With(_main_activity).Load(((string) poster_url).Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
 					.Transition(DrawableTransitionOptions.WithCrossFade()));

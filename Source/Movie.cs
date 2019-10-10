@@ -12,9 +12,10 @@ namespace Movolira {
 		public string Overview { get; }
 		public string BackdropUrl { get; set; }
 
+
 		[JsonConstructor]
-		public Movie(ShowType Type, string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating, int Votes,
-		             string Certification, string Overview) : base(Type, Title, Genres) {
+		public Movie(ShowType Type, string TraktID, string TMDB_ID, string Title, string[] Genres, string ReleaseDate, int Runtime, double Rating,
+		             int Votes, string Certification, string Overview) : base(Type, Title, Genres) {
 			this.TraktID = TraktID;
 			this.TMDB_ID = TMDB_ID;
 			this.ReleaseDate = ReleaseDate;

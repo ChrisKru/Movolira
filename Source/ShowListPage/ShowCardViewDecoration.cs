@@ -8,9 +8,11 @@ namespace Movolira {
 	internal class ShowCardViewDecoration : RecyclerView.ItemDecoration {
 		private readonly Context _app_context;
 
+
 		public ShowCardViewDecoration(Context app_context) {
 			_app_context = app_context;
 		}
+
 
 		public override void GetItemOffsets(Rect offset_rect, View view, RecyclerView parent_view, RecyclerView.State parent_state) {
 			float display_density = _app_context.Resources.DisplayMetrics.Density;
@@ -22,6 +24,8 @@ namespace Movolira {
 			}
 			int span_count = ((GridLayoutManager) parent_view.GetLayoutManager()).SpanCount;
 			int child_column_pos = child_pos % span_count;
+
+
 			offset_rect.Bottom = offset;
 			if (child_pos < span_count) {
 				offset_rect.Top = offset;
