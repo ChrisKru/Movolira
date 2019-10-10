@@ -30,6 +30,7 @@ namespace Movolira {
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			_main_activity.setIsLoading(false);
+			_main_activity.toggleFilterOption(false);
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 

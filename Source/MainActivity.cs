@@ -24,6 +24,7 @@ namespace Movolira {
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private FilterDialog _filter_dialog;
+		private IMenuItem _filter_menu_item;
 		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
@@ -42,6 +43,11 @@ namespace Movolira {
 					Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
 				}
 			}
+		}
+
+
+		public void toggleFilterOption(bool is_visible) {
+			_filter_menu_item?.SetVisible(is_visible);
 		}
 
 
@@ -149,7 +155,7 @@ namespace Movolira {
 				ShowListFragment content_frag = new ShowListFragment();
 				Bundle fragment_args = new Bundle();
 				fragment_args.PutString("type", "movies");
-				fragment_args.PutString("subtype", "most_popular");
+				fragment_args.PutString("subtype", "popular");
 				content_frag.Arguments = fragment_args;
 				SupportFragmentManager.BeginTransaction().Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
 			}
@@ -158,6 +164,7 @@ namespace Movolira {
 
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
+			_filter_menu_item = menu.FindItem(Resource.Id.toolbar_menu_filter);
 			buildSearchView(menu);
 			_filter_dialog = new FilterDialog(this);
 			return true;
@@ -193,8 +200,6 @@ namespace Movolira {
 			} else if (SupportFragmentManager.BackStackEntryCount > 0) {
 				clearLoading();
 				SupportFragmentManager.PopBackStack();
-
-
 			} else {
 				var fragments = SupportFragmentManager.Fragments;
 				for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {

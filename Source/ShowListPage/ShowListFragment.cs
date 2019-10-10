@@ -40,6 +40,7 @@ namespace Movolira {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
 			_main_activity.setToolbarTitle(type, subtype);
+			_main_activity.toggleFilterOption(true);
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
 
@@ -127,33 +128,11 @@ namespace Movolira {
 
 
 			if (type == "movies") {
-				if (subtype == "trending") {
-					show_data = await _main_activity.DataProvider.getTrendingMovies(new_page_number, filter_query);
-				} else if (subtype == "most_popular") {
-					show_data = await _main_activity.DataProvider.getMostPopularMovies(new_page_number);
-				} else if (subtype == "most_watched") {
-					show_data = await _main_activity.DataProvider.getMostWatchedMovies(new_page_number);
-				} else if (subtype == "most_collected") {
-					show_data = await _main_activity.DataProvider.getMostCollectedMovies(new_page_number);
-				} else if (subtype == "most_anticipated") {
-					show_data = await _main_activity.DataProvider.getMostAnticipatedMovies(new_page_number);
-				} else if (subtype == "box_office") {
-					show_data = await _main_activity.DataProvider.getBoxOfficeMovies();
-				}
+				show_data = await _main_activity.DataProvider.getMovies(subtype, new_page_number, filter_query);
 			} else if (type == "tv_shows") {
-				if (subtype == "trending") {
-					show_data = await _main_activity.DataProvider.getTrendingTvShows(new_page_number);
-				} else if (subtype == "most_popular") {
-					show_data = await _main_activity.DataProvider.getMostPopularTvShows(new_page_number);
-				} else if (subtype == "most_watched") {
-					show_data = await _main_activity.DataProvider.getMostWatchedTvShows(new_page_number);
-				} else if (subtype == "most_collected") {
-					show_data = await _main_activity.DataProvider.getMostCollectedTvShows(new_page_number);
-				} else if (subtype == "most_anticipated") {
-					show_data = await _main_activity.DataProvider.getMostAnticipatedTvShows(new_page_number);
-				}
+				show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number, filter_query);
 			} else if (type == "search") {
-				show_data = await _main_activity.DataProvider.searchShows(new_page_number, subtype);
+				show_data = await _main_activity.DataProvider.searchShows(subtype, new_page_number, filter_query);
 			}
 
 

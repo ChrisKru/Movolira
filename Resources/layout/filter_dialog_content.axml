@@ -94,7 +94,7 @@
             app:stepValueContinuously="true"
             app:internalPadding="4dp"
             app:barHeight="2dp"
-            app:absoluteMinValue="60"
+            app:absoluteMinValue="0"
             app:absoluteMaxValue="300"
             app:stepValue="15"
             app:activeColor="@color/range_slider"

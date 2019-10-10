@@ -37,19 +37,19 @@ namespace Movolira {
 			} else if (clicked_view.Id == Resource.Id.menu_movies_most_popular) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "most_popular"));
+				Task.Run(() => _main_activity.changeContentFragment("movies", "popular"));
 			} else if (clicked_view.Id == Resource.Id.menu_movies_most_watched) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "most_watched"));
+				Task.Run(() => _main_activity.changeContentFragment("movies", "watched"));
 			} else if (clicked_view.Id == Resource.Id.menu_movies_most_collected) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "most_collected"));
+				Task.Run(() => _main_activity.changeContentFragment("movies", "collected"));
 			} else if (clicked_view.Id == Resource.Id.menu_movies_most_anticipated) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "most_anticipated"));
+				Task.Run(() => _main_activity.changeContentFragment("movies", "anticipated"));
 			} else if (clicked_view.Id == Resource.Id.menu_movies_box_office) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
@@ -72,19 +72,19 @@ namespace Movolira {
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows_most_popular) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "most_popular"));
+				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "popular"));
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows_most_watched) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "most_watched"));
+				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "watched"));
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows_most_collected) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "most_collected"));
+				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "collected"));
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows_most_anticipated) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "most_anticipated"));
+				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "anticipated"));
 
 
 			} else {

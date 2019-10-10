@@ -42,11 +42,19 @@ namespace Movolira {
 		}
 
 
-		public async Task<Tuple<List<Show>, int>> getTrendingMovies(int page_number, string filter_query) {
-			Uri trending_movies_uri = new Uri("https://api.trakt.tv/movies/trending?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number +
-			                                  "&" + filter_query);
+		public async Task<Tuple<List<Show>, int>> getMovies(string category, int page_number, string filter_query) {
+			if (category == "popular") {
+				return await getMostPopularMovies(page_number, filter_query);
+			}
+			if (category == "box_office") {
+				return await getBoxOfficeMovies();
+			}
+
+
+			Uri movies_uri = new Uri("https://api.trakt.tv/movies/" + category + "?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number +
+			                         "&" + filter_query);
 			List<Show> movies = null;
-			JObject movies_json = await getShowsJson(page_number, "movies_trending" + "&" + filter_query, trending_movies_uri);
+			JObject movies_json = await getShowsJson(page_number, "movies_" + category + "&" + filter_query, movies_uri);
 
 
 			if (movies_json == null) {
@@ -92,11 +100,11 @@ namespace Movolira {
 		}
 
 
-		public async Task<Tuple<List<Show>, int>> getMostPopularMovies(int page_number) {
-			Uri most_popular_movies_uri =
-				new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
+		public async Task<Tuple<List<Show>, int>> getMostPopularMovies(int page_number, string filter_query) {
+			Uri most_popular_movies_uri = new Uri("https://api.trakt.tv/movies/popular?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" +
+			                                      page_number + "&" + filter_query);
 			List<Show> movies = null;
-			JObject movies_json = await getShowsJson(page_number, "movies_most_popular", most_popular_movies_uri);
+			JObject movies_json = await getShowsJson(page_number, "movies_most_popular" + "&" + filter_query, most_popular_movies_uri);
 
 
 			if (movies_json == null) {
@@ -123,156 +131,6 @@ namespace Movolira {
 				int votes = movie_jtoken["votes"].Value<int>();
 				string certification = movie_jtoken["certification"].Value<string>();
 				string overview = movie_jtoken["overview"].Value<string>();
-
-
-				Movie movie = new Movie(ShowType.Movie, trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification,
-					overview);
-				movies.Add(movie);
-				images_loading_tasks.Add(getMovieImages(movie));
-			}
-
-
-			int page_count = movies_json["page_count"].Value<int>();
-			int page_item_count = movies_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(movies, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostWatchedMovies(int page_number) {
-			Uri most_watched_movies_uri =
-				new Uri("https://api.trakt.tv/movies/watched?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> movies = null;
-			JObject movies_json = await getShowsJson(page_number, "movies_most_watched", most_watched_movies_uri);
-
-
-			if (movies_json == null) {
-				return null;
-			}
-			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			movies = new List<Show>();
-			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
-
-
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
-				string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
-				string title = movie_jtoken["movie"]["title"].Value<string>();
-				var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
-				string release_date = movie_jtoken["movie"]["released"].Value<string>();
-				int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
-				double rating = movie_jtoken["movie"]["rating"].Value<double>();
-				int votes = movie_jtoken["movie"]["votes"].Value<int>();
-				string certification = movie_jtoken["movie"]["certification"].Value<string>();
-				string overview = movie_jtoken["movie"]["overview"].Value<string>();
-
-
-				Movie movie = new Movie(ShowType.Movie, trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification,
-					overview);
-				movies.Add(movie);
-				images_loading_tasks.Add(getMovieImages(movie));
-			}
-
-
-			int page_count = movies_json["page_count"].Value<int>();
-			int page_item_count = movies_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(movies, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostCollectedMovies(int page_number) {
-			Uri most_collected_movies_uri =
-				new Uri("https://api.trakt.tv/movies/collected?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> movies = null;
-			JObject movies_json = await getShowsJson(page_number, "movies_most_collected", most_collected_movies_uri);
-
-
-			if (movies_json == null) {
-				return null;
-			}
-			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			movies = new List<Show>();
-			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
-
-
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
-				string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
-				string title = movie_jtoken["movie"]["title"].Value<string>();
-				var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
-				string release_date = movie_jtoken["movie"]["released"].Value<string>();
-				int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
-				double rating = movie_jtoken["movie"]["rating"].Value<double>();
-				int votes = movie_jtoken["movie"]["votes"].Value<int>();
-				string certification = movie_jtoken["movie"]["certification"].Value<string>();
-				string overview = movie_jtoken["movie"]["overview"].Value<string>();
-
-
-				Movie movie = new Movie(ShowType.Movie, trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification,
-					overview);
-				movies.Add(movie);
-				images_loading_tasks.Add(getMovieImages(movie));
-			}
-
-
-			int page_count = movies_json["page_count"].Value<int>();
-			int page_item_count = movies_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(movies, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostAnticipatedMovies(int page_number) {
-			Uri most_anticipated_movies_uri =
-				new Uri("https://api.trakt.tv/movies/anticipated?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> movies = null;
-			JObject movies_json = await getShowsJson(page_number, "movies_most_anticipated", most_anticipated_movies_uri);
-
-
-			if (movies_json == null) {
-				return null;
-			}
-			if (!movies_json.ContainsKey("data") || !movies_json.ContainsKey("page_count") || !movies_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			movies = new List<Show>();
-			IList<JToken> movies_jtokens = movies_json["data"].Children().ToList();
-
-
-			foreach (JToken movie_jtoken in movies_jtokens) {
-				string trakt_id = movie_jtoken["movie"]["ids"]["trakt"].Value<string>();
-				string tmdb_id = movie_jtoken["movie"]["ids"]["tmdb"].Value<string>();
-				string title = movie_jtoken["movie"]["title"].Value<string>();
-				var genres = movie_jtoken["movie"]["genres"].Select(genre => (string) genre).ToArray();
-				string release_date = movie_jtoken["movie"]["released"].Value<string>();
-				int runtime = movie_jtoken["movie"]["runtime"].Value<int>();
-				double rating = movie_jtoken["movie"]["rating"].Value<double>();
-				int votes = movie_jtoken["movie"]["votes"].Value<int>();
-				string certification = movie_jtoken["movie"]["certification"].Value<string>();
-				string overview = movie_jtoken["movie"]["overview"].Value<string>();
 
 
 				Movie movie = new Movie(ShowType.Movie, trakt_id, tmdb_id, title, genres, release_date, runtime, rating, votes, certification,
@@ -400,10 +258,15 @@ namespace Movolira {
 		}
 
 
-		public async Task<Tuple<List<Show>, int>> getTrendingTvShows(int page_number) {
-			Uri trending_tv_shows_uri = new Uri("https://api.trakt.tv/shows/trending?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
+		public async Task<Tuple<List<Show>, int>> getTvShows(string category, int page_number, string filter_query) {
+			if (category == "popular") {
+				return await getMostPopularTvShows(page_number, filter_query);
+			}
+
+			Uri trending_tv_shows_uri = new Uri("https://api.trakt.tv/shows/" + category + "?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" +
+			                                    page_number + "&" + filter_query);
 			List<Show> tv_shows = null;
-			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_trending", trending_tv_shows_uri);
+			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_" + category + "&" + filter_query, trending_tv_shows_uri);
 
 
 			if (tv_shows_json == null) {
@@ -452,11 +315,11 @@ namespace Movolira {
 		}
 
 
-		public async Task<Tuple<List<Show>, int>> getMostPopularTvShows(int page_number) {
-			Uri most_popular_tv_shows_uri =
-				new Uri("https://api.trakt.tv/shows/popular?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
+		public async Task<Tuple<List<Show>, int>> getMostPopularTvShows(int page_number, string filter_query) {
+			Uri most_popular_tv_shows_uri = new Uri("https://api.trakt.tv/shows/popular?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" +
+			                                        page_number + "&" + filter_query);
 			List<Show> tv_shows = null;
-			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_most_popular", most_popular_tv_shows_uri);
+			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_most_popular" + "&" + filter_query, most_popular_tv_shows_uri);
 
 
 			if (tv_shows_json == null) {
@@ -486,165 +349,6 @@ namespace Movolira {
 				int votes = tv_show_jtoken["votes"].Value<int>();
 				string certification = tv_show_jtoken["certification"].Value<string>();
 				string overview = tv_show_jtoken["overview"].Value<string>();
-
-
-				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
-					overview);
-				tv_shows.Add(tv_show);
-				images_loading_tasks.Add(getTvShowImages(tv_show));
-			}
-
-
-			int page_count = tv_shows_json["page_count"].Value<int>();
-			int page_item_count = tv_shows_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(tv_shows, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostWatchedTvShows(int page_number) {
-			Uri most_watched_tv_shows_uri =
-				new Uri("https://api.trakt.tv/shows/watched?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> tv_shows = null;
-			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_most_watched", most_watched_tv_shows_uri);
-
-
-			if (tv_shows_json == null) {
-				return null;
-			}
-			if (!tv_shows_json.ContainsKey("data") || !tv_shows_json.ContainsKey("page_count") || !tv_shows_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			tv_shows = new List<Show>();
-			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
-
-
-			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
-				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = tv_show_jtoken["show"]["title"].Value<string>();
-				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
-				if (air_date != null) {
-					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				}
-				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
-				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
-				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
-				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
-				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
-
-
-				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
-					overview);
-				tv_shows.Add(tv_show);
-				images_loading_tasks.Add(getTvShowImages(tv_show));
-			}
-
-
-			int page_count = tv_shows_json["page_count"].Value<int>();
-			int page_item_count = tv_shows_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(tv_shows, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostCollectedTvShows(int page_number) {
-			Uri most_collected_tv_shows_uri =
-				new Uri("https://api.trakt.tv/shows/collected?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> tv_shows = null;
-			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_most_collected", most_collected_tv_shows_uri);
-
-
-			if (tv_shows_json == null) {
-				return null;
-			}
-			if (!tv_shows_json.ContainsKey("data") || !tv_shows_json.ContainsKey("page_count") || !tv_shows_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			tv_shows = new List<Show>();
-			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
-
-
-			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
-				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = tv_show_jtoken["show"]["title"].Value<string>();
-				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
-				if (air_date != null) {
-					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				}
-				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
-				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
-				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
-				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
-				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
-
-
-				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
-					overview);
-				tv_shows.Add(tv_show);
-				images_loading_tasks.Add(getTvShowImages(tv_show));
-			}
-
-
-			int page_count = tv_shows_json["page_count"].Value<int>();
-			int page_item_count = tv_shows_json["page_item_count"].Value<int>();
-			int item_count = page_count * page_item_count;
-			await Task.WhenAll(images_loading_tasks);
-
-
-			return Tuple.Create(tv_shows, item_count);
-		}
-
-
-		public async Task<Tuple<List<Show>, int>> getMostAnticipatedTvShows(int page_number) {
-			Uri most_anticipated_tv_shows_uri =
-				new Uri("https://api.trakt.tv/shows/anticipated?extended=full&limit=" + SHOWS_PER_PAGE + "&page=" + page_number);
-			List<Show> tv_shows = null;
-			JObject tv_shows_json = await getShowsJson(page_number, "tv_shows_most_anticipated", most_anticipated_tv_shows_uri);
-
-
-			if (tv_shows_json == null) {
-				return null;
-			}
-			if (!tv_shows_json.ContainsKey("data") || !tv_shows_json.ContainsKey("page_count") || !tv_shows_json.ContainsKey("page_item_count")) {
-				return null;
-			}
-
-
-			var images_loading_tasks = new List<Task>();
-			tv_shows = new List<Show>();
-			IList<JToken> tv_shows_jtokens = tv_shows_json["data"].Children().ToList();
-
-
-			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
-				string trakt_id = tv_show_jtoken["show"]["ids"]["trakt"].Value<string>();
-				string tvdb_id = tv_show_jtoken["show"]["ids"]["tvdb"].Value<string>();
-				string title = tv_show_jtoken["show"]["title"].Value<string>();
-				var genres = tv_show_jtoken["show"]["genres"].Select(genre => (string) genre).ToArray();
-				string air_date = tv_show_jtoken["show"]["first_aired"].Value<string>();
-				if (air_date != null) {
-					air_date = DateTime.Parse(air_date).ToString("yyyy-MM-dd");
-				}
-				int runtime = tv_show_jtoken["show"]["runtime"].Value<int>();
-				double rating = tv_show_jtoken["show"]["rating"].Value<double>();
-				int votes = tv_show_jtoken["show"]["votes"].Value<int>();
-				string certification = tv_show_jtoken["show"]["certification"].Value<string>();
-				string overview = tv_show_jtoken["show"]["overview"].Value<string>();
 
 
 				TvShow tv_show = new TvShow(ShowType.TvShow, trakt_id, tvdb_id, title, genres, air_date, runtime, rating, votes, certification,
@@ -732,7 +436,7 @@ namespace Movolira {
 		private async Task<JObject> getShowsJson(int page_number, string cache_id, Uri movies_uri) {
 			JObject movies_json;
 			try {
-				movies_json = await BlobCache.LocalMachine.GetObject<JObject>(cache_id + page_number);
+				movies_json = await BlobCache.LocalMachine.GetObject<JObject>(cache_id + ";" + page_number);
 			} catch (Exception) {
 				movies_json = new JObject();
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
@@ -774,9 +478,9 @@ namespace Movolira {
 			return movies_json;
 		}
 
-		public async Task<Tuple<List<Show>, int>> searchShows(int page_number, string query) {
+		public async Task<Tuple<List<Show>, int>> searchShows(string query, int page_number, string filter_query) {
 			List<Show> shows = null;
-			JObject search_json = await getSearchJson(page_number, query);
+			JObject search_json = await getSearchJson(page_number, query + "&" + filter_query);
 
 
 			if (search_json == null) {

@@ -70,8 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\FilterDialog.cs" />
-    <Compile Include="Source\IBackButtonHandler.cs" />
-    <Compile Include="Source\IFilterable.cs" />
+    <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
+    <Compile Include="Source\Interfaces\IFilterable.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
