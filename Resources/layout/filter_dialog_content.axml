@@ -53,7 +53,7 @@
             android:theme="@style/ColoredButtonStyle"
             android:text="@string/filter_dialog_all_genres_button"
             app:layout_constraintTop_toBottomOf="@id/filter_dialog_genre_buttons"
-            app:layout_constraintLeft_toRightOf="@+id/filter_dialog_none_genres_button"
+            app:layout_constraintLeft_toRightOf="@id/filter_dialog_none_genres_button"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"/>
         <TextView

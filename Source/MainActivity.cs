@@ -24,6 +24,7 @@ namespace Movolira {
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private FilterDialog _filter_dialog;
+		private bool _is_filter_menu_item_visible = true;
 		private IMenuItem _filter_menu_item;
 		private int _loading_count;
 		private ImageView _loading_view;
@@ -48,6 +49,7 @@ namespace Movolira {
 
 		public void toggleFilterOption(bool is_visible) {
 			_filter_menu_item?.SetVisible(is_visible);
+			_is_filter_menu_item_visible = is_visible;
 		}
 
 
@@ -165,6 +167,7 @@ namespace Movolira {
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
 			_filter_menu_item = menu.FindItem(Resource.Id.toolbar_menu_filter);
+			_filter_menu_item.SetVisible(_is_filter_menu_item_visible);
 			buildSearchView(menu);
 			_filter_dialog = new FilterDialog(this);
 			return true;

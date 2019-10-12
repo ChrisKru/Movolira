@@ -67,4 +67,6 @@
     <string name="show_details_runtime_title">Runtime: </string>
     <string name="show_details_release_date_title">Released: </string>
     <string name="show_details_certification_title">Rated: </string>
+    <string name="show_details_add_watchlist_button">Watchlist</string>
+    <string name="show_details_add_rating_button">Rate Show</string>
 </resources>

@@ -40,11 +40,15 @@ namespace Movolira {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
 			_main_activity.setToolbarTitle(type, subtype);
-			_main_activity.toggleFilterOption(true);
+			if (subtype == "box_office") {
+				_main_activity.toggleFilterOption(false);
+			} else {
+				_main_activity.toggleFilterOption(true);
+			}
+
+
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
-
-
 			if (_shows.Count == 0) {
 				Task.Run(() => fillAdapter(_current_page_number, _current_filter_query));
 			} else {
@@ -62,7 +66,7 @@ namespace Movolira {
 			_cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
 			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
-			int span_count = (int) Math.Floor(display_width_pixels / display_dpi / 1.2);
+			int span_count = (int) Math.Floor(display_width_pixels / display_dpi / 1.1);
 
 
 			((GridLayoutManager) _cards_view.GetLayoutManager()).SpanCount = span_count;
