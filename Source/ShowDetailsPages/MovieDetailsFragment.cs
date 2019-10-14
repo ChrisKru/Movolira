@@ -43,6 +43,7 @@ namespace Movolira {
 			buildCertificationView(layout);
 			buildRatingView(layout);
 			buildOverviewView(layout);
+			buildRatingButton(layout);
 
 
 			return layout;
@@ -184,6 +185,12 @@ namespace Movolira {
 				TextView overview_view = layout.FindViewById<TextView>(Resource.Id.movie_details_overview);
 				overview_view.Text = _movie.Overview;
 			}
+		}
+
+
+		private void buildRatingButton(View layout) {
+			ToggleButton rating_button = layout.FindViewById<ToggleButton>(Resource.Id.movie_details_add_rating_button);
+			rating_button.SetOnCheckedChangeListener(new RatingButtonToggledListener());
 		}
 	}
 }

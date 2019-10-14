@@ -173,30 +173,49 @@
             app:layout_constraintLeft_toRightOf="@id/movie_details_runtime"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread" />
-        <Button
-            android:id="@+id/movie_details_add_watchlist_button"
-            android:layout_width="wrap_content"
+        <Space
+            android:id="@+id/movie_details_watchlist_rating_separator"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/ColoredSecondaryButtonStyle"
-            android:text="@string/show_details_add_watchlist_button"
-            android:drawableLeft="@drawable/ic_watchlist_button"
             app:layout_constraintTop_toBottomOf="@id/movie_details_certification"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/movie_details_add_rating_button"
-            app:layout_constraintHorizontal_chainStyle="spread"/>
-        <Button
-            android:id="@id/movie_details_add_rating_button"
+            app:layout_constraintRight_toRightOf="parent"/>
+        <ToggleButton
+            android:id="@+id/movie_details_add_watchlist_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_rate_button"
-            android:theme="@style/ColoredSecondaryButtonStyle"
-            android:text="@string/show_details_add_rating_button"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:background="@drawable/show_details_button"
+            android:textColor="@drawable/show_details_button_text"
+            android:textOff="@string/show_details_add_watchlist_button_off"
+            android:textOn="@string/show_details_add_watchlist_button_on"
+            android:drawableLeft="@drawable/ic_watchlist_button"
             app:layout_constraintTop_toBottomOf="@id/movie_details_certification"
-            app:layout_constraintLeft_toRightOf="@id/movie_details_add_watchlist_button"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"/>
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <ToggleButton
+            android:id="@+id/movie_details_add_rating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="6dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:background="@drawable/show_details_button"
+            android:textColor="@drawable/show_details_button_text"
+            android:textOff="@string/show_details_add_rating_button_off"
+            android:textOn="@string/show_details_add_rating_button_on"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_certification"
+            app:layout_constraintRight_toRightOf="parent"/>
         <TextView
             android:id="@+id/movie_details_overview"
             android:layout_width="0dp"
