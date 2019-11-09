@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Android.Animation;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -29,24 +31,37 @@ namespace Movolira {
 
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			_main_activity.setIsLoading(false);
 			_main_activity.toggleFilterOption(false);
 			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
+			LayoutTransition layout_transition = new LayoutTransition();
+			layout.FindViewById<ViewGroup>(Resource.Id.movie_details_content).LayoutTransition = layout_transition;
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 
 
 			buildBackdropView(layout);
-			buildTitleView(layout);
-			buildGenresView(layout);
-			buildReleaseDateView(layout);
-			buildRuntimeView(layout);
-			buildCertificationView(layout);
-			buildRatingView(layout);
-			buildOverviewView(layout);
-			buildRatingButton(layout);
+			Task.Run(() => buildMovieData(layout));
 
 
 			return layout;
+		}
+
+
+		private async void buildMovieData(View layout) {
+			await _main_activity.DataProvider.getMovieDetails(_movie);
+
+
+			_main_activity.RunOnUiThread(() => {
+				buildRuntimeView(layout);
+				buildTitleView(layout);
+				buildGenresView(layout);
+				buildReleaseDateView(layout);
+				buildCertificationView(layout);
+				buildRatingView(layout);
+				buildOverviewView(layout);
+				buildRatingButton(layout);
+				layout.FindViewById<View>(Resource.Id.movie_details_info).Visibility = ViewStates.Visible;
+				_main_activity.setIsLoading(false);
+			});
 		}
 
 

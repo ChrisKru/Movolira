@@ -132,11 +132,11 @@ namespace Movolira {
 
 
 			if (type == "movies") {
-				show_data = await _main_activity.DataProvider.getMovies(subtype, new_page_number, filter_query);
+				show_data = await _main_activity.DataProvider.getMovies(subtype, new_page_number);
 			} else if (type == "tv_shows") {
-				show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number, filter_query);
+				//show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number, filter_query);
 			} else if (type == "search") {
-				show_data = await _main_activity.DataProvider.searchShows(subtype, new_page_number, filter_query);
+				//show_data = await _main_activity.DataProvider.searchShows(subtype, new_page_number, filter_query);
 			}
 
 

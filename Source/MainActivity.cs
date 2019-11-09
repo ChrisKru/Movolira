@@ -143,10 +143,14 @@ namespace Movolira {
 			_drawer_toggle = new ActionBarDrawerToggle(this, _drawer_layout, _toolbar, Android.Resource.Drawable.IcMenuDirections,
 				Android.Resource.Drawable.IcMenuDirections);
 			_drawer_layout.AddDrawerListener(_drawer_toggle);
+
+
 			LinearLayout drawer_menu = FindViewById<LinearLayout>(Resource.Id.main_activity_navigation_menu);
 			LayoutTransition drawer_menu_transition = new LayoutTransition();
 			drawer_menu_transition.DisableTransitionType(LayoutTransitionType.Disappearing);
 			drawer_menu.LayoutTransition = drawer_menu_transition;
+
+
 			MenuOnClickListener menu_on_click_listener = new MenuOnClickListener(this, _drawer_layout);
 			for (int i_menu_children = 0; i_menu_children < drawer_menu.ChildCount; ++i_menu_children) {
 				drawer_menu.GetChildAt(i_menu_children).SetOnClickListener(menu_on_click_listener);
