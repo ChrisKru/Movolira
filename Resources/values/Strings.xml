@@ -3,12 +3,9 @@
     <string name="app_name">Movolira</string>
     <!--menu-->
     <string name="menu_movies">Movies</string>
-    <string name="menu_movies_trending">Trending</string>
-    <string name="menu_movies_most_popular">Most Popular</string>
-    <string name="menu_movies_most_watched">Most Watched</string>
-    <string name="menu_movies_most_collected">Most Collected</string>
-    <string name="menu_movies_most_anticipated">Most Anticipated</string>
-    <string name="menu_movies_box_office">Box Office</string>
+    <string name="menu_movies_popular">Popular</string>
+    <string name="menu_movies_top_rated">Top Rated</string>
+    <string name="menu_movies_upcoming">Upcoming</string>
     <string name="menu_tv_shows">Tv Shows</string>
     <string name="menu_tv_shows_trending">Trending</string>
     <string name="menu_tv_shows_most_popular">Most Popular</string>

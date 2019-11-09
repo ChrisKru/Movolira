@@ -30,30 +30,22 @@ namespace Movolira {
 		}
 
 		private bool checkMovieMenusForClickEvents(View clicked_view) {
-			if (clicked_view.Id == Resource.Id.menu_movies_trending) {
-				_drawer.CloseDrawer(GravityCompat.Start);
-				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "trending"));
-			} else if (clicked_view.Id == Resource.Id.menu_movies_most_popular) {
+			if (clicked_view.Id == Resource.Id.menu_movies_popular) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("movies", "popular"));
-			} else if (clicked_view.Id == Resource.Id.menu_movies_most_watched) {
+
+
+			} else if (clicked_view.Id == Resource.Id.menu_movies_top_rated) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "watched"));
-			} else if (clicked_view.Id == Resource.Id.menu_movies_most_collected) {
+				Task.Run(() => _main_activity.changeContentFragment("movies", "top_rated"));
+
+
+			} else if (clicked_view.Id == Resource.Id.menu_movies_upcoming) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "collected"));
-			} else if (clicked_view.Id == Resource.Id.menu_movies_most_anticipated) {
-				_drawer.CloseDrawer(GravityCompat.Start);
-				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "anticipated"));
-			} else if (clicked_view.Id == Resource.Id.menu_movies_box_office) {
-				_drawer.CloseDrawer(GravityCompat.Start);
-				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("movies", "box_office"));
+				Task.Run(() => _main_activity.changeContentFragment("movies", "upcoming"));
 
 
 			} else {
@@ -97,12 +89,9 @@ namespace Movolira {
 
 		private void collapseAllGroups() {
 			_drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon).SetImageResource(Resource.Drawable.ic_expand_arrow);
-			_drawer.FindViewById(Resource.Id.menu_movies_trending).Visibility = ViewStates.Gone;
-			_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Gone;
-			_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Gone;
-			_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Gone;
-			_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Gone;
-			_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Gone;
+			_drawer.FindViewById(Resource.Id.menu_movies_popular).Visibility = ViewStates.Gone;
+			_drawer.FindViewById(Resource.Id.menu_movies_top_rated).Visibility = ViewStates.Gone;
+			_drawer.FindViewById(Resource.Id.menu_movies_upcoming).Visibility = ViewStates.Gone;
 
 
 			_drawer.FindViewById<ImageView>(Resource.Id.menu_tv_shows_expandable_icon).SetImageResource(Resource.Drawable.ic_expand_arrow);
@@ -115,43 +104,31 @@ namespace Movolira {
 
 
 		private void toggleMoviesGroup() {
-			View menu_movies_trending = _drawer.FindViewById(Resource.Id.menu_movies_trending);
+			View menu_movies_popular = _drawer.FindViewById(Resource.Id.menu_movies_popular);
 			ImageView expandable_icon = _drawer.FindViewById<ImageView>(Resource.Id.menu_movies_expandable_icon);
-			if (menu_movies_trending.Visibility == ViewStates.Visible) {
-				menu_movies_trending.Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Invisible;
+			if (menu_movies_popular.Visibility == ViewStates.Visible) {
+				menu_movies_popular.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_top_rated).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_upcoming).Visibility = ViewStates.Invisible;
 
 
-				menu_movies_trending.Visibility = ViewStates.Gone;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Gone;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Gone;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Gone;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Gone;
-				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Gone;
+				menu_movies_popular.Visibility = ViewStates.Gone;
+				_drawer.FindViewById(Resource.Id.menu_movies_top_rated).Visibility = ViewStates.Gone;
+				_drawer.FindViewById(Resource.Id.menu_movies_upcoming).Visibility = ViewStates.Gone;
 
 
 				expandable_icon.SetImageResource(Resource.Drawable.ic_expand_arrow);
 
 
 			} else {
-				menu_movies_trending.Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Invisible;
-				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Invisible;
+				menu_movies_popular.Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_top_rated).Visibility = ViewStates.Invisible;
+				_drawer.FindViewById(Resource.Id.menu_movies_upcoming).Visibility = ViewStates.Invisible;
 
 
-				menu_movies_trending.Visibility = ViewStates.Visible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_popular).Visibility = ViewStates.Visible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_watched).Visibility = ViewStates.Visible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_collected).Visibility = ViewStates.Visible;
-				_drawer.FindViewById(Resource.Id.menu_movies_most_anticipated).Visibility = ViewStates.Visible;
-				_drawer.FindViewById(Resource.Id.menu_movies_box_office).Visibility = ViewStates.Visible;
+				menu_movies_popular.Visibility = ViewStates.Visible;
+				_drawer.FindViewById(Resource.Id.menu_movies_top_rated).Visibility = ViewStates.Visible;
+				_drawer.FindViewById(Resource.Id.menu_movies_upcoming).Visibility = ViewStates.Visible;
 
 
 				expandable_icon.SetImageResource(Resource.Drawable.ic_collapse_arrow);

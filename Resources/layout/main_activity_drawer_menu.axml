@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
     <TextView
-        android:id="@+id/menu_movies_trending"
+        android:id="@+id/menu_movies_popular"
         android:background="@drawable/abc_list_selector_holo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,9 +56,9 @@
         android:paddingLeft="30dp"
         android:textSize="14sp"
         android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_trending" />
+        android:text="@string/menu_movies_popular" />
     <TextView
-        android:id="@+id/menu_movies_most_popular"
+        android:id="@+id/menu_movies_top_rated"
         android:background="@drawable/abc_list_selector_holo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,9 +70,9 @@
         android:paddingLeft="30dp"
         android:textSize="14sp"
         android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_most_popular" />
+        android:text="@string/menu_movies_top_rated" />
     <TextView
-        android:id="@+id/menu_movies_most_watched"
+        android:id="@+id/menu_movies_upcoming"
         android:background="@drawable/abc_list_selector_holo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,49 +84,7 @@
         android:paddingLeft="30dp"
         android:textSize="14sp"
         android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_most_watched" />
-    <TextView
-        android:id="@+id/menu_movies_most_collected"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_most_collected" />
-    <TextView
-        android:id="@+id/menu_movies_most_anticipated"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_most_anticipated" />
-    <TextView
-        android:id="@+id/menu_movies_box_office"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_movies_box_office" />
+        android:text="@string/menu_movies_upcoming" />
     <android.support.constraint.ConstraintLayout
         android:id="@+id/menu_tv_shows"
         android:background="@drawable/abc_list_selector_holo_light"
