@@ -146,7 +146,7 @@ namespace Movolira {
 			} else if (type == "tv_shows") {
 				show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number);
 			} else if (type == "search") {
-				//show_data = await _main_activity.DataProvider.searchShows(subtype, new_page_number, filter_query);
+				show_data = await _main_activity.DataProvider.getSearchedShows(subtype, new_page_number);
 			}
 
 

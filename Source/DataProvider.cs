@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Movolira {
 	public class DataProvider {
-		public const int SHOWS_PER_PAGE = 30;
+		public const int SHOWS_PER_PAGE = 20;
 		private const int HTTP_RETRY_COUNT = 5;
 		private const int HTTP_RETRY_DELAY = 500;
 
@@ -263,6 +263,50 @@ namespace Movolira {
 					return;
 				}
 			}
+		}
+
+
+
+
+		public async Task<Tuple<List<Show>, int>> getSearchedShows(string query, int page_number) {
+			Uri movies_uri = new Uri("https://api.themoviedb.org/3/search/movie" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number + "&query=" + query);
+			Task<JObject> movies_json_task = getJson("search_movies_" + query + ";" + page_number, movies_uri);
+			Uri tv_shows_uri = new Uri("https://api.themoviedb.org/3/search/tv" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number + "&query=" + query);
+			Task<JObject> tv_shows_json_task = getJson("search_tv_shows_" + query + ";" + page_number, tv_shows_uri);
+
+
+			if (genre_list.Count == 0) {
+				await getGenreList();
+				if (genre_list.Count == 0) {
+					return null;
+				}
+			}
+
+
+			JObject movies_json = await movies_json_task;
+			if (!doesJsonContainData(movies_json)) {
+				return null;
+			}
+			var movies = getMovieListFromJson(movies_json);
+			int movies_item_count = movies_json["data"]["total_results"].Value<int>();
+
+
+			JObject tv_shows_json = await tv_shows_json_task;
+			if (!doesJsonContainData(tv_shows_json)) {
+				return null;
+			}
+			var tv_shows = getTvShowListFromJson(tv_shows_json);
+			int tv_shows_item_count = tv_shows_json["data"]["total_results"].Value<int>();
+
+
+			int max_item_count = Math.Max(movies_item_count, tv_shows_item_count);
+			List<Show> searched_shows = movies;
+			for (int i_tv_show = 0; i_tv_show < tv_shows.Count; ++i_tv_show) {
+				searched_shows.Insert(i_tv_show + 1, tv_shows[i_tv_show]);
+			}
+
+
+			return Tuple.Create(searched_shows, max_item_count);
 		}
 
 
