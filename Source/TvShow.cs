@@ -2,27 +2,26 @@
 
 namespace Movolira {
 	public class TvShow : Show {
-		public string TraktID { get; }
-		public string TVDB_ID { get; }
+		public string Id { get; }
 		public string AirDate { get; }
-		public int Runtime { get; }
 		public double Rating { get; }
 		public int Votes { get; }
-		public string Certification { get; }
 		public string Overview { get; }
 		public string BackdropUrl { get; set; }
+		public int Runtime { get; set; }
+		public string Certification { get; set; }
+
+
 
 
 		[JsonConstructor]
-		public TvShow(ShowType Type, string TraktID, string TVDB_ID, string Title, string[] Genres, string AirDate, int Runtime, double Rating,
-		              int Votes, string Certification, string Overview) : base(Type, Title, Genres) {
-			this.TraktID = TraktID;
-			this.TVDB_ID = TVDB_ID;
+		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string AirDate, double Rating, int Votes, string Overview) 
+			: base(Type, Title, Genres) 
+		{
+			this.Id = Id;
 			this.AirDate = AirDate;
-			this.Runtime = Runtime;
 			this.Rating = Rating;
 			this.Votes = Votes;
-			this.Certification = Certification;
 			this.Overview = Overview;
 		}
 	}

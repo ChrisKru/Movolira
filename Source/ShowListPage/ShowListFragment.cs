@@ -24,9 +24,13 @@ namespace Movolira {
 		private List<Show> _shows;
 
 
+
+
 		public override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
 		}
+
+
 
 
 		public override void OnAttach(Context activity) {
@@ -34,6 +38,8 @@ namespace Movolira {
 			_shows = new List<Show>();
 			base.OnAttach(activity);
 		}
+
+
 
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
@@ -89,6 +95,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private async void fillAdapter(int new_page_number, string filter_query) {
 			var show_data = await getShowData(new_page_number, filter_query);
 			if (show_data == null) {
@@ -125,6 +133,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number, string filter_query) {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
@@ -134,7 +144,7 @@ namespace Movolira {
 			if (type == "movies") {
 				show_data = await _main_activity.DataProvider.getMovies(subtype, new_page_number);
 			} else if (type == "tv_shows") {
-				//show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number, filter_query);
+				show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number);
 			} else if (type == "search") {
 				//show_data = await _main_activity.DataProvider.searchShows(subtype, new_page_number, filter_query);
 			}
@@ -144,6 +154,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void OnShowCardClick(object sender, int position) {
 			if (_main_activity.IsLoading) {
 				return;
@@ -151,6 +163,8 @@ namespace Movolira {
 			_main_activity.setIsLoading(true);
 			Task.Run(() => moveToShowDetailsFrag(position));
 		}
+
+
 
 
 		private void OnNextButtonClick(object sender, EventArgs args) {
@@ -163,6 +177,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void OnPrevButtonClick(object sender, EventArgs args) {
 			if (_main_activity.IsLoading) {
 				return;
@@ -171,6 +187,8 @@ namespace Movolira {
 			int new_page_number = _current_page_number - 1;
 			Task.Run(() => fillAdapter(new_page_number, _current_filter_query));
 		}
+
+
 
 
 		public bool handleBackButtonPress() {
@@ -182,10 +200,14 @@ namespace Movolira {
 		}
 
 
+
+
 		public void filter(string filter_query) {
 			_current_filter_query = filter_query;
 			fillAdapter(1, filter_query);
 		}
+
+
 
 
 		private void moveToShowDetailsFrag(int position) {

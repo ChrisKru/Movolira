@@ -30,12 +30,16 @@ namespace Movolira {
 		public event EventHandler<int> ShowCardClickEvent;
 
 
+
+
 		public ShowCardViewAdapter(List<Show> shows, MainActivity main_activity) {
 			Shows = shows;
 			CurrentPageNumber = 1;
 			MaxItemCount = 0;
 			_main_activity = main_activity;
 		}
+
+
 
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent_view, int view_type) {
@@ -52,6 +56,8 @@ namespace Movolira {
 		}
 
 
+
+
 		public override void OnBindViewHolder(RecyclerView.ViewHolder view_holder, int position) {
 			if (position == Shows.Count) {
 				ShowListPagerHolder pager_holder = view_holder as ShowListPagerHolder;
@@ -62,6 +68,8 @@ namespace Movolira {
 					pager_holder.PrevButton.Alpha = 1f;
 					pager_holder.PrevButton.Enabled = true;
 				}
+
+
 				if (CurrentPageNumber * DataProvider.SHOWS_PER_PAGE >= MaxItemCount) {
 					pager_holder.NextButton.Alpha = 0.5f;
 					pager_holder.NextButton.Enabled = false;
@@ -69,6 +77,8 @@ namespace Movolira {
 					pager_holder.NextButton.Alpha = 1f;
 					pager_holder.NextButton.Enabled = true;
 				}
+
+
 				if (!pager_holder.NextButton.Enabled && !pager_holder.PrevButton.Enabled) {
 					pager_holder.NextButton.Visibility = ViewStates.Gone;
 					pager_holder.PrevButton.Visibility = ViewStates.Gone;
@@ -76,6 +86,8 @@ namespace Movolira {
 					pager_holder.NextButton.Visibility = ViewStates.Visible;
 					pager_holder.PrevButton.Visibility = ViewStates.Visible;
 				}
+
+
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
 				Show show = Shows[position];
@@ -92,6 +104,8 @@ namespace Movolira {
 				if (show.Title != null) {
 					card_holder.TitleText.Text = show.Title;
 				}
+
+
 				if (show.Genres.Length > 0) {
 					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() + show.Genres[0].Substring(1);
 					if (show.Genres.Length > 1) {
@@ -102,6 +116,8 @@ namespace Movolira {
 		}
 
 
+
+
 		public override int GetItemViewType(int position) {
 			if (position == Shows.Count()) {
 				return Resource.Layout.show_list_pager;
@@ -110,14 +126,20 @@ namespace Movolira {
 		}
 
 
+
+
 		private void onCardClick(int position) {
 			ShowCardClickEvent?.Invoke(this, position);
 		}
 
 
+
+
 		private void onNextButtonClick() {
 			NextButtonClickEvent?.Invoke(this, EventArgs.Empty);
 		}
+
+
 
 
 		private void onPrevButtonClick() {

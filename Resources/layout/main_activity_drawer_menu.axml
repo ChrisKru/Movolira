@@ -121,7 +121,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
     <TextView
-        android:id="@+id/menu_tv_shows_trending"
+        android:id="@+id/menu_tv_shows_popular"
         android:background="@drawable/abc_list_selector_holo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -133,9 +133,9 @@
         android:paddingLeft="30dp"
         android:textSize="14sp"
         android:textColor="@color/menu_text"
-        android:text="@string/menu_tv_shows_trending" />
+        android:text="@string/menu_tv_shows_popular" />
     <TextView
-        android:id="@+id/menu_tv_shows_most_popular"
+        android:id="@+id/menu_tv_shows_top_rated"
         android:background="@drawable/abc_list_selector_holo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -147,47 +147,5 @@
         android:paddingLeft="30dp"
         android:textSize="14sp"
         android:textColor="@color/menu_text"
-        android:text="@string/menu_tv_shows_most_popular" />
-    <TextView
-        android:id="@+id/menu_tv_shows_most_watched"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_tv_shows_most_watched" />
-    <TextView
-        android:id="@+id/menu_tv_shows_most_collected"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_tv_shows_most_collected" />
-    <TextView
-        android:id="@+id/menu_tv_shows_most_anticipated"
-        android:background="@drawable/abc_list_selector_holo_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="30dp"
-        android:textSize="14sp"
-        android:textColor="@color/menu_text"
-        android:text="@string/menu_tv_shows_most_anticipated" />
+        android:text="@string/menu_tv_shows_top_rated" />
 </LinearLayout>

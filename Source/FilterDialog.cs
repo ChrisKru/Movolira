@@ -21,6 +21,8 @@ namespace Movolira {
 		private NumberPicker _years_start_picker;
 
 
+
+
 		public FilterDialog(MainActivity main_activity) {
 			_main_activity = main_activity;
 			_genre_buttons = new List<ToggleButton>();
@@ -28,9 +30,13 @@ namespace Movolira {
 		}
 
 
+
+
 		public void showDialog() {
 			_dialog.Show();
 		}
+
+
 
 
 		private void buildFilterDialog(MainActivity main_activity) {
@@ -50,6 +56,8 @@ namespace Movolira {
 			dialog_builder.SetView(filter_dialog_layout);
 			_dialog = dialog_builder.Create();
 		}
+
+
 
 
 		private void buildGenreButtons(View filter_dialog_layout) {
@@ -103,6 +111,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildDialogRuntimeRange(View filter_dialog_layout) {
 			RangeSliderControl runtime_range_slider =
 				filter_dialog_layout.FindViewById<RangeSliderControl>(Resource.Id.filter_dialog_runtime_range_slider);
@@ -122,6 +132,8 @@ namespace Movolira {
 				_runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
 			};
 		}
+
+
 
 
 		private void buildDialogRatingRange(View filter_dialog_layout) {
@@ -145,6 +157,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildYearsNumberPickers(View filter_dialog_layout) {
 			_years_start_picker = filter_dialog_layout.FindViewById<NumberPicker>(Resource.Id.filter_dialog_years_start_picker);
 			_years_start_picker.MinValue = YEARS_MIN_VALUE;
@@ -159,10 +173,14 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildCancelButton(View filter_dialog_layout) {
 			Button cancel_button = filter_dialog_layout.FindViewById<Button>(Resource.Id.filter_dialog_cancel_button);
 			cancel_button.Click += (sender, args) => { _dialog.Hide(); };
 		}
+
+
 
 
 		private void buildResetButton(View filter_dialog_layout) {
@@ -189,6 +207,8 @@ namespace Movolira {
 				_years_end_picker.Value = DEFAULT_YEARS_END_VALUE;
 			};
 		}
+
+
 
 
 		private void buildFilterButton(View filter_dialog_layout) {

@@ -6,10 +6,14 @@ namespace Movolira {
 		private readonly int _span_count;
 
 
+
+
 		public ShowListSpanSizeLookup(int cards_view_span_count, ShowCardViewAdapter adapter) {
 			_span_count = cards_view_span_count;
 			_cards_view_adapter = adapter;
 		}
+
+
 
 
 		public override int GetSpanSize(int child_position) {

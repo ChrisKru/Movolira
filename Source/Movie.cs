@@ -12,9 +12,12 @@ namespace Movolira {
 		public string Certification { get; set; }
 
 
+
+
 		[JsonConstructor]
-		public Movie(ShowType Type, string Id, string Title, string[] Genres, string ReleaseDate, double Rating,
-		             int Votes, string Overview) : base(Type, Title, Genres) {
+		public Movie(ShowType Type, string Id, string Title, string[] Genres, string ReleaseDate, double Rating, int Votes, string Overview) 
+			: base(Type, Title, Genres) 
+		{
 			this.Id = Id;
 			this.ReleaseDate = ReleaseDate;
 			this.Rating = Rating;

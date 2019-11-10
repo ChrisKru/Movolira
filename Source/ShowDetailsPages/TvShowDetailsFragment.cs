@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Android.Animation;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -22,33 +24,52 @@ namespace Movolira {
 		private TvShow _tv_show;
 
 
+
+
 		public override void OnAttach(Context main_activity) {
 			_main_activity = (MainActivity) main_activity;
 			base.OnAttach(main_activity);
 		}
 
 
+
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			_main_activity.setIsLoading(false);
 			_main_activity.toggleFilterOption(false);
-
-
 			View layout = inflater.Inflate(Resource.Layout.tv_show_details, container, false);
+			LayoutTransition layout_transition = new LayoutTransition();
+			layout.FindViewById<ViewGroup>(Resource.Id.tv_show_details_content).LayoutTransition = layout_transition;
 			_tv_show = JsonConvert.DeserializeObject<TvShow>(Arguments.GetString("tv_show"));
 
 
 			buildBackdropView(layout);
-			buildTitleView(layout);
-			buildGenresView(layout);
-			buildAirDateView(layout);
-			buildRuntimeView(layout);
-			buildCertificationView(layout);
-			buildRatingView(layout);
-			buildOverviewView(layout);
+			Task.Run(() => buildTvShowData(layout));
 
 
 			return layout;
 		}
+
+
+
+
+		private async void buildTvShowData(View layout) {
+			await _main_activity.DataProvider.getTvShowDetails(_tv_show);
+
+
+			_main_activity.RunOnUiThread(() => {
+				buildRuntimeView(layout);
+				buildTitleView(layout);
+				buildGenresView(layout);
+				buildAirDateView(layout);
+				buildCertificationView(layout);
+				buildRatingView(layout);
+				buildOverviewView(layout);
+				layout.FindViewById<View>(Resource.Id.tv_show_details_info).Visibility = ViewStates.Visible;
+				_main_activity.setIsLoading(false);
+			});
+		}
+
+
 
 
 		private void buildBackdropView(View layout) {
@@ -70,6 +91,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildTitleView(View layout) {
 			if (_tv_show.Title != null) {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_title);
@@ -81,6 +104,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildGenresView(View layout) {
 			if (_tv_show.Genres.Length > 0) {
 				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_genres);
@@ -90,6 +115,8 @@ namespace Movolira {
 				}
 			}
 		}
+
+
 
 
 		private void buildAirDateView(View layout) {
@@ -112,6 +139,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildRuntimeView(View layout) {
 			TextView runtime_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_runtime);
 
@@ -132,6 +161,8 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildCertificationView(View layout) {
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_certification);
 
@@ -150,6 +181,8 @@ namespace Movolira {
 				SpanTypes.ExclusiveExclusive);
 			certification_view.TextFormatted = certification_styled_string;
 		}
+
+
 
 
 		private void buildRatingView(View layout) {
@@ -177,12 +210,16 @@ namespace Movolira {
 				rating -= 2;
 				++i_rating_stars;
 			}
+
+
 			while (rating >= 1) {
 				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_half);
 				--rating;
 				++i_rating_stars;
 			}
 		}
+
+
 
 
 		private void buildOverviewView(View layout) {

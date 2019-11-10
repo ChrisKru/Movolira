@@ -6,9 +6,13 @@ namespace Movolira {
 		private MainActivity _main_activity;
 
 
+
+
 		public RatingDialog(MainActivity main_activity) {
 			_main_activity = main_activity;
 		}
+
+
 
 
 		public void showDialog() {

@@ -24,11 +24,13 @@ namespace Movolira {
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private FilterDialog _filter_dialog;
-		private bool _is_filter_menu_item_visible = true;
 		private IMenuItem _filter_menu_item;
+		private bool _is_filter_menu_item_visible = true;
 		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
+
+
 
 
 		public void setIsLoading(bool is_loading) {
@@ -36,6 +38,8 @@ namespace Movolira {
 			if (is_loading) {
 				++_loading_count;
 				_loading_view.Visibility = ViewStates.Visible;
+
+
 			} else {
 				if (_loading_count > 0) {
 					--_loading_count;
@@ -47,10 +51,14 @@ namespace Movolira {
 		}
 
 
+
+
 		public void toggleFilterOption(bool is_visible) {
 			_filter_menu_item?.SetVisible(is_visible);
 			_is_filter_menu_item_visible = is_visible;
 		}
+
+
 
 
 		public void showNetworkError() {
@@ -61,6 +69,8 @@ namespace Movolira {
 				Toast.MakeText(this, "Server error", ToastLength.Short).Show();
 			}
 		}
+
+
 
 
 		public void changeContentFragment(string type, string subtype) {
@@ -86,9 +96,13 @@ namespace Movolira {
 		}
 
 
+
+
 		public void submitSearch(string query) {
 			changeContentFragment("search", query);
 		}
+
+
 
 
 		public void submitFilter(string filter_query) {
@@ -100,9 +114,13 @@ namespace Movolira {
 		}
 
 
+
+
 		public void setToolbarTitle(string title) {
 			_toolbar.Title = title;
 		}
+
+
 
 
 		public void setToolbarTitle(string type, string subtype) {
@@ -117,6 +135,8 @@ namespace Movolira {
 			}
 			_toolbar.Title = type + ": " + subtype;
 		}
+
+
 
 
 		protected override void OnCreate(Bundle saved_app_state) {
@@ -168,6 +188,8 @@ namespace Movolira {
 		}
 
 
+
+
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
 			_filter_menu_item = menu.FindItem(Resource.Id.toolbar_menu_filter);
@@ -178,12 +200,16 @@ namespace Movolira {
 		}
 
 
+
+
 		private void buildSearchView(IMenu menu) {
 			IMenuItem search_item = menu.FindItem(Resource.Id.toolbar_menu_search);
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
 		}
+
+
 
 
 		public override bool OnOptionsItemSelected(IMenuItem menu_item) {
@@ -195,10 +221,14 @@ namespace Movolira {
 		}
 
 
+
+
 		protected override void OnPostCreate(Bundle saved_app_state) {
 			_drawer_toggle.SyncState();
 			base.OnPostCreate(saved_app_state);
 		}
+
+
 
 
 		public override void OnBackPressed() {
@@ -221,10 +251,14 @@ namespace Movolira {
 		}
 
 
+
+
 		protected override void OnSaveInstanceState(Bundle new_app_state) {
 			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
 			base.OnSaveInstanceState(new_app_state);
 		}
+
+
 
 
 		private void clearLoading() {

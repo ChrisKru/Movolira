@@ -14,10 +14,14 @@ namespace Movolira {
 		private readonly MainActivity _main_activity;
 
 
+
+
 		public ShowCardPreloadModelProvider(List<Show> shows, MainActivity main_activity) {
 			Shows = shows;
 			_main_activity = main_activity;
 		}
+
+
 
 
 		public IList GetPreloadItems(int position) {
@@ -32,6 +36,8 @@ namespace Movolira {
 
 			return Collections.SingletonList(poster_url);
 		}
+
+
 
 
 		public RequestBuilder GetPreloadRequestBuilder(Object poster_url) {

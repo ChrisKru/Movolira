@@ -10,6 +10,8 @@ namespace Movolira {
 		public TextView GenresText { get; }
 
 
+
+
 		public ShowCardViewHolder(View view, Action<int> click_listener) : base(view) {
 			view.Click += (sender, position) => click_listener(LayoutPosition);
 			BackdropImage = view.FindViewById<ImageView>(Resource.Id.show_card_backdrop);

@@ -9,9 +9,13 @@ namespace Movolira {
 		private readonly Context _app_context;
 
 
+
+
 		public ShowCardViewDecoration(Context app_context) {
 			_app_context = app_context;
 		}
+
+
 
 
 		public override void GetItemOffsets(Rect offset_rect, View view, RecyclerView parent_view, RecyclerView.State parent_state) {
@@ -19,6 +23,8 @@ namespace Movolira {
 			int offset = (int) (display_density * 14);
 			int child_pos = parent_view.GetChildLayoutPosition(view);
 			int child_count = parent_view.GetAdapter().ItemCount;
+
+
 			if (child_pos == child_count - 1) {
 				return;
 			}

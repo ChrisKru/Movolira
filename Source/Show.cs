@@ -8,6 +8,8 @@ namespace Movolira {
 		public string PosterUrl { get; set; }
 
 
+
+
 		[JsonConstructor]
 		public Show(ShowType Type, string Title, string[] Genres) {
 			this.Type = Type;
