@@ -35,7 +35,6 @@ namespace Movolira {
 
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			_main_activity.toggleFilterOption(false);
 			View layout = inflater.Inflate(Resource.Layout.tv_show_details, container, false);
 			LayoutTransition layout_transition = new LayoutTransition();
 			layout.FindViewById<ViewGroup>(Resource.Id.tv_show_details_content).LayoutTransition = layout_transition;
@@ -167,7 +166,7 @@ namespace Movolira {
 			TextView certification_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_certification);
 
 
-			string certification_title = "Rated\n";
+			string certification_title = "Certified\n";
 			certification_view.Text = certification_title;
 			if (_tv_show.Certification != null) {
 				certification_view.Text += _tv_show.Certification;

@@ -69,10 +69,10 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\AdvancedSearchPage\AdvancedSearchFragment.cs" />
     <Compile Include="Source\DataProvider.cs" />
-    <Compile Include="Source\FilterDialog.cs" />
     <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
-    <Compile Include="Source\Interfaces\IFilterable.cs" />
+    <Compile Include="Source\Interfaces\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
@@ -89,9 +89,9 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\ShowDetailsPages\MovieDetailsFragment.cs" />
-    <Compile Include="Source\TraktDataProvider.cs" />
     <Compile Include="Source\ShowListPage\ShowListPagerHolder.cs" />
     <Compile Include="Source\ShowListPage\ShowListSpanSizeLookup.cs" />
+    <Compile Include="Source\TextBoxOnActionListener.cs" />
     <Compile Include="Source\TvShow.cs" />
     <Compile Include="Source\ShowDetailsPages\TvShowDetailsFragment.cs" />
   </ItemGroup>
@@ -715,12 +715,12 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\filter_dialog.axml">
+    <AndroidResource Include="Resources\layout\advanced_search.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_filter_button.xml" />
+    <AndroidResource Include="Resources\drawable\ic_search_button.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_reset_button.xml" />
@@ -741,12 +741,7 @@
     <AndroidResource Include="Resources\drawable\genre_button_text.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\filter_dialog_content.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\filter_dialog_content_genres.axml">
+    <AndroidResource Include="Resources\layout\advanced_search_content.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -788,6 +783,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\rating_dialog.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\advanced_search_genre_button.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

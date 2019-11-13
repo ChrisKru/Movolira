@@ -148,4 +148,29 @@
         android:textSize="14sp"
         android:textColor="@color/menu_text"
         android:text="@string/menu_tv_shows_top_rated" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/menu_advanced_search"
+        android:background="@drawable/abc_list_selector_holo_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/menu_advanced_search_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintLeft_toLeftOf="parent" />
+        <TextView
+            android:id="@+id/menu_advanced_search_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/menu_text"
+            android:text="@string/menu_advanced_search"
+            android:gravity="center_horizontal"
+            app:layout_constraintLeft_toRightOf="@id/menu_advanced_search_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

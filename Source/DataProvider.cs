@@ -18,18 +18,33 @@ namespace Movolira {
 		private static HttpClient HTTP_CLIENT;
 
 
-		private readonly Dictionary<int, string> genre_list;
+		private readonly Dictionary<int, string> _genre_list;
 
 
 
 
 		[JsonConstructor]
 		public DataProvider() {
-			genre_list = new Dictionary<int, string>();
+			_genre_list = new Dictionary<int, string>();
 
 
 			initHttpClient();
 			initCache();
+		}
+
+
+
+
+		public async Task<Dictionary<int, string>> getGenreList() {
+			if (_genre_list.Count == 0) {
+				await initGenreList();
+				if (_genre_list.Count == 0) {
+					return null;
+				}
+			}
+
+
+			return _genre_list;
 		}
 
 
@@ -66,9 +81,9 @@ namespace Movolira {
 			}
 
 
-			if (genre_list.Count == 0) {
-				await getGenreList();
-				if (genre_list.Count == 0) {
+			if (_genre_list.Count == 0) {
+				await initGenreList();
+				if (_genre_list.Count == 0) {
 					return null;
 				}
 			}
@@ -95,7 +110,7 @@ namespace Movolira {
 				IList<JToken> genre_ids = movie_jtoken["genre_ids"].Children().ToList();
 				var genres = new List<string>();
 				foreach (JToken genre_id in genre_ids) {
-					genres.Add(genre_list[genre_id.Value<int>()]);
+					genres.Add(_genre_list[genre_id.Value<int>()]);
 				}
 
 
@@ -165,9 +180,9 @@ namespace Movolira {
 			}
 
 
-			if (genre_list.Count == 0) {
-				await getGenreList();
-				if (genre_list.Count == 0) {
+			if (_genre_list.Count == 0) {
+				await initGenreList();
+				if (_genre_list.Count == 0) {
 					return null;
 				}
 			}
@@ -194,7 +209,7 @@ namespace Movolira {
 				IList<JToken> genre_ids = tv_show_jtoken["genre_ids"].Children().ToList();
 				var genres = new List<string>();
 				foreach (JToken genre_id in genre_ids) {
-					string genre = genre_list[genre_id.Value<int>()];
+					string genre = _genre_list[genre_id.Value<int>()];
 					if (!genre.Contains("&")) {
 						genres.Add(genre);
 					} else {
@@ -275,9 +290,9 @@ namespace Movolira {
 			Task<JObject> tv_shows_json_task = getJson("search_tv_shows_" + query + ";" + page_number, tv_shows_uri);
 
 
-			if (genre_list.Count == 0) {
-				await getGenreList();
-				if (genre_list.Count == 0) {
+			if (_genre_list.Count == 0) {
+				await initGenreList();
+				if (_genre_list.Count == 0) {
 					return null;
 				}
 			}
@@ -312,7 +327,7 @@ namespace Movolira {
 
 
 
-		private async Task getGenreList() {
+		private async Task initGenreList() {
 			Uri tv_show_genres_uri = new Uri("https://api.themoviedb.org/3/genre/tv/list" + "?api_key=" + ApiKeys.TMDB_KEY);
 			var tv_show_genres_task = getJson("tv_genres", tv_show_genres_uri);
 			Uri movie_genres_uri = new Uri("https://api.themoviedb.org/3/genre/movie/list" + "?api_key=" + ApiKeys.TMDB_KEY);
@@ -328,8 +343,8 @@ namespace Movolira {
 			foreach (JToken genre_jtoken in movie_genres_jtokens) {
 				int id = genre_jtoken["id"].Value<int>();
 				string name = genre_jtoken["name"].Value<string>();
-				if (!genre_list.ContainsKey(id)) {
-					genre_list.Add(id, name);
+				if (!_genre_list.ContainsKey(id)) {
+					_genre_list.Add(id, name);
 				}
 			}
 
@@ -344,8 +359,8 @@ namespace Movolira {
 			foreach (JToken genre_jtoken in tv_show_genres_jtokens) {
 				int id = genre_jtoken["id"].Value<int>();
 				string name = genre_jtoken["name"].Value<string>();
-				if (!genre_list.ContainsKey(id)) {
-					genre_list.Add(id, name);
+				if (!_genre_list.ContainsKey(id)) {
+					_genre_list.Add(id, name);
 				}
 			}
 		}

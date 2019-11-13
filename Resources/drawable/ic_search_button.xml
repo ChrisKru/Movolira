@@ -6,6 +6,6 @@
         android:width="33dp"
         android:height="33dp">
         <bitmap
-            android:src="@drawable/ic_filter"/>
+            android:src="@drawable/ic_search"/>
     </item>
 </layer-list>

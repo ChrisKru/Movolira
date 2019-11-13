@@ -26,8 +26,10 @@ namespace Movolira {
 				toggleMoviesGroup();
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows) {
 				toggleShowsGroup();
-
-
+			} else if (clicked_view.Id == Resource.Id.menu_advanced_search) {
+				_drawer.CloseDrawer(GravityCompat.Start);
+				collapseAllGroups();
+				Task.Run(() => _main_activity.changeContentFragment("advanced_search", ""));
 			} else {
 				if (!checkMovieMenusForClickEvents(clicked_view)) {
 					checkShowsMenusForClickEvents(clicked_view);
@@ -43,20 +45,14 @@ namespace Movolira {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("movies", "popular"));
-
-
 			} else if (clicked_view.Id == Resource.Id.menu_movies_top_rated) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("movies", "top_rated"));
-
-
 			} else if (clicked_view.Id == Resource.Id.menu_movies_upcoming) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("movies", "upcoming"));
-
-
 			} else {
 				return false;
 			}
@@ -73,14 +69,10 @@ namespace Movolira {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "popular"));
-
-
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows_top_rated) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("tv_shows", "top_rated"));
-
-
 			} else {
 				return false;
 			}
@@ -149,8 +141,6 @@ namespace Movolira {
 
 
 				expandable_icon.SetImageResource(Resource.Drawable.ic_expand_arrow);
-
-
 			} else {
 				menu_tv_shows_popular.Visibility = ViewStates.Invisible;
 				_drawer.FindViewById(Resource.Id.menu_tv_shows_top_rated).Visibility = ViewStates.Invisible;

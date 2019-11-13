@@ -17,15 +17,13 @@ using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace Movolira {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true,
+		WindowSoftInputMode = SoftInput.StateUnchanged | SoftInput.AdjustResize)]
 	public class MainActivity : AppCompatActivity {
 		public DataProvider DataProvider { get; private set; }
 		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
-		private FilterDialog _filter_dialog;
-		private IMenuItem _filter_menu_item;
-		private bool _is_filter_menu_item_visible = true;
 		private int _loading_count;
 		private ImageView _loading_view;
 		private Toolbar _toolbar;
@@ -38,8 +36,6 @@ namespace Movolira {
 			if (is_loading) {
 				++_loading_count;
 				_loading_view.Visibility = ViewStates.Visible;
-
-
 			} else {
 				if (_loading_count > 0) {
 					--_loading_count;
@@ -48,14 +44,6 @@ namespace Movolira {
 					Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
 				}
 			}
-		}
-
-
-
-
-		public void toggleFilterOption(bool is_visible) {
-			_filter_menu_item?.SetVisible(is_visible);
-			_is_filter_menu_item_visible = is_visible;
 		}
 
 
@@ -75,14 +63,21 @@ namespace Movolira {
 
 		public void changeContentFragment(string type, string subtype) {
 			RunOnUiThread(() => { setIsLoading(true); });
-			ShowListFragment content_fragment = new ShowListFragment();
 			Bundle fragment_args = new Bundle();
 			fragment_args.PutString("type", type);
 			fragment_args.PutString("subtype", subtype);
+
+
+			Fragment content_fragment;
+			if (type == "movies" || type == "tv_shows" || type == "search" || type == "advanced_search" && subtype != "") {
+				content_fragment = new ShowListFragment();
+			} else {
+				content_fragment = new AdvancedSearchFragment();
+			}
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows") {
+			if (type == "movies" || type == "tv_shows" || type == "advanced_search" && subtype != "") {
 				if (SupportFragmentManager.BackStackEntryCount > 0) {
 					RunOnUiThread(() => { setIsLoading(true); });
 					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
@@ -100,17 +95,6 @@ namespace Movolira {
 
 		public void submitSearch(string query) {
 			changeContentFragment("search", query);
-		}
-
-
-
-
-		public void submitFilter(string filter_query) {
-			Fragment top_fragment = SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame);
-			if (top_fragment is IFilterable filterable) {
-				setIsLoading(true);
-				filterable.filter(filter_query);
-			}
 		}
 
 
@@ -192,10 +176,7 @@ namespace Movolira {
 
 		public override bool OnCreateOptionsMenu(IMenu menu) {
 			MenuInflater.Inflate(Resource.Menu.main_activity_toolbar_menu, menu);
-			_filter_menu_item = menu.FindItem(Resource.Id.toolbar_menu_filter);
-			_filter_menu_item.SetVisible(_is_filter_menu_item_visible);
 			buildSearchView(menu);
-			_filter_dialog = new FilterDialog(this);
 			return true;
 		}
 
@@ -212,12 +193,9 @@ namespace Movolira {
 
 
 
-		public override bool OnOptionsItemSelected(IMenuItem menu_item) {
-			if (menu_item.ItemId == Resource.Id.toolbar_menu_filter) {
-				_filter_dialog.showDialog();
-				return true;
-			}
-			return base.OnOptionsItemSelected(menu_item);
+		protected override void OnSaveInstanceState(Bundle new_app_state) {
+			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
+			base.OnSaveInstanceState(new_app_state);
 		}
 
 
@@ -234,28 +212,28 @@ namespace Movolira {
 		public override void OnBackPressed() {
 			if (_drawer_layout.IsDrawerOpen(GravityCompat.Start)) {
 				_drawer_layout.CloseDrawer(GravityCompat.Start);
-			} else if (SupportFragmentManager.BackStackEntryCount > 0) {
-				clearLoading();
-				SupportFragmentManager.PopBackStack();
-			} else {
-				var fragments = SupportFragmentManager.Fragments;
-				for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
-					if (SupportFragmentManager.Fragments[i_fragment] is IBackButtonHandler back_button_handler) {
-						if (back_button_handler.handleBackButtonPress()) {
-							return;
-						}
+				return;
+			}
+
+
+			var fragments = SupportFragmentManager.Fragments;
+			for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
+				if (SupportFragmentManager.Fragments[i_fragment] is IBackButtonHandler back_button_handler) {
+					if (back_button_handler.handleBackButtonPress()) {
+						return;
 					}
 				}
-				base.OnBackPressed();
 			}
-		}
 
 
+			if (SupportFragmentManager.BackStackEntryCount > 0) {
+				clearLoading();
+				SupportFragmentManager.PopBackStack();
+				return;
+			}
 
 
-		protected override void OnSaveInstanceState(Bundle new_app_state) {
-			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
-			base.OnSaveInstanceState(new_app_state);
+			base.OnBackPressed();
 		}
 
 
@@ -264,6 +242,21 @@ namespace Movolira {
 		private void clearLoading() {
 			_loading_count = 0;
 			Task.Delay(200).ContinueWith(a => RunOnUiThread(() => _loading_view.Visibility = ViewStates.Gone));
+		}
+
+
+
+
+		public override bool DispatchTouchEvent(MotionEvent motion_event) {
+			var fragments = SupportFragmentManager.Fragments;
+			for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
+				if (SupportFragmentManager.Fragments[i_fragment] is ITouchHandler back_button_handler) {
+					back_button_handler.handleTouch(motion_event);
+				}
+			}
+
+
+			return base.DispatchTouchEvent(motion_event);
 		}
 	}
 }

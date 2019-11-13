@@ -12,10 +12,9 @@ using Bumptech.Glide.Util;
 using Newtonsoft.Json;
 
 namespace Movolira {
-	public class ShowListFragment : Fragment, IBackButtonHandler, IFilterable {
+	public class ShowListFragment : Fragment, IBackButtonHandler {
 		private RecyclerView _cards_view;
 		private ShowCardViewAdapter _cards_view_adapter;
-		private string _current_filter_query = "";
 		private int _current_page_number = 1;
 		private View _frag_layout;
 		private MainActivity _main_activity;
@@ -46,17 +45,12 @@ namespace Movolira {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
 			_main_activity.setToolbarTitle(type, subtype);
-			if (subtype == "box_office") {
-				_main_activity.toggleFilterOption(false);
-			} else {
-				_main_activity.toggleFilterOption(true);
-			}
 
 
 			_frag_layout = inflater.Inflate(Resource.Layout.show_list, container, false);
 			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
 			if (_shows.Count == 0) {
-				Task.Run(() => fillAdapter(_current_page_number, _current_filter_query));
+				Task.Run(() => fillAdapter(_current_page_number));
 			} else {
 				_main_activity.setIsLoading(false);
 			}
@@ -97,8 +91,8 @@ namespace Movolira {
 
 
 
-		private async void fillAdapter(int new_page_number, string filter_query) {
-			var show_data = await getShowData(new_page_number, filter_query);
+		private async void fillAdapter(int new_page_number) {
+			var show_data = await getShowData(new_page_number);
 			if (show_data == null) {
 				_main_activity.RunOnUiThread(() => {
 					_main_activity.setIsLoading(false);
@@ -135,7 +129,7 @@ namespace Movolira {
 
 
 
-		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number, string filter_query) {
+		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number) {
 			string type = Arguments.GetString("type");
 			string subtype = Arguments.GetString("subtype");
 			Tuple<List<Show>, int> show_data = null;
@@ -173,7 +167,7 @@ namespace Movolira {
 			}
 			_main_activity.setIsLoading(true);
 			int new_page_number = _current_page_number + 1;
-			Task.Run(() => fillAdapter(new_page_number, _current_filter_query));
+			Task.Run(() => fillAdapter(new_page_number));
 		}
 
 
@@ -185,7 +179,7 @@ namespace Movolira {
 			}
 			_main_activity.setIsLoading(true);
 			int new_page_number = _current_page_number - 1;
-			Task.Run(() => fillAdapter(new_page_number, _current_filter_query));
+			Task.Run(() => fillAdapter(new_page_number));
 		}
 
 
@@ -197,14 +191,6 @@ namespace Movolira {
 				return true;
 			}
 			return false;
-		}
-
-
-
-
-		public void filter(string filter_query) {
-			_current_filter_query = filter_query;
-			fillAdapter(1, filter_query);
 		}
 
 

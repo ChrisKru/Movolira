@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        layout="@layout/advanced_search_content"
+        android:id="@+id/advanced_search_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/advanced_search_reset_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/Widget.AppCompat.Button"
+            android:drawableLeft="@drawable/ic_reset_button"
+            android:text="@string/advanced_search_reset"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/advanced_search_search_button" />
+        <Button
+            android:id="@id/advanced_search_search_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:theme="@style/ColoredButtonStyle"
+            android:drawableLeft="@drawable/ic_search_button"
+            android:text="@string/advanced_search_search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/advanced_search_reset_button"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
