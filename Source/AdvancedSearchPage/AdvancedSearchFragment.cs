@@ -6,6 +6,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Newtonsoft.Json;
 using Xamarin.RangeSlider;
 
 namespace Movolira {
@@ -16,6 +17,7 @@ namespace Movolira {
 		private const int DEFAULT_YEARS_END_VALUE = 2020;
 
 
+		private View _layout;
 		private List<ToggleButton> _genre_buttons;
 		private EditText _keywords_textbox;
 		private MainActivity _main_activity;
@@ -43,26 +45,26 @@ namespace Movolira {
 
 
 
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View layout = inflater.Inflate(Resource.Layout.advanced_search, container, false);
+		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
+			_layout = inflater.Inflate(Resource.Layout.advanced_search, container, false);
 			
 
-			Task.Run(() => buildGenreButtons(layout, inflater));
-			buildKeywordsTextBox(layout);
-			buildDialogRuntimeRange(layout);
-			buildDialogRatingRange(layout);
-			buildYearsNumberPickers(layout);
-			buildResetButton(layout);
-			buildSearchButton(layout);
+			Task.Run(() => buildGenreButtons(_layout, inflater, saved_instance_state));
+			buildKeywordsTextBox(_layout);
+			buildRuntimeRange(_layout, saved_instance_state);
+			buildRatingRange(_layout, saved_instance_state);
+			buildYearsNumberPickers(_layout, saved_instance_state);
+			buildResetButton(_layout);
+			buildSearchButton(_layout);
 
 
-			return layout;
+			return _layout;
 		}
 
 
 
 
-		private async void buildGenreButtons(View advanced_search_layout, LayoutInflater inflater) {
+		private async void buildGenreButtons(View advanced_search_layout, LayoutInflater inflater, Bundle saved_instance_state) {
 			var genre_list = await _main_activity.DataProvider.getGenreList();
 			_main_activity.RunOnUiThread(() => {
 				ViewGroup genre_button_layout = advanced_search_layout.FindViewById<ViewGroup>(Resource.Id.advanced_search_genre_buttons);
@@ -81,6 +83,13 @@ namespace Movolira {
 					_genre_buttons.Add(genre_button);
 				}
 
+
+				if (saved_instance_state != null) {
+					int[] unchecked_buttons_indexes = saved_instance_state.GetIntArray("unchecked_buttons_indexes");
+					foreach (int i_unchecked_button in unchecked_buttons_indexes) {
+						_genre_buttons[i_unchecked_button].Checked = false;
+					}
+				}
 
 				Button all_genres_button = advanced_search_layout.FindViewById<Button>(Resource.Id.advanced_search_all_genres_button);
 				all_genres_button.Click += (sender, args) => {
@@ -113,7 +122,7 @@ namespace Movolira {
 
 
 
-		private void buildDialogRuntimeRange(View advanced_search_layout) {
+		private void buildRuntimeRange(View advanced_search_layout, Bundle saved_instance_state) {
 			RangeSliderControl runtime_range_slider =
 				advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_runtime_range_slider);
 			_runtime_range_view = advanced_search_layout.FindViewById<TextView>(Resource.Id.advanced_search_runtime_range);
@@ -121,11 +130,22 @@ namespace Movolira {
 			runtime_range_slider.NotifyWhileDragging = true;
 
 
+			if (saved_instance_state == null) {
+				_runtime_range_view.Text = runtime_range_slider.GetSelectedMinValue() + "-" + runtime_range_slider.GetSelectedMaxValue() + "min";
+			} else {
+				float runtime_range_min = saved_instance_state.GetFloat("runtime_range_min");
+				float runtime_range_max = saved_instance_state.GetFloat("runtime_range_max");
+				_runtime_range_view.Text = runtime_range_min + "-" + runtime_range_max + "min";
+			}
+
+
 			runtime_range_slider.LowerValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_runtime_range_slider);
 				_runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
 			};
+
+
 			runtime_range_slider.UpperValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_runtime_range_slider);
@@ -136,7 +156,7 @@ namespace Movolira {
 
 
 
-		private void buildDialogRatingRange(View advanced_search_layout) {
+		private void buildRatingRange(View advanced_search_layout, Bundle saved_instance_state) {
 			RangeSliderControl rating_range_slider =
 				advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_rating_range_slider);
 			_rating_range_view = advanced_search_layout.FindViewById<TextView>(Resource.Id.advanced_search_rating_range);
@@ -144,11 +164,22 @@ namespace Movolira {
 			rating_range_slider.NotifyWhileDragging = true;
 
 
+			if (saved_instance_state == null) {
+				_rating_range_view.Text = rating_range_slider.GetSelectedMinValue() + "-" + rating_range_slider.GetSelectedMaxValue();
+			} else {
+				float rating_range_min = saved_instance_state.GetFloat("rating_range_min");
+				float rating_range_max = saved_instance_state.GetFloat("rating_range_max");
+				_rating_range_view.Text = rating_range_min + "-" + rating_range_max;
+			}
+
+
 			rating_range_slider.LowerValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_rating_range_slider);
 				_rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue();
 			};
+
+
 			rating_range_slider.UpperValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					advanced_search_layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_rating_range_slider);
@@ -159,17 +190,29 @@ namespace Movolira {
 
 
 
-		private void buildYearsNumberPickers(View advanced_search_layout) {
+		private void buildYearsNumberPickers(View advanced_search_layout, Bundle saved_instance_state) {
 			_years_start_picker = advanced_search_layout.FindViewById<NumberPicker>(Resource.Id.advanced_search_years_start_picker);
 			_years_start_picker.MinValue = YEARS_MIN_VALUE;
 			_years_start_picker.MaxValue = YEARS_MAX_VALUE;
-			_years_start_picker.Value = DEFAULT_YEARS_START_VALUE;
+
+
+			if (saved_instance_state == null) {
+				_years_start_picker.Value = DEFAULT_YEARS_START_VALUE;
+			} else {
+				_years_start_picker.Value = saved_instance_state.GetInt("years_start_picker_value");
+			}
 
 
 			_years_end_picker = advanced_search_layout.FindViewById<NumberPicker>(Resource.Id.advanced_search_years_end_picker);
 			_years_end_picker.MinValue = YEARS_MIN_VALUE;
 			_years_end_picker.MaxValue = YEARS_MAX_VALUE;
-			_years_end_picker.Value = DEFAULT_YEARS_END_VALUE;
+
+
+			if (saved_instance_state == null) {
+				_years_end_picker.Value = DEFAULT_YEARS_END_VALUE;
+			} else {
+				_years_end_picker.Value = saved_instance_state.GetInt("years_end_picker_value");
+			}
 		}
 
 
@@ -239,6 +282,34 @@ namespace Movolira {
 				}
 				string search_query = genres_query + "&" + runtime_query + "&" + ratings_query + "&" + years_query;
 			};
+		}
+
+
+
+
+		public override void OnSaveInstanceState(Bundle new_app_state) {
+			List<int> unchecked_buttons_indexes = new List<int>();
+			for (int i_genre_button = 0; i_genre_button < _genre_buttons.Count; ++i_genre_button) {
+				if (_genre_buttons[i_genre_button].Checked == false) {
+					unchecked_buttons_indexes.Add(i_genre_button);
+				}
+			}
+
+
+			RangeSliderControl runtime_range_slider = _layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_runtime_range_slider);
+			RangeSliderControl rating_range_slider = _layout.FindViewById<RangeSliderControl>(Resource.Id.advanced_search_rating_range_slider);
+
+
+			new_app_state.PutIntArray("unchecked_buttons_indexes", unchecked_buttons_indexes.ToArray());
+			new_app_state.PutFloat("runtime_range_min", runtime_range_slider.GetSelectedMinValue());
+			new_app_state.PutFloat("runtime_range_max", runtime_range_slider.GetSelectedMaxValue());
+			new_app_state.PutFloat("rating_range_min", rating_range_slider.GetSelectedMinValue());
+			new_app_state.PutFloat("rating_range_max", rating_range_slider.GetSelectedMaxValue());
+			new_app_state.PutInt("years_start_picker_value", _years_start_picker.Value);
+			new_app_state.PutInt("years_end_picker_value", _years_end_picker.Value);
+
+
+			base.OnSaveInstanceState(new_app_state);
 		}
 
 

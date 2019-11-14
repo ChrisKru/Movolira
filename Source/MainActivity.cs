@@ -123,10 +123,10 @@ namespace Movolira {
 
 
 
-		protected override void OnCreate(Bundle saved_app_state) {
-			base.OnCreate(saved_app_state);
-			if (saved_app_state != null) {
-				DataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_app_state.GetString("DataProvider"));
+		protected override void OnCreate(Bundle saved_instance_state) {
+			base.OnCreate(saved_instance_state);
+			if (saved_instance_state != null) {
+				DataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_instance_state.GetString("DataProvider"));
 			} else {
 				DataProvider = new DataProvider();
 			}
@@ -201,9 +201,9 @@ namespace Movolira {
 
 
 
-		protected override void OnPostCreate(Bundle saved_app_state) {
+		protected override void OnPostCreate(Bundle saved_instance_state) {
 			_drawer_toggle.SyncState();
-			base.OnPostCreate(saved_app_state);
+			base.OnPostCreate(saved_instance_state);
 		}
 
 

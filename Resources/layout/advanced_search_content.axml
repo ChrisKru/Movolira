@@ -103,7 +103,6 @@
             android:textColor="@color/advanced_search_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="0-300min"
             app:layout_constraintTop_toBottomOf="@id/advanced_search_none_genres_button"
             app:layout_constraintRight_toRightOf="parent" />
         <xamarin.rangeslider.RangeSliderControl
@@ -148,7 +147,6 @@
             android:textColor="@color/advanced_search_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="0-100"
             app:layout_constraintTop_toBottomOf="@id/advanced_search_runtime_range_slider"
             app:layout_constraintRight_toRightOf="parent" />
         <xamarin.rangeslider.RangeSliderControl
