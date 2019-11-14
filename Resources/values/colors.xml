@@ -4,8 +4,8 @@
     <!--App-->
     <color name="range_slider">#220024</color>
     <!--FilterDialog-->
-    <color name="advanced_search_title">#220024</color>
-    <color name="advanced_search_content">#232323</color>
+    <color name="discover_page_title">#220024</color>
+    <color name="discover_page_content">#232323</color>
     <color name="genre_button_on">#220024</color>
     <color name="genre_button_off">#ffffff</color>
     <color name="genre_button_off_border">#220024</color>

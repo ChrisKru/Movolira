@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include
-        layout="@layout/advanced_search_content"
-        android:id="@+id/advanced_search_content"
+        layout="@layout/discover_page_content"
+        android:id="@+id/discover_page_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -16,25 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/advanced_search_reset_button"
+            android:id="@+id/discover_page_reset_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/Widget.AppCompat.Button"
             android:drawableLeft="@drawable/ic_reset_button"
-            android:text="@string/advanced_search_reset"
+            android:text="@string/discover_page_reset"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/advanced_search_search_button" />
+            app:layout_constraintRight_toLeftOf="@+id/discover_page_discover_button" />
         <Button
-            android:id="@id/advanced_search_search_button"
+            android:id="@id/discover_page_discover_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
             android:theme="@style/ColoredButtonStyle"
             android:drawableLeft="@drawable/ic_search_button"
-            android:text="@string/advanced_search_search"
+            android:text="@string/discover_page_discover"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/advanced_search_reset_button"
+            app:layout_constraintLeft_toRightOf="@id/discover_page_reset_button"
             app:layout_constraintRight_toRightOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

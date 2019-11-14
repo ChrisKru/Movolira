@@ -69,8 +69,8 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\AdvancedSearchPage\AdvancedSearchFragment.cs" />
-    <Compile Include="Source\DataProvider.cs" />
+    <Compile Include="Source\DiscoverPage\DiscoverFragment.cs" />
+    <Compile Include="Source\DataProvider\DataProvider.cs" />
     <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
     <Compile Include="Source\Interfaces\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
@@ -82,7 +82,7 @@
     <Compile Include="Source\ShowListPage\ShowCardPreloadModelProvider.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
     <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
-    <Compile Include="Source\ApiKeys.cs" />
+    <Compile Include="Source\DataProvider\ApiKeys.cs" />
     <Compile Include="Source\MainActivity.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewDecoration.cs" />
     <Compile Include="Source\ShowListPage\ShowCardViewHolder.cs" />
@@ -91,7 +91,6 @@
     <Compile Include="Source\ShowDetailsPages\MovieDetailsFragment.cs" />
     <Compile Include="Source\ShowListPage\ShowListPagerHolder.cs" />
     <Compile Include="Source\ShowListPage\ShowListSpanSizeLookup.cs" />
-    <Compile Include="Source\TextBoxOnActionListener.cs" />
     <Compile Include="Source\TvShow.cs" />
     <Compile Include="Source\ShowDetailsPages\TvShowDetailsFragment.cs" />
   </ItemGroup>
@@ -715,7 +714,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\advanced_search.axml">
+    <AndroidResource Include="Resources\layout\discover_page.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -741,7 +740,7 @@
     <AndroidResource Include="Resources\drawable\genre_button_text.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\advanced_search_content.axml">
+    <AndroidResource Include="Resources\layout\discover_page_content.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -787,7 +786,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\advanced_search_genre_button.axml">
+    <AndroidResource Include="Resources\layout\discover_page_genre_button.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

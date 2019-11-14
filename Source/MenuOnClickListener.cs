@@ -26,10 +26,10 @@ namespace Movolira {
 				toggleMoviesGroup();
 			} else if (clicked_view.Id == Resource.Id.menu_tv_shows) {
 				toggleShowsGroup();
-			} else if (clicked_view.Id == Resource.Id.menu_advanced_search) {
+			} else if (clicked_view.Id == Resource.Id.menu_discover) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
-				Task.Run(() => _main_activity.changeContentFragment("advanced_search", ""));
+				Task.Run(() => _main_activity.changeContentFragment("discover", ""));
 			} else {
 				if (!checkMovieMenusForClickEvents(clicked_view)) {
 					checkShowsMenusForClickEvents(clicked_view);

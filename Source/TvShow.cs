@@ -7,7 +7,6 @@ namespace Movolira {
 		public double Rating { get; }
 		public int Votes { get; }
 		public string Overview { get; }
-		public string BackdropUrl { get; set; }
 		public int Runtime { get; set; }
 		public string Certification { get; set; }
 
@@ -15,8 +14,8 @@ namespace Movolira {
 
 
 		[JsonConstructor]
-		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string AirDate, double Rating, int Votes, string Overview) 
-			: base(Type, Title, Genres) 
+		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string AirDate, double Rating, int Votes, string Overview) 
+			: base(Type, Title, Genres, PosterUrl, BackdropUrl) 
 		{
 			this.Id = Id;
 			this.AirDate = AirDate;

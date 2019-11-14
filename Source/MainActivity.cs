@@ -69,15 +69,15 @@ namespace Movolira {
 
 
 			Fragment content_fragment;
-			if (type == "movies" || type == "tv_shows" || type == "search" || type == "advanced_search" && subtype != "") {
+			if (type == "movies" || type == "tv_shows" || type == "search" || type == "discover" && subtype != "") {
 				content_fragment = new ShowListFragment();
 			} else {
-				content_fragment = new AdvancedSearchFragment();
+				content_fragment = new DiscoverFragment();
 			}
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows" || type == "advanced_search" && subtype != "") {
+			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "") {
 				if (SupportFragmentManager.BackStackEntryCount > 0) {
 					RunOnUiThread(() => { setIsLoading(true); });
 					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
@@ -108,16 +108,23 @@ namespace Movolira {
 
 
 		public void setToolbarTitle(string type, string subtype) {
-			if (type == "search") {
-				type = "Search";
-			} else {
-				TextInfo text_info = new CultureInfo("en-US", false).TextInfo;
-				type = type.Replace("_", " ");
-				type = text_info.ToTitleCase(type);
-				subtype = subtype.Replace("_", " ");
-				subtype = text_info.ToTitleCase(subtype);
+			TextInfo text_info = new CultureInfo("en-US", false).TextInfo;
+			string title_a = type.Replace("_", " ");
+			title_a = text_info.ToTitleCase(title_a);
+
+
+			string title_b = subtype;
+			if (type != "search") {
+				title_b = subtype.Replace("_", " ");
+				title_b = text_info.ToTitleCase(title_b);
 			}
-			_toolbar.Title = type + ": " + subtype;
+
+
+			if (type == "discover") {
+				_toolbar.Title = title_a;
+			} else {
+				_toolbar.Title = title_a + ": " + title_b;
+			}
 		}
 
 

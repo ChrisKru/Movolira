@@ -9,19 +9,19 @@
     <string name="menu_tv_shows">Tv Shows</string>
     <string name="menu_tv_shows_popular">Popular</string>
     <string name="menu_tv_shows_top_rated">Top Rated</string>
-    <string name="menu_advanced_search">Search</string>
-    <!--AdvancedSearch-->
-    <string name="advanced_search_keywords_title">KEYWORDS</string>
-    <string name="advanced_search_keywords_hint">Movie or Tv show</string>
-    <string name="advanced_search_genres_title">GENRES</string>
-    <string name="advanced_search_none_genres_button">NONE</string>
-    <string name="advanced_search_all_genres_button">ALL</string>
-    <string name="advanced_search_runtime_title">RUNTIME</string>
-    <string name="advanced_search_rating_title">RATING</string>
-    <string name="advanced_search_years_start_title">FROM</string>
-    <string name="advanced_search_years_end_title">TO</string>
-    <string name="advanced_search_search">Search</string>
-    <string name="advanced_search_reset">Reset</string>
+    <string name="menu_discover">Discover</string>
+    <!--DiscoverPage-->
+    <string name="discover_page_keywords_title">KEYWORDS</string>
+    <string name="discover_page_keywords_hint">Movie or Tv show</string>
+    <string name="discover_page_genres_title">GENRES</string>
+    <string name="discover_page_none_genres_button">NONE</string>
+    <string name="discover_page_all_genres_button">ALL</string>
+    <string name="discover_page_runtime_title">RUNTIME</string>
+    <string name="discover_page_rating_title">RATING</string>
+    <string name="discover_page_years_start_title">FROM</string>
+    <string name="discover_page_years_end_title">TO</string>
+    <string name="discover_page_discover">Discover</string>
+    <string name="discover_page_reset">Reset</string>
     <!--ShowList-->
     <string name="show_list_no_shows_text">No results found</string>
     <!--ShowListPager-->
