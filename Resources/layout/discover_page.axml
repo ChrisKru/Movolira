@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
             android:theme="@style/ColoredButtonStyle"
-            android:drawableLeft="@drawable/ic_search_button"
+            android:drawableLeft="@drawable/ic_discover_button"
             android:text="@string/discover_page_discover"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/discover_page_reset_button"

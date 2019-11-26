@@ -159,7 +159,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="8dp"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_discover"
             app:layout_constraintLeft_toLeftOf="parent" />
         <TextView
             android:id="@+id/menu_discover_title"

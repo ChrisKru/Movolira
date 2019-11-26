@@ -15,11 +15,7 @@ namespace Movolira {
 		private const int HTTP_RETRY_DELAY = 500;
 
 
-
-
 		private static HttpClient HTTP_CLIENT;
-
-
 
 
 		private readonly Dictionary<int, string> _genre_list;
