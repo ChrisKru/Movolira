@@ -15,10 +15,15 @@ namespace Movolira {
 		private const int YEARS_MAX_VALUE = 2050;
 		private const int DEFAULT_YEARS_START_VALUE = 1990;
 		private const int DEFAULT_YEARS_END_VALUE = 2020;
+		private const int RATING_MIN_VALUE = 0;
+		private const int RATING_MAX_VALUE = 100;
+		private const int RUNTIME_MIN_VALUE = 0;
+		private const int RUNTIME_MAX_VALUE = 300;
 
 
 		private MainActivity _main_activity;
 		private Dictionary<string, string> _genre_ids;
+		private Bundle _frag_saved_state;
 
 
 		private View _layout;
@@ -40,8 +45,6 @@ namespace Movolira {
 
 		public override void OnAttach(Context activity) {
 			_main_activity = (MainActivity) activity;
-
-
 			base.OnAttach(activity);
 		}
 
@@ -52,12 +55,23 @@ namespace Movolira {
 			_layout = inflater.Inflate(Resource.Layout.discover_page, container, false);
 
 
-			Task.Run(() => buildGenreButtons(_layout, inflater, saved_instance_state));
-			buildRuntimeRange(_layout, saved_instance_state);
-			buildRatingRange(_layout, saved_instance_state);
-			buildYearsNumberPickers(_layout, saved_instance_state);
-			buildResetButton(_layout);
-			buildDiscoverButton(_layout);
+			if (_frag_saved_state != null) {
+				Task.Run(() => buildGenreButtons(_layout, inflater, _frag_saved_state));
+				buildRuntimeRange(_layout, _frag_saved_state);
+				buildRatingRange(_layout, _frag_saved_state);
+				buildResetButton(_layout);
+				buildDiscoverButton(_layout);
+				buildYearsNumberPickers(_layout, _frag_saved_state);
+			} else {
+				Task.Run(() => buildGenreButtons(_layout, inflater, saved_instance_state));
+				buildRuntimeRange(_layout, saved_instance_state);
+				buildRatingRange(_layout, saved_instance_state);
+				buildResetButton(_layout);
+				buildDiscoverButton(_layout);
+				buildYearsNumberPickers(_layout, saved_instance_state);
+			}
+			
+			
 
 
 			_main_activity.setToolbarTitle("Discover");
@@ -146,9 +160,10 @@ namespace Movolira {
 			RangeSliderControl runtime_range_slider =
 				discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_runtime_range_slider);
 			_runtime_range_view = discover_page_layout.FindViewById<TextView>(Resource.Id.discover_page_runtime_range);
-			runtime_range_slider.SetSelectedMaxValue(runtime_range_slider.AbsoluteMaxValue);
 			runtime_range_slider.NotifyWhileDragging = true;
-
+			runtime_range_slider.SetSelectedMinValue(RUNTIME_MIN_VALUE);
+			runtime_range_slider.SetSelectedMaxValue(RUNTIME_MAX_VALUE);
+			
 
 			if (saved_instance_state == null) {
 				_runtime_range_view.Text = runtime_range_slider.GetSelectedMinValue() + "-" + runtime_range_slider.GetSelectedMaxValue() + "min";
@@ -171,6 +186,9 @@ namespace Movolira {
 					discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_runtime_range_slider);
 				_runtime_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" + updated_range_slider.GetSelectedMaxValue() + "min";
 			};
+
+
+			
 		}
 
 
@@ -180,7 +198,8 @@ namespace Movolira {
 			RangeSliderControl rating_range_slider =
 				discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
 			_rating_range_view = discover_page_layout.FindViewById<TextView>(Resource.Id.discover_page_rating_range);
-			rating_range_slider.SetSelectedMaxValue(rating_range_slider.AbsoluteMaxValue);
+			rating_range_slider.SetSelectedMinValue(RATING_MIN_VALUE);
+			rating_range_slider.SetSelectedMaxValue(RATING_MAX_VALUE);
 			rating_range_slider.NotifyWhileDragging = true;
 
 
@@ -241,26 +260,35 @@ namespace Movolira {
 		private void buildResetButton(View discover_page_layout) {
 			Button reset_button = discover_page_layout.FindViewById<Button>(Resource.Id.discover_page_reset_button);
 			reset_button.Click += (sender, args) => {
-				foreach (ToggleButton genre_button in _genre_buttons) {
-					genre_button.Checked = true;
-				}
-
-
-				RangeSliderControl runtime_range_slider =
-					discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_runtime_range_slider);
-				runtime_range_slider.SetSelectedMaxValue(runtime_range_slider.AbsoluteMaxValue);
-				runtime_range_slider.SetSelectedMinValue(runtime_range_slider.AbsoluteMinValue);
-				_runtime_range_view.Text = runtime_range_slider.AbsoluteMinValue + "-" + runtime_range_slider.AbsoluteMaxValue + "min";
-
-
-				RangeSliderControl rating_range_slider =
-					discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
-				rating_range_slider.SetSelectedMaxValue(rating_range_slider.AbsoluteMaxValue);
-				rating_range_slider.SetSelectedMinValue(rating_range_slider.AbsoluteMinValue);
-				_rating_range_view.Text = rating_range_slider.AbsoluteMinValue + "-" + rating_range_slider.AbsoluteMaxValue;
-				_years_start_picker.Value = DEFAULT_YEARS_START_VALUE;
-				_years_end_picker.Value = DEFAULT_YEARS_END_VALUE;
+				resetOptions(discover_page_layout);
 			};
+		}
+
+
+
+
+		private void resetOptions(View discover_page_layout) {
+			foreach (ToggleButton genre_button in _genre_buttons) {
+				genre_button.Checked = true;
+			}
+
+
+			RangeSliderControl runtime_range_slider =
+				discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_runtime_range_slider);
+			runtime_range_slider.SetSelectedMaxValue(RUNTIME_MAX_VALUE);
+			runtime_range_slider.SetSelectedMinValue(RUNTIME_MIN_VALUE);
+			_runtime_range_view.Text = RUNTIME_MIN_VALUE + "-" + RUNTIME_MAX_VALUE + "min";
+
+
+			RangeSliderControl rating_range_slider =
+				discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
+			rating_range_slider.SetSelectedMaxValue(RATING_MAX_VALUE);
+			rating_range_slider.SetSelectedMinValue(RATING_MIN_VALUE);
+			_rating_range_view.Text = RATING_MIN_VALUE + "-" + RATING_MAX_VALUE;
+
+
+			_years_start_picker.Value = DEFAULT_YEARS_START_VALUE;
+			_years_end_picker.Value = DEFAULT_YEARS_END_VALUE;
 		}
 
 
@@ -311,6 +339,7 @@ namespace Movolira {
 				}
 
 
+				_frag_saved_state = getFragmentStateBundle(null);
 				_main_activity.changeContentFragment("discover", search_query);
 			};
 		}
@@ -318,7 +347,20 @@ namespace Movolira {
 
 
 
-		public override void OnSaveInstanceState(Bundle new_app_state) {
+		public override void OnSaveInstanceState(Bundle new_frag_state) {
+			getFragmentStateBundle(new_frag_state);
+			base.OnSaveInstanceState(new_frag_state);
+		}
+
+
+
+
+		private Bundle getFragmentStateBundle(Bundle new_frag_state) {
+			if (new_frag_state == null) {
+				new_frag_state = new Bundle();
+			}
+
+
 			var unchecked_buttons_indexes = new List<int>();
 			for (int i_genre_button = 0; i_genre_button < _genre_buttons.Count; ++i_genre_button) {
 				if (_genre_buttons[i_genre_button].Checked == false) {
@@ -331,16 +373,16 @@ namespace Movolira {
 			RangeSliderControl rating_range_slider = _layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
 
 
-			new_app_state.PutIntArray("unchecked_buttons_indexes", unchecked_buttons_indexes.ToArray());
-			new_app_state.PutFloat("runtime_range_min", runtime_range_slider.GetSelectedMinValue());
-			new_app_state.PutFloat("runtime_range_max", runtime_range_slider.GetSelectedMaxValue());
-			new_app_state.PutFloat("rating_range_min", rating_range_slider.GetSelectedMinValue());
-			new_app_state.PutFloat("rating_range_max", rating_range_slider.GetSelectedMaxValue());
-			new_app_state.PutInt("years_start_picker_value", _years_start_picker.Value);
-			new_app_state.PutInt("years_end_picker_value", _years_end_picker.Value);
+			new_frag_state.PutIntArray("unchecked_buttons_indexes", unchecked_buttons_indexes.ToArray());
+			new_frag_state.PutFloat("runtime_range_min", runtime_range_slider.GetSelectedMinValue());
+			new_frag_state.PutFloat("runtime_range_max", runtime_range_slider.GetSelectedMaxValue());
+			new_frag_state.PutFloat("rating_range_min", rating_range_slider.GetSelectedMinValue());
+			new_frag_state.PutFloat("rating_range_max", rating_range_slider.GetSelectedMaxValue());
+			new_frag_state.PutInt("years_start_picker_value", _years_start_picker.Value);
+			new_frag_state.PutInt("years_end_picker_value", _years_end_picker.Value);
 
 
-			base.OnSaveInstanceState(new_app_state);
+			return new_frag_state;
 		}
 	}
 }
