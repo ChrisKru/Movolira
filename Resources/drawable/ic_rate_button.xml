@@ -6,7 +6,6 @@
         android:width="33dp"
         android:height="33dp">
         <bitmap
-            android:src="@drawable/ic_star_full"
-            android:tint="@color/ic_rate_button_tint"/>
+            android:src="@drawable/ic_star_full"/>
     </item>
 </layer-list>

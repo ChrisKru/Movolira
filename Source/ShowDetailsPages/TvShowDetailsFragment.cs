@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
@@ -63,6 +62,8 @@ namespace Movolira {
 				buildCertificationView(layout);
 				buildRatingView(layout);
 				buildOverviewView(layout);
+				buildWatchlistButton(layout);
+				buildRatingButton(layout);
 				layout.FindViewById<View>(Resource.Id.tv_show_details_info).Visibility = ViewStates.Visible;
 				_main_activity.setIsLoading(false);
 			});
@@ -193,29 +194,51 @@ namespace Movolira {
 			vote_count_view.Text = _tv_show.Votes + " votes";
 
 
-			var rating_stars = new List<ImageView> {
-				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_1),
-				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_2),
-				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_3),
-				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_4),
-				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_5)
-			};
-			int i_rating_stars = 0;
-			int rating = (int) Math.Round(_tv_show.Rating);
+			layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_1).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			int rating = (int) Math.Floor(_tv_show.Rating);
 
 
-			while (rating >= 2) {
-				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_full);
-				rating -= 2;
-				++i_rating_stars;
+			if (rating >= 3) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_2).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 2) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_2).SetImageResource(Resource.Drawable.ic_star_crop_half);
 			}
 
 
-			while (rating >= 1) {
-				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_half);
-				--rating;
-				++i_rating_stars;
+			if (rating >= 5) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_3).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 4) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_3).SetImageResource(Resource.Drawable.ic_star_crop_half);
 			}
+
+
+			if (rating >= 7) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_4).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 6) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_4).SetImageResource(Resource.Drawable.ic_star_crop_half);
+			}
+
+			if (rating >= 9) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_5).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 8) {
+				layout.FindViewById<ImageView>(Resource.Id.tv_show_details_rating_star_5).SetImageResource(Resource.Drawable.ic_star_crop_half);
+			}
+		}
+
+
+
+
+		private void buildWatchlistButton(View layout) {
+			Button watchlist_button = layout.FindViewById<Button>(Resource.Id.tv_show_details_add_watchlist_button);
+			watchlist_button.SetOnClickListener(new WatchlistButtonClickListener(_main_activity, watchlist_button, _tv_show));
+		}
+
+
+
+
+		private void buildRatingButton(View layout) {
+			Button rating_button = layout.FindViewById<Button>(Resource.Id.tv_show_details_add_rating_button);
+			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity));
 		}
 
 

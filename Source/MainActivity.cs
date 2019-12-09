@@ -21,6 +21,7 @@ namespace Movolira {
 		WindowSoftInputMode = SoftInput.StateUnchanged | SoftInput.AdjustResize)]
 	public class MainActivity : AppCompatActivity {
 		public DataProvider DataProvider { get; private set; }
+		public UserData UserData { get; private set; }
 		public bool IsLoading { get; private set; }
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
@@ -132,11 +133,8 @@ namespace Movolira {
 
 		protected override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
-			if (saved_instance_state != null) {
-				DataProvider = JsonConvert.DeserializeObject<DataProvider>(saved_instance_state.GetString("DataProvider"));
-			} else {
-				DataProvider = new DataProvider();
-			}
+			DataProvider = new DataProvider();
+			UserData = new UserData();
 			SetContentView(Resource.Layout.main_activity);
 
 
@@ -195,14 +193,6 @@ namespace Movolira {
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
-		}
-
-
-
-
-		protected override void OnSaveInstanceState(Bundle new_app_state) {
-			new_app_state.PutString("DataProvider", JsonConvert.SerializeObject(DataProvider));
-			base.OnSaveInstanceState(new_app_state);
 		}
 
 

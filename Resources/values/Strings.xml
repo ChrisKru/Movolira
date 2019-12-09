@@ -31,8 +31,10 @@
     <string name="show_details_runtime_title">Runtime: </string>
     <string name="show_details_release_date_title">Released: </string>
     <string name="show_details_certification_title">Rated: </string>
-    <string name="show_details_add_watchlist_button_off">Add to Watchlist</string>
-    <string name="show_details_add_watchlist_button_on">In Watchlist</string>
-    <string name="show_details_add_rating_button_off">Rate Show</string>
-    <string name="show_details_add_rating_button_on">Rated</string>
+    <string name="show_details_add_watchlist_button">Add to Watchlist</string>
+    <string name="show_details_add_watchlist_button_added">In Watchlist</string>
+    <string name="show_details_add_rating_button">Rate Show</string>
+    <string name="rating_dialog_title">Rate Show</string>
+    <string name="rating_dialog_cancel_button">Cancel</string>
+    <string name="rating_dialog_rate_button">Rate</string>
 </resources>

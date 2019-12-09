@@ -2,6 +2,7 @@
 
 namespace Movolira {
 	public class Show {
+		public string Id { get; }
 		public ShowType Type { get; }
 		public string Title { get; }
 		public string[] Genres { get; }
@@ -12,7 +13,8 @@ namespace Movolira {
 
 
 		[JsonConstructor]
-		public Show(ShowType Type, string Title, string[] Genres, string PosterUrl, string BackdropUrl) {
+		public Show(string Id, ShowType Type, string Title, string[] Genres, string PosterUrl, string BackdropUrl) {
+			this.Id = Id;
 			this.Type = Type;
 			this.Title = Title;
 			this.Genres = Genres;

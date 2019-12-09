@@ -30,9 +30,8 @@
     <!--ShowDetails-->
     <color name="show_details_title">#232323</color>
     <color name="show_details_button_background">#00000000</color>
-    <color name="show_details_button_text_on">#220024</color>
-    <color name="show_details_button_text_off">#750031</color>
-    <color name="ic_watchlist_button_tint_on">#636363</color>
-    <color name="ic_watchlist_button_tint_off">#750031</color>
-    <color name="ic_rate_button_tint">#750031</color>
+    <color name="show_details_button_text">#750031</color>
+    <color name="show_details_button_text_set">#232323</color>
+    <color name="ic_watchlist_button_tint">#750031</color>
+    <color name="rating_dialog_title">#232323</color>
 </resources>

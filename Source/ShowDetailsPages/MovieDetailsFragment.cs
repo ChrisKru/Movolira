@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
@@ -63,6 +62,7 @@ namespace Movolira {
 				buildCertificationView(layout);
 				buildRatingView(layout);
 				buildOverviewView(layout);
+				buildWatchlistButton(layout);
 				buildRatingButton(layout);
 				layout.FindViewById<View>(Resource.Id.movie_details_info).Visibility = ViewStates.Visible;
 				_main_activity.setIsLoading(false);
@@ -83,8 +83,6 @@ namespace Movolira {
 				Glide.With(_main_activity).Load(_movie.BackdropUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Apply(image_load_options)
 					.Thumbnail(Glide.With(_main_activity).Load(_movie.BackdropUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
 						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(backdrop_view);
-
-
 			} else {
 				Glide.With(_main_activity).Load(_movie.PosterUrl).Transition(DrawableTransitionOptions.WithCrossFade()).Apply(image_load_options)
 					.Thumbnail(Glide.With(_main_activity).Load(_movie.PosterUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
@@ -100,8 +98,6 @@ namespace Movolira {
 				TextView title_view = layout.FindViewById<TextView>(Resource.Id.movie_details_title);
 				title_view.Text = _movie.Title;
 				_main_activity.setToolbarTitle(_movie.Title);
-
-
 			} else {
 				_main_activity.setToolbarTitle("Movolira");
 			}
@@ -200,28 +196,34 @@ namespace Movolira {
 			vote_count_view.Text = _movie.Votes + " votes";
 
 
-			var rating_stars = new List<ImageView> {
-				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_1),
-				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_2),
-				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_3),
-				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_4),
-				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_5)
-			};
-			int rating = (int) Math.Round(_movie.Rating);
-			int i_rating_stars = 0;
+			layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_1).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			int rating = (int) Math.Floor(_movie.Rating);
 
 
-			while (rating >= 2) {
-				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_full);
-				rating -= 2;
-				++i_rating_stars;
+			if (rating >= 3) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_2).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 2) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_2).SetImageResource(Resource.Drawable.ic_star_crop_half);
 			}
 
 
-			while (rating >= 1) {
-				rating_stars[i_rating_stars].SetImageResource(Resource.Drawable.ic_star_half);
-				--rating;
-				++i_rating_stars;
+			if (rating >= 5) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_3).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 4) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_3).SetImageResource(Resource.Drawable.ic_star_crop_half);
+			}
+
+
+			if (rating >= 7) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_4).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 6) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_4).SetImageResource(Resource.Drawable.ic_star_crop_half);
+			}
+
+			if (rating >= 9) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_5).SetImageResource(Resource.Drawable.ic_star_crop_full);
+			} else if (rating >= 8) {
+				layout.FindViewById<ImageView>(Resource.Id.movie_details_rating_star_5).SetImageResource(Resource.Drawable.ic_star_crop_half);
 			}
 		}
 
@@ -238,9 +240,17 @@ namespace Movolira {
 
 
 
+		private void buildWatchlistButton(View layout) {
+			Button watchlist_button = layout.FindViewById<Button>(Resource.Id.movie_details_add_watchlist_button);
+			watchlist_button.SetOnClickListener(new WatchlistButtonClickListener(_main_activity, watchlist_button, _movie));
+		}
+
+
+
+
 		private void buildRatingButton(View layout) {
-			ToggleButton rating_button = layout.FindViewById<ToggleButton>(Resource.Id.movie_details_add_rating_button);
-			rating_button.SetOnCheckedChangeListener(new RatingButtonToggledListener());
+			Button rating_button = layout.FindViewById<Button>(Resource.Id.movie_details_add_rating_button);
+			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity));
 		}
 	}
 }

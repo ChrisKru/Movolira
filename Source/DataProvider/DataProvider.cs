@@ -22,8 +22,7 @@ namespace Movolira {
 
 
 
-
-		[JsonConstructor]
+		
 		public DataProvider() {
 			_genre_list = new Dictionary<int, string>();
 
@@ -345,10 +344,12 @@ namespace Movolira {
 				if (details_json["data"]["episode_run_time"].Type != JTokenType.Null) {
 					IList<JToken> episode_run_times = details_json["data"]["episode_run_time"].Children().ToList();
 					tv_show.Runtime = 0;
-					foreach (JToken episode_run_time in episode_run_times) {
-						tv_show.Runtime += episode_run_time.Value<int>();
+					if (episode_run_times.Count > 0) {
+						foreach (JToken episode_run_time in episode_run_times) {
+							tv_show.Runtime += episode_run_time.Value<int>();
+						}
+						tv_show.Runtime /= episode_run_times.Count();
 					}
-					tv_show.Runtime /= episode_run_times.Count();
 				}
 			}
 
