@@ -34,7 +34,7 @@ namespace Movolira {
 
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			View layout = inflater.Inflate(Resource.Layout.movie_details, container, false);
+			View layout = inflater.Inflate(Resource.Layout.movie_details_page, container, false);
 			LayoutTransition layout_transition = new LayoutTransition();
 			layout.FindViewById<ViewGroup>(Resource.Id.movie_details_content).LayoutTransition = layout_transition;
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
@@ -72,13 +73,15 @@ namespace Movolira {
 			Fragment content_fragment;
 			if (type == "movies" || type == "tv_shows" || type == "search" || type == "discover" && subtype != "") {
 				content_fragment = new ShowListFragment();
-			} else {
+			} else if(type == "discover" && subtype == ""){
 				content_fragment = new DiscoverFragment();
+			} else {
+				content_fragment = new WatchlistFragment();
 			}
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "") {
+			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type=="watchlist") {
 				if (SupportFragmentManager.BackStackEntryCount > 0) {
 					RunOnUiThread(() => { setIsLoading(true); });
 					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
@@ -121,7 +124,7 @@ namespace Movolira {
 			}
 
 
-			if (type == "discover") {
+			if (type == "discover" || type == "watchlist") {
 				_toolbar.Title = title_a;
 			} else {
 				_toolbar.Title = title_a + ": " + title_b;
@@ -133,8 +136,14 @@ namespace Movolira {
 
 		protected override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
+			if (saved_instance_state != null) {
+				UserData = new UserData(JsonConvert.DeserializeObject<Dictionary<string, Show>>(saved_instance_state.GetString("watchlist")));
+			} else {
+				UserData = new UserData();
+			}
+
+
 			DataProvider = new DataProvider();
-			UserData = new UserData();
 			SetContentView(Resource.Layout.main_activity);
 
 
@@ -193,6 +202,14 @@ namespace Movolira {
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
+		}
+
+
+
+
+		protected override void OnSaveInstanceState(Bundle new_app_state) {
+			new_app_state.PutString("watchlist", JsonConvert.SerializeObject(UserData.Watchlist));
+			base.OnSaveInstanceState(new_app_state);
 		}
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Movolira {
 	public class UserData {
@@ -6,9 +7,16 @@ namespace Movolira {
 
 
 
-
+		
 		public UserData() {
 			Watchlist = new Dictionary<string, Show>();
+		}
+
+
+
+
+		public UserData(Dictionary<string, Show> watchlist) {
+			Watchlist = watchlist;
 		}
 
 

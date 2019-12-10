@@ -34,4 +34,7 @@
     <color name="show_details_button_text_set">#232323</color>
     <color name="ic_watchlist_button_tint">#750031</color>
     <color name="rating_dialog_title">#232323</color>
+    <!--Watchlist-->
+    <color name="watchlist_entry">#232323</color>
+    <color name="watchlist_entry_divider">#7d7d7d</color>
 </resources>

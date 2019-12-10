@@ -95,6 +95,7 @@
     <Compile Include="Source\TvShow.cs" />
     <Compile Include="Source\ShowDetailsPages\TvShowDetailsFragment.cs" />
     <Compile Include="Source\UserData.cs" />
+    <Compile Include="Source\WatchlistPage\WatchlistFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml">
@@ -602,12 +603,12 @@
     <Folder Include="Assets\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\movie_details.axml">
+    <AndroidResource Include="Resources\layout\movie_details_page.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\show_list.axml">
+    <AndroidResource Include="Resources\layout\show_list_page.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -729,7 +730,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout-land\movie_details.axml">
+    <AndroidResource Include="Resources\layout-land\movie_details_page.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -741,12 +742,12 @@
     <AndroidResource Include="Resources\drawable\ic_next_button.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\tv_show_details.axml">
+    <AndroidResource Include="Resources\layout\tv_show_details_page.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout-land\tv_show_details.axml">
+    <AndroidResource Include="Resources\layout-land\tv_show_details_page.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -849,6 +850,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_star_crop_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\watchlist_page.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\watchlist_page_entry.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
