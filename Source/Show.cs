@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Realms;
 
 namespace Movolira {
 	public class Show {
@@ -21,11 +22,37 @@ namespace Movolira {
 			this.PosterUrl = PosterUrl;
 			this.BackdropUrl = BackdropUrl;
 		}
+
+
+
+
+		public ShowSerialized serialize() {
+			ShowSerialized show = new ShowSerialized();
+			show.Id = Id;
+			show.Type = Type.ToString();
+			show.Title = Title;
+			show.Genre = Genres[0];
+
+
+			return show;
+		}
 	}
+
+
 
 
 	public enum ShowType {
 		Movie,
 		TvShow
+	}
+
+
+
+
+	public class ShowSerialized : RealmObject {
+		public string Id { get; set; }
+		public string Type { get; set; }
+		public string Title { get; set; }
+		public string Genre { get; set; }
 	}
 }

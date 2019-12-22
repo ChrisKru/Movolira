@@ -136,11 +136,7 @@ namespace Movolira {
 
 		protected override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
-			if (saved_instance_state != null) {
-				UserData = new UserData(JsonConvert.DeserializeObject<Dictionary<string, Show>>(saved_instance_state.GetString("watchlist")));
-			} else {
-				UserData = new UserData();
-			}
+			UserData = new UserData();
 
 
 			DataProvider = new DataProvider();
@@ -202,14 +198,6 @@ namespace Movolira {
 			SearchView search_view = (SearchView) search_item.ActionView;
 			search_view.QueryHint = "Movie or Tv show";
 			search_view.SetOnQueryTextListener(new SearchQueryTextListener(this, search_item));
-		}
-
-
-
-
-		protected override void OnSaveInstanceState(Bundle new_app_state) {
-			new_app_state.PutString("watchlist", JsonConvert.SerializeObject(UserData.Watchlist));
-			base.OnSaveInstanceState(new_app_state);
 		}
 
 
