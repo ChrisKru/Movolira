@@ -340,7 +340,7 @@ namespace Movolira {
 
 
 				_frag_saved_state = getFragmentStateBundle(null);
-				_main_activity.changeContentFragment("discover", search_query);
+				Task.Run(() => _main_activity.changeContentFragment("discover", search_query));
 			};
 		}
 

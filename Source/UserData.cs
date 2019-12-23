@@ -4,7 +4,7 @@ using Realms;
 
 namespace Movolira {
 	public class UserData {
-		private Realm realm_db;
+		private readonly Realm realm_db;
 
 
 
@@ -24,8 +24,7 @@ namespace Movolira {
 
 
 		public void removeFromWatchlist(string show_id) {
-			var matching_shows = realm_db.All<ShowSerialized>()
-				.Where(show => show.Id == show_id);
+			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
 
 
 			realm_db.Write(() => realm_db.RemoveRange(matching_shows));
@@ -42,8 +41,7 @@ namespace Movolira {
 
 
 		public bool isShowInWatchlist(string show_id) {
-			var matching_shows = realm_db.All<ShowSerialized>()
-				.Where(show => show.Id == show_id);
+			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
 
 
 			if (matching_shows.Any()) {

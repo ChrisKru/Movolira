@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
@@ -11,7 +10,6 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SearchView = Android.Support.V7.Widget.SearchView;
@@ -73,7 +71,7 @@ namespace Movolira {
 			Fragment content_fragment;
 			if (type == "movies" || type == "tv_shows" || type == "search" || type == "discover" && subtype != "") {
 				content_fragment = new ShowListFragment();
-			} else if(type == "discover" && subtype == ""){
+			} else if (type == "discover" && subtype == "") {
 				content_fragment = new DiscoverFragment();
 			} else {
 				content_fragment = new WatchlistFragment();
@@ -81,7 +79,7 @@ namespace Movolira {
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type=="watchlist") {
+			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type == "watchlist") {
 				if (SupportFragmentManager.BackStackEntryCount > 0) {
 					RunOnUiThread(() => { setIsLoading(true); });
 					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);

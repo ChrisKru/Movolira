@@ -40,10 +40,7 @@ namespace Movolira {
 			_movie = JsonConvert.DeserializeObject<Movie>(Arguments.GetString("movie"));
 
 
-			buildBackdropView(layout);
 			Task.Run(() => buildMovieData(layout));
-
-
 			return layout;
 		}
 
@@ -55,10 +52,11 @@ namespace Movolira {
 
 
 			_main_activity.RunOnUiThread(() => {
-				buildRuntimeView(layout);
+				buildBackdropView(layout);
 				buildTitleView(layout);
 				buildGenresView(layout);
 				buildReleaseDateView(layout);
+				buildRuntimeView(layout);
 				buildCertificationView(layout);
 				buildRatingView(layout);
 				buildOverviewView(layout);

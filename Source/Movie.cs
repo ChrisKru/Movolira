@@ -2,21 +2,44 @@
 
 namespace Movolira {
 	public class Movie : Show {
-		
-		public string ReleaseDate { get; }
-		public double Rating { get; }
-		public int Votes { get; }
-		public string Overview { get; }
+		public string ReleaseDate { get; set; }
+		public double Rating { get; set; }
+		public int Votes { get; set; }
+		public string Overview { get; set; }
 		public int Runtime { get; set; }
 		public string Certification { get; set; }
 
 
 
 
+		public static Movie deserialize(ShowSerialized show) {
+			ShowType type;
+			if (show.Type == ShowType.Movie.ToString()) {
+				type = ShowType.Movie;
+			} else {
+				type = ShowType.TvShow;
+			}
+
+
+			return new Movie(show.Id, type, show.Title);
+		}
+
+
+
+
+		public Movie(string id, ShowType type, string title) : base(id, type, title) {
+			/*ReleaseDate = "";
+			Rating = 0;
+			Votes = 0;
+			Overview = "";*/
+		}
+
+
+
+
 		[JsonConstructor]
-		public Movie(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string ReleaseDate, double Rating, int Votes, string Overview) 
-			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) 
-		{
+		public Movie(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string ReleaseDate, double Rating,
+		             int Votes, string Overview) : base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) {
 			this.ReleaseDate = ReleaseDate;
 			this.Rating = Rating;
 			this.Votes = Votes;

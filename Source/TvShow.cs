@@ -2,12 +2,37 @@
 
 namespace Movolira {
 	public class TvShow : Show {
-		public string AirDate { get; }
-		public double Rating { get; }
-		public int Votes { get; }
-		public string Overview { get; }
+		public string AirDate { get; set; }
+		public double Rating { get; set; }
+		public int Votes { get; set; }
+		public string Overview { get; set; }
 		public int Runtime { get; set; }
 		public string Certification { get; set; }
+
+
+
+
+		public static TvShow deserialize(ShowSerialized show) {
+			ShowType type;
+			if (show.Type == ShowType.Movie.ToString()) {
+				type = ShowType.Movie;
+			} else {
+				type = ShowType.TvShow;
+			}
+
+
+			return new TvShow(show.Id, type, show.Title);
+		}
+
+
+
+
+		public TvShow(string id, ShowType type, string title) : base(id, type, title) {
+			AirDate = "";
+			Rating = 0;
+			Votes = 0;
+			Overview = "";
+		}
 
 
 

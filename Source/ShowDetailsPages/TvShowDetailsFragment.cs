@@ -40,7 +40,7 @@ namespace Movolira {
 			_tv_show = JsonConvert.DeserializeObject<TvShow>(Arguments.GetString("tv_show"));
 
 
-			buildBackdropView(layout);
+			
 			Task.Run(() => buildTvShowData(layout));
 
 
@@ -55,10 +55,11 @@ namespace Movolira {
 
 
 			_main_activity.RunOnUiThread(() => {
-				buildRuntimeView(layout);
+				buildBackdropView(layout);
 				buildTitleView(layout);
 				buildGenresView(layout);
 				buildAirDateView(layout);
+				buildRuntimeView(layout);
 				buildCertificationView(layout);
 				buildRatingView(layout);
 				buildOverviewView(layout);

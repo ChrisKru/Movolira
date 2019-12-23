@@ -6,9 +6,21 @@ namespace Movolira {
 		public string Id { get; }
 		public ShowType Type { get; }
 		public string Title { get; }
-		public string[] Genres { get; }
+		public string[] Genres { get; set; }
 		public string PosterUrl { get; set; }
 		public string BackdropUrl { get; set; }
+
+
+
+
+		public Show(string id, ShowType type, string title) {
+			Id = id;
+			Type = type;
+			Title = title;
+			/*Genres = new string[0];
+			PosterUrl = "";
+			BackdropUrl = "";*/
+		}
 
 
 
@@ -32,6 +44,11 @@ namespace Movolira {
 			show.Type = Type.ToString();
 			show.Title = Title;
 			show.Genre = Genres[0];
+
+
+			if (show.Genre == "Science Fiction") {
+				show.Genre = "Sci-Fi";
+			}
 
 
 			return show;

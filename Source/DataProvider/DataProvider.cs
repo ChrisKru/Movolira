@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Movolira {
@@ -22,7 +21,7 @@ namespace Movolira {
 
 
 
-		
+
 		public DataProvider() {
 			_genre_list = new Dictionary<int, string>();
 
@@ -188,6 +187,48 @@ namespace Movolira {
 			}
 
 
+			if (movie.Genres == null) {
+				var movie_genres = new List<string>();
+				if (doesJTokenContainKey(details_json["data"], "genres")) {
+					IList<JToken> genres = details_json["data"]["genres"].Children().ToList();
+					foreach (JToken genre in genres) {
+						movie_genres.Add(_genre_list[genre["id"].Value<int>()]);
+					}
+				}
+				movie.Genres = movie_genres.ToArray();
+
+
+				if (doesJTokenContainKey(details_json["data"], "release_date")) {
+					movie.ReleaseDate = details_json["data"]["release_date"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "vote_average")) {
+					movie.Rating = details_json["data"]["vote_average"].Value<double>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "vote_count")) {
+					movie.Votes = details_json["data"]["vote_count"].Value<int>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "overview")) {
+					movie.Overview = details_json["data"]["overview"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "poster_path")) {
+					movie.PosterUrl = "http://image.tmdb.org/t/p/w500/" + details_json["data"]["poster_path"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "backdrop_path")) {
+					movie.BackdropUrl = "http://image.tmdb.org/t/p/w780/" + details_json["data"]["backdrop_path"].Value<string>();
+				}
+			}
+
+
 			if (doesJTokenContainKey(details_json["data"], "runtime")) {
 				movie.Runtime = details_json["data"]["runtime"].Value<int>();
 			}
@@ -337,6 +378,48 @@ namespace Movolira {
 			JObject details_json = await details_task;
 			if (!doesJsonContainData(details_json)) {
 				return;
+			}
+
+
+			if (tv_show.Genres == null) {
+				var tv_show_genres = new List<string>();
+				if (doesJTokenContainKey(details_json["data"], "genres")) {
+					IList<JToken> genres = details_json["data"]["genres"].Children().ToList();
+					foreach (JToken genre in genres) {
+						tv_show_genres.Add(_genre_list[genre["id"].Value<int>()]);
+					}
+				}
+				tv_show.Genres = tv_show_genres.ToArray();
+
+
+				if (doesJTokenContainKey(details_json["data"], "first_air_date")) {
+					tv_show.AirDate = details_json["data"]["first_air_date"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "vote_average")) {
+					tv_show.Rating = details_json["data"]["vote_average"].Value<double>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "vote_count")) {
+					tv_show.Votes = details_json["data"]["vote_count"].Value<int>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "overview")) {
+					tv_show.Overview = details_json["data"]["overview"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "poster_path")) {
+					tv_show.PosterUrl = "http://image.tmdb.org/t/p/w500/" + details_json["data"]["poster_path"].Value<string>();
+				}
+
+
+				if (doesJTokenContainKey(details_json["data"], "backdrop_path")) {
+					tv_show.BackdropUrl = "http://image.tmdb.org/t/p/w780/" + details_json["data"]["backdrop_path"].Value<string>();
+				}
 			}
 
 

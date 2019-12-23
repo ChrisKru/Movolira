@@ -1,17 +1,15 @@
-﻿using System;
-using Android.Content.Res;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
-using Object = Java.Lang.Object;
+using Java.Lang;
 
 namespace Movolira {
 	internal class WatchlistButtonClickListener : Object, View.IOnClickListener {
-		private MainActivity _main_activity;
-		private Button _watchlist_button;
-		private Show _show;
-		private bool _is_show_watchlisted = false;
+		private readonly MainActivity _main_activity;
+		private readonly Button _watchlist_button;
+		private readonly Show _show;
+		private bool _is_show_watchlisted;
 
 
 
@@ -45,12 +43,10 @@ namespace Movolira {
 		private void toggleButtonState() {
 			if (_is_show_watchlisted) {
 				_watchlist_button.Text = _main_activity.GetString(Resource.String.show_details_add_watchlist_button_added);
-				_watchlist_button.SetTextColor(new Color(
-					ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text_set)));
+				_watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text_set)));
 			} else {
 				_watchlist_button.Text = _main_activity.GetString(Resource.String.show_details_add_watchlist_button);
-				_watchlist_button.SetTextColor(new Color(
-					ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text)));
+				_watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text)));
 			}
 		}
 	}

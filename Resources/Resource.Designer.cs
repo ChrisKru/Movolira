@@ -6060,11 +6060,11 @@ namespace Movolira
 			// aapt resource value: 0x7f0b0139
 			public const int visible = 2131427641;
 			
-			// aapt resource value: 0x7f0b0138
-			public const int watchlist_entry_genre = 2131427640;
-			
 			// aapt resource value: 0x7f0b0137
-			public const int watchlist_entry_title = 2131427639;
+			public const int watchlist_entry_genre = 2131427639;
+			
+			// aapt resource value: 0x7f0b0138
+			public const int watchlist_entry_title = 2131427640;
 			
 			// aapt resource value: 0x7f0b0135
 			public const int watchlist_page_entries = 2131427637;
