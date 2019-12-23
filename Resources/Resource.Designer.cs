@@ -6763,8 +6763,8 @@ namespace Movolira
 			// aapt resource value: 0x7f0c0162
 			public const int Animation_Design_BottomSheetDialog = 2131493218;
 			
-			// aapt resource value: 0x7f0c01f4
-			public const int AppTheme = 2131493364;
+			// aapt resource value: 0x7f0c01f5
+			public const int AppTheme = 2131493365;
 			
 			// aapt resource value: 0x7f0c0092
 			public const int Base_AlertDialog_AppCompat = 2131493010;
@@ -7339,11 +7339,11 @@ namespace Movolira
 			// aapt resource value: 0x7f0c0003
 			public const int CardView_Light = 2131492867;
 			
-			// aapt resource value: 0x7f0c01f5
-			public const int ColoredButtonStyle = 2131493365;
-			
 			// aapt resource value: 0x7f0c01f6
-			public const int ColoredSecondaryButtonStyle = 2131493366;
+			public const int ColoredButtonStyle = 2131493366;
+			
+			// aapt resource value: 0x7f0c01f7
+			public const int ColoredSecondaryButtonStyle = 2131493367;
 			
 			// aapt resource value: 0x7f0c0073
 			public const int Platform_AppCompat = 2131492979;
@@ -7890,6 +7890,9 @@ namespace Movolira
 			
 			// aapt resource value: 0x7f0c01be
 			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131493310;
+			
+			// aapt resource value: 0x7f0c01f4
+			public const int ToolbarTitleText = 2131493364;
 			
 			// aapt resource value: 0x7f0c010e
 			public const int Widget_AppCompat_ActionBar = 2131493134;

@@ -6,6 +6,7 @@
     android:id="@+id/main_activity_toolbar"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    app:titleTextAppearance="@style/ToolbarTitleText"
     android:fitsSystemWindows="true"
     android:minHeight="?android:attr/actionBarSize"
     android:background="?android:attr/colorPrimary"

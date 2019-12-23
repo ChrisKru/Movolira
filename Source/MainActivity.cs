@@ -147,6 +147,9 @@ namespace Movolira {
 
 
 			_toolbar = FindViewById<Toolbar>(Resource.Id.main_activity_toolbar);
+			if (saved_instance_state != null) {
+				_toolbar.Title = saved_instance_state.GetString("toolbar_title");
+			}
 			SetSupportActionBar(_toolbar);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
@@ -204,6 +207,14 @@ namespace Movolira {
 		protected override void OnPostCreate(Bundle saved_instance_state) {
 			_drawer_toggle.SyncState();
 			base.OnPostCreate(saved_instance_state);
+		}
+
+
+
+
+		protected override void OnSaveInstanceState(Bundle saved_instance_state) {
+			saved_instance_state.PutString("toolbar_title", _toolbar.Title);
+			base.OnSaveInstanceState(saved_instance_state);
 		}
 
 
