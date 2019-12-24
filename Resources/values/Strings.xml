@@ -11,6 +11,7 @@
     <string name="menu_tv_shows_top_rated">Top Rated</string>
     <string name="menu_discover">Discover</string>
     <string name="menu_watchlist">Watchlist</string>
+    <string name="menu_rated_shows">Rated</string>
     <!--DiscoverPage-->
     <string name="discover_page_keywords_title">KEYWORDS</string>
     <string name="discover_page_keywords_hint">Movie or Tv show</string>

@@ -248,7 +248,7 @@ namespace Movolira {
 
 		private void buildRatingButton(View layout) {
 			Button rating_button = layout.FindViewById<Button>(Resource.Id.movie_details_add_rating_button);
-			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity));
+			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity, rating_button, _movie));
 		}
 	}
 }

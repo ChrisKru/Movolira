@@ -40,7 +40,7 @@ namespace Movolira {
 			_tv_show = JsonConvert.DeserializeObject<TvShow>(Arguments.GetString("tv_show"));
 
 
-			
+
 			Task.Run(() => buildTvShowData(layout));
 
 
@@ -239,7 +239,7 @@ namespace Movolira {
 
 		private void buildRatingButton(View layout) {
 			Button rating_button = layout.FindViewById<Button>(Resource.Id.tv_show_details_add_rating_button);
-			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity));
+			rating_button.SetOnClickListener(new RatingButtonClickListener(_main_activity, rating_button, _tv_show));
 		}
 
 

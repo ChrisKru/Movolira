@@ -1,19 +1,26 @@
 ﻿using System;
 using Android.App;
+using Android.Provider;
 using Android.Views;
 using Android.Widget;
 
 namespace Movolira {
 	internal class RatingDialog {
+		public event EventHandler<int> RatedEvent;
+
+
 		private AlertDialog _dialog;
 		private View _layout;
-		private MainActivity _main_activity;
+		private readonly MainActivity _main_activity;
+		private readonly Show _show;
+		private int _current_rating = 3;
 
 
 
 
-		public RatingDialog(MainActivity main_activity) {
+		public RatingDialog(MainActivity main_activity, Show show) {
 			_main_activity = main_activity;
+			_show = show;
 			buildDialog();
 		}
 
@@ -51,6 +58,8 @@ namespace Movolira {
 
 
 		private void OnRateButtonClick(object sender, EventArgs args) {
+			_main_activity.UserData.addToRatedShows(_show, _current_rating);
+			RatedEvent.Invoke(this, _current_rating);
 			_dialog.Hide();
 		}
 
@@ -59,6 +68,7 @@ namespace Movolira {
 
 		private void OnRatingStar1Click(object sender, EventArgs args) {
 			toggleRatingStars(1);
+			_current_rating = 1;
 		}
 
 
@@ -66,6 +76,7 @@ namespace Movolira {
 
 		private void OnRatingStar2Click(object sender, EventArgs args) {
 			toggleRatingStars(2);
+			_current_rating = 2;
 		}
 
 
@@ -73,6 +84,7 @@ namespace Movolira {
 
 		private void OnRatingStar3Click(object sender, EventArgs args) {
 			toggleRatingStars(3);
+			_current_rating = 3;
 		}
 
 
@@ -80,6 +92,7 @@ namespace Movolira {
 
 		private void OnRatingStar4Click(object sender, EventArgs args) {
 			toggleRatingStars(4);
+			_current_rating = 4;
 		}
 
 
@@ -87,6 +100,7 @@ namespace Movolira {
 
 		private void OnRatingStar5Click(object sender, EventArgs args) {
 			toggleRatingStars(5);
+			_current_rating = 5;
 		}
 
 

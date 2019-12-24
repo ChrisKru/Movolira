@@ -73,13 +73,15 @@ namespace Movolira {
 				content_fragment = new ShowListFragment();
 			} else if (type == "discover" && subtype == "") {
 				content_fragment = new DiscoverFragment();
-			} else {
+			} else if (type == "watchlist"){
 				content_fragment = new WatchlistFragment();
+			} else {
+				content_fragment = new RatedShowsFragment();
 			}
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type == "watchlist") {
+			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type == "watchlist" || type == "rated_shows") {
 				if (SupportFragmentManager.BackStackEntryCount > 0) {
 					RunOnUiThread(() => { setIsLoading(true); });
 					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);

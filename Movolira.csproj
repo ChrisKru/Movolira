@@ -75,6 +75,7 @@
     <Compile Include="Source\Interfaces\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
+    <Compile Include="Source\RatedShowsPage\RatedShowsFragment.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
     <Compile Include="Source\Show.cs" />
     <Compile Include="Source\ShowDetailsPages\RatingButtonClickListener.cs" />
@@ -861,6 +862,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\watchlist_page_entry.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\rated_shows_page.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\rated_shows_page_entry.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

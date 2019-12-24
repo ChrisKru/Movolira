@@ -17,9 +17,6 @@ namespace Movolira {
 			Id = id;
 			Type = type;
 			Title = title;
-			/*Genres = new string[0];
-			PosterUrl = "";
-			BackdropUrl = "";*/
 		}
 
 
@@ -71,5 +68,15 @@ namespace Movolira {
 		public string Type { get; set; }
 		public string Title { get; set; }
 		public string Genre { get; set; }
+	}
+
+
+
+
+	public class RatedShowSerialized : RealmObject {
+		public string Id { get; set; }
+		public string Type { get; set; }
+		public string Title { get; set; }
+		public int Rating { get; set; }
 	}
 }

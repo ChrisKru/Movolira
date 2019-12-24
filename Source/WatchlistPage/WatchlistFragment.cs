@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
@@ -67,8 +66,6 @@ namespace Movolira {
 				details_fragment = new MovieDetailsFragment();
 				Movie movie = Movie.deserialize(show);
 				fragment_args.PutString("movie", JsonConvert.SerializeObject(movie));
-
-
 			} else {
 				details_fragment = new TvShowDetailsFragment();
 				TvShow tv_show = TvShow.deserialize(show);
@@ -79,7 +76,6 @@ namespace Movolira {
 			details_fragment.Arguments = fragment_args;
 			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
-
 		}
 	}
 }

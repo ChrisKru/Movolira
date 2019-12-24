@@ -27,6 +27,21 @@ namespace Movolira {
 
 
 
+		public static TvShow deserialize(RatedShowSerialized show) {
+			ShowType type;
+			if (show.Type == ShowType.Movie.ToString()) {
+				type = ShowType.Movie;
+			} else {
+				type = ShowType.TvShow;
+			}
+
+
+			return new TvShow(show.Id, type, show.Title);
+		}
+
+
+
+
 		public TvShow(string id, ShowType type, string title) : base(id, type, title) {
 			AirDate = "";
 			Rating = 0;
@@ -38,9 +53,8 @@ namespace Movolira {
 
 
 		[JsonConstructor]
-		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string AirDate, double Rating, int Votes, string Overview) 
-			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) 
-		{
+		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string AirDate, double Rating,
+		              int Votes, string Overview) : base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) {
 			this.AirDate = AirDate;
 			this.Rating = Rating;
 			this.Votes = Votes;

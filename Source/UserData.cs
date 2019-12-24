@@ -23,8 +23,35 @@ namespace Movolira {
 
 
 
+		public void addToRatedShows(Show show, int rating) {
+			ShowSerialized serialized_show = show.serialize();
+			RatedShowSerialized rated_show = new RatedShowSerialized();
+
+
+			rated_show.Id = serialized_show.Id;
+			rated_show.Type = serialized_show.Type;
+			rated_show.Title = serialized_show.Title;
+			rated_show.Rating = rating;
+
+
+			realm_db.Write(() => realm_db.Add(rated_show));
+		}
+
+
+
+
 		public void removeFromWatchlist(string show_id) {
 			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
+
+
+			realm_db.Write(() => realm_db.RemoveRange(matching_shows));
+		}
+
+
+
+
+		public void removeFromRatedShows(string show_id) {
+			var matching_shows = realm_db.All<RatedShowSerialized>().Where(show => show.Id == show_id);
 
 
 			realm_db.Write(() => realm_db.RemoveRange(matching_shows));
@@ -40,6 +67,13 @@ namespace Movolira {
 
 
 
+		public List<RatedShowSerialized> getRatedShows() {
+			return realm_db.All<RatedShowSerialized>().ToList();
+		}
+
+
+
+
 		public bool isShowInWatchlist(string show_id) {
 			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
 
@@ -48,6 +82,19 @@ namespace Movolira {
 				return true;
 			}
 			return false;
+		}
+
+
+
+
+		public int getShowRating(string show_id) {
+			var matching_shows = realm_db.All<RatedShowSerialized>().Where(show => show.Id == show_id);
+
+
+			if (!matching_shows.Any()) {
+				return 0;
+			}
+			return matching_shows.First().Rating;
 		}
 	}
 }

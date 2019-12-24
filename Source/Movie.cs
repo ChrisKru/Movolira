@@ -27,6 +27,21 @@ namespace Movolira {
 
 
 
+		public static Movie deserialize(RatedShowSerialized show) {
+			ShowType type;
+			if (show.Type == ShowType.Movie.ToString()) {
+				type = ShowType.Movie;
+			} else {
+				type = ShowType.TvShow;
+			}
+
+
+			return new Movie(show.Id, type, show.Title);
+		}
+
+
+
+
 		public Movie(string id, ShowType type, string title) : base(id, type, title) {
 			/*ReleaseDate = "";
 			Rating = 0;
