@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Linq;
+using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
@@ -26,6 +27,16 @@ namespace Movolira {
 
 			ViewGroup entries_layout = layout.FindViewById<ViewGroup>(Resource.Id.rated_shows_page_entries);
 			var rated_shows = _main_activity.UserData.getRatedShows();
+
+
+			TextView list_empty_text = layout.FindViewById<TextView>(Resource.Id.rated_shows_page_empty_text);
+			if (rated_shows.Any()) {
+				list_empty_text.Visibility = ViewStates.Gone;
+			} else {
+				list_empty_text.Visibility = ViewStates.Visible;
+			}
+
+
 			foreach (RatedShowSerialized show in rated_shows) {
 				ViewGroup rated_shows_entry = (ViewGroup)inflater.Inflate(Resource.Layout.rated_shows_page_entry, entries_layout, false);
 				entries_layout.AddView(rated_shows_entry);

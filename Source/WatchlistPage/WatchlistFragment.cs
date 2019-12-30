@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Linq;
+using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
@@ -26,6 +27,16 @@ namespace Movolira {
 
 			ViewGroup entries_layout = layout.FindViewById<ViewGroup>(Resource.Id.watchlist_page_entries);
 			var watchlist = _main_activity.UserData.getWatchlist();
+
+
+			TextView list_empty_text = layout.FindViewById<TextView>(Resource.Id.watchlist_page_empty_text);
+			if (watchlist.Any()) {
+				list_empty_text.Visibility = ViewStates.Gone;
+			} else {
+				list_empty_text.Visibility = ViewStates.Visible;
+			}
+
+
 			foreach (ShowSerialized show in watchlist) {
 				ViewGroup watchlist_entry = (ViewGroup) inflater.Inflate(Resource.Layout.watchlist_page_entry, entries_layout, false);
 				entries_layout.AddView(watchlist_entry);

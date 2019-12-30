@@ -34,10 +34,13 @@ namespace Movolira {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("watchlist", ""));
-			}else if(clicked_view.Id == Resource.Id.menu_rated_shows) {
+			}else if (clicked_view.Id == Resource.Id.menu_rated_shows) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
 				Task.Run(() => _main_activity.changeContentFragment("rated_shows", ""));
+			}else if (clicked_view.Id == Resource.Id.menu_recommendations) {
+				_drawer.CloseDrawer(GravityCompat.Start);
+				collapseAllGroups();
 			} else {
 				if (!checkMovieMenusForClickEvents(clicked_view)) {
 					checkShowsMenusForClickEvents(clicked_view);

@@ -12,6 +12,7 @@
     <string name="menu_discover">Discover</string>
     <string name="menu_watchlist">Watchlist</string>
     <string name="menu_rated_shows">Rated</string>
+    <string name="menu_recommendations">Recommendation</string>
     <!--DiscoverPage-->
     <string name="discover_page_keywords_title">KEYWORDS</string>
     <string name="discover_page_keywords_hint">Movie or Tv show</string>
@@ -39,4 +40,8 @@
     <string name="rating_dialog_title">Rate Show</string>
     <string name="rating_dialog_cancel_button">Cancel</string>
     <string name="rating_dialog_rate_button">Rate</string>
+    <!--WatchlistPage-->
+    <string name="watchlist_page_empty_text">Empty</string>
+    <!--RatedShowsPage-->
+    <string name="rated_shows_page_empty_text">Empty</string>
 </resources>

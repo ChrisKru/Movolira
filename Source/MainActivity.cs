@@ -81,17 +81,8 @@ namespace Movolira {
 			content_fragment.Arguments = fragment_args;
 
 
-			if (type == "movies" || type == "tv_shows" || type == "discover" && subtype == "" || type == "watchlist" || type == "rated_shows") {
-				if (SupportFragmentManager.BackStackEntryCount > 0) {
-					RunOnUiThread(() => { setIsLoading(true); });
-					SupportFragmentManager.PopBackStack(null, (int) PopBackStackFlags.Inclusive);
-				}
-				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
-					.SetTransition(FragmentTransaction.TransitFragmentFade).Commit();
-			} else {
-				SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
-					.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
-			}
+			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
+				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}
 
 
