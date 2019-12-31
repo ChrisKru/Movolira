@@ -42,8 +42,6 @@ namespace Movolira {
 
 
 			Task.Run(() => buildTvShowData(layout));
-
-
 			return layout;
 		}
 
@@ -51,7 +49,13 @@ namespace Movolira {
 
 
 		private async void buildTvShowData(View layout) {
-			await _main_activity.DataProvider.getTvShowDetails(_tv_show);
+			if (!(await _main_activity.DataProvider.getTvShowDetails(_tv_show))) {
+				_main_activity.RunOnUiThread(() => {
+					_main_activity.setIsLoading(false);
+					_main_activity.showNetworkError();
+				});
+				return;
+			}
 
 
 			_main_activity.RunOnUiThread(() => {

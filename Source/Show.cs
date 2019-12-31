@@ -17,6 +17,8 @@ namespace Movolira {
 			Id = id;
 			Type = type;
 			Title = title;
+			PosterUrl = "";
+			BackdropUrl = "";
 		}
 
 
@@ -78,5 +80,12 @@ namespace Movolira {
 		public string Type { get; set; }
 		public string Title { get; set; }
 		public int Rating { get; set; }
+	}
+
+
+
+
+	public class AlreadyRecommendedShow : RealmObject {
+		public string Id { get; set; }
 	}
 }

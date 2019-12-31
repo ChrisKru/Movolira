@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
 using Android.App;
@@ -10,8 +13,11 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Java.Util;
+using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using Random = System.Random;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -82,6 +88,203 @@ namespace Movolira {
 
 
 			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, content_fragment)
+				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
+		}
+
+
+
+
+		public void getRecommendation() {
+			RunOnUiThread(() => setIsLoading(true));
+
+
+			HashSet<string> known_show_ids = UserData.getKnownShowIds();
+			Random randomizer = new Random();
+			List<Show> shows = null;
+			Show recommended_show = null;
+			string recommended_show_type = null;
+
+
+			int page_count = 9999;
+			List<RatedShowSerialized> five_star_shows = UserData.getFiveStarShows();
+			while (five_star_shows.Any()) {
+				int i_show = randomizer.Next(0, five_star_shows.Count - 1);
+
+
+				string category = five_star_shows[i_show].Id + "/similar";
+				for (int i_page = 1; i_page < page_count; ++i_page) {
+
+					Tuple<List<Show>, int> show_data = null;
+					if (five_star_shows[i_show].Type == ShowType.Movie.ToString()) {
+						show_data = DataProvider.getMovies(category, i_page).Result;
+						recommended_show_type = "movie";
+					} else {
+						show_data = DataProvider.getTvShows(category, i_page).Result;
+						recommended_show_type = "tv_show";
+					}
+					
+
+					if (show_data == null) {
+						RunOnUiThread(() => {
+							setIsLoading(false);
+							showNetworkError();
+						});
+						return;
+					}
+
+
+					shows = show_data.Item1;
+					page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+					if (shows.Any()) {
+						for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
+							if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
+								recommended_show = shows[i_similar_shows];
+								break;
+							}
+						}
+					}
+
+
+					if (recommended_show != null) {
+						break;
+					}
+				}
+
+
+				if (recommended_show != null) {
+					break;
+				}
+				five_star_shows.RemoveAt(i_show);
+			}
+
+
+			if (recommended_show == null) {
+				page_count = 9999;
+				List<RatedShowSerialized> four_star_shows = UserData.getFourStarShows();
+				while (four_star_shows.Any()) {
+					int i_show = randomizer.Next(0, four_star_shows.Count - 1);
+
+
+					string category = four_star_shows[i_show].Id + "/similar";
+					for (int i_page = 1; i_page < page_count; ++i_page) {
+
+						Tuple<List<Show>, int> show_data = null;
+						if (four_star_shows[i_show].Type == ShowType.Movie.ToString()) {
+							show_data = DataProvider.getMovies(category, i_page).Result;
+							recommended_show_type = "movie";
+						} else {
+							show_data = DataProvider.getTvShows(category, i_page).Result;
+							recommended_show_type = "tv_show";
+						}
+
+
+						if (show_data == null) {
+							RunOnUiThread(() => {
+								setIsLoading(false);
+								showNetworkError();
+							});
+							return;
+						}
+
+
+						shows = show_data.Item1;
+						page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+						if (shows.Any()) {
+							for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
+								if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
+									recommended_show = shows[i_similar_shows];
+									break;
+								}
+							}
+						}
+
+
+						if (recommended_show != null) {
+							break;
+						}
+					}
+
+
+					if (recommended_show != null) {
+						break;
+					}
+					four_star_shows.RemoveAt(i_show);
+				}
+			}
+
+
+			if (recommended_show == null) {
+				page_count = 9999;
+				for (int i_page = 1; i_page < page_count; ++i_page) {
+
+					Tuple<List<Show>, int> show_data = null;
+					if (randomizer.Next(0, 1) == 0) {
+						show_data = DataProvider.getMovies("popular", i_page).Result;
+						recommended_show_type = "movie";
+					} else {
+						show_data = DataProvider.getTvShows("popular", i_page).Result;
+						recommended_show_type = "tv_show";
+					}
+
+
+					if (show_data == null) {
+						RunOnUiThread(() => {
+							setIsLoading(false);
+							showNetworkError();
+						});
+						return;
+					}
+
+
+					shows = show_data.Item1;
+					page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+					if (shows.Any()) {
+						for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
+							if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
+								recommended_show = shows[i_similar_shows];
+								break;
+							}
+						}
+					}
+
+
+					if (recommended_show != null) {
+						break;
+					}
+				}
+			}
+
+
+			if (recommended_show == null) {
+				RunOnUiThread(() => {
+					setIsLoading(false);
+					showNetworkError();
+				});
+				return;
+			}
+
+
+			UserData.addToAlreadyRecommendedShows(recommended_show);
+			Fragment details_fragment;
+			Bundle fragment_args = new Bundle();
+
+
+			if (recommended_show_type == "movie") {
+				details_fragment = new MovieDetailsFragment();
+				Movie movie = recommended_show as Movie;
+				fragment_args.PutString("movie", JsonConvert.SerializeObject(movie));
+				details_fragment.Arguments = fragment_args;
+
+
+			} else {
+				details_fragment = new TvShowDetailsFragment();
+				TvShow movie = recommended_show as TvShow;
+				fragment_args.PutString("tv_show", JsonConvert.SerializeObject(movie));
+				details_fragment.Arguments = fragment_args;
+			}
+
+
+			SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}
 

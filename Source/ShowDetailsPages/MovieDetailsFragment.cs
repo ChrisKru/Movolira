@@ -48,7 +48,13 @@ namespace Movolira {
 
 
 		private async void buildMovieData(View layout) {
-			await _main_activity.DataProvider.getMovieDetails(_movie);
+			if (!await _main_activity.DataProvider.getMovieDetails(_movie)) {
+				_main_activity.RunOnUiThread(() => {
+					_main_activity.setIsLoading(false);
+					_main_activity.showNetworkError();
+				});
+				return;
+			}
 
 
 			_main_activity.RunOnUiThread(() => {

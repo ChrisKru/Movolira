@@ -41,6 +41,7 @@ namespace Movolira {
 			}else if (clicked_view.Id == Resource.Id.menu_recommendations) {
 				_drawer.CloseDrawer(GravityCompat.Start);
 				collapseAllGroups();
+				Task.Run(() => _main_activity.getRecommendation());
 			} else {
 				if (!checkMovieMenusForClickEvents(clicked_view)) {
 					checkShowsMenusForClickEvents(clicked_view);

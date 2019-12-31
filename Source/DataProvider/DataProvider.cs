@@ -174,7 +174,7 @@ namespace Movolira {
 
 
 
-		public async Task getMovieDetails(Movie movie) {
+		public async Task<bool> getMovieDetails(Movie movie) {
 			Uri details_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie.Id + "?api_key=" + ApiKeys.TMDB_KEY);
 			var details_task = getJson("movie;" + movie.Id, details_uri);
 			Uri release_dates_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie.Id + "/release_dates?api_key=" + ApiKeys.TMDB_KEY);
@@ -183,7 +183,7 @@ namespace Movolira {
 
 			JObject details_json = await details_task;
 			if (!doesJsonContainData(details_json)) {
-				return;
+				return false;
 			}
 
 
@@ -195,7 +195,12 @@ namespace Movolira {
 						movie_genres.Add(_genre_list[genre["id"].Value<int>()]);
 					}
 				}
+
+
 				movie.Genres = movie_genres.ToArray();
+				if (movie.Genres.Length == 0) {
+					return false;
+				}
 
 
 				if (doesJTokenContainKey(details_json["data"], "release_date")) {
@@ -236,7 +241,7 @@ namespace Movolira {
 
 			JObject release_dates_json = await release_dates_task;
 			if (!doesJsonContainData(release_dates_json)) {
-				return;
+				return true;
 			}
 
 
@@ -248,10 +253,13 @@ namespace Movolira {
 						if (certification != "") {
 							movie.Certification = certification + "+";
 						}
-						return;
+						return true;
 					}
 				}
 			}
+
+
+			return true;
 		}
 
 
@@ -367,7 +375,7 @@ namespace Movolira {
 
 
 
-		public async Task getTvShowDetails(TvShow tv_show) {
+		public async Task<bool> getTvShowDetails(TvShow tv_show) {
 			Uri details_uri = new Uri("https://api.themoviedb.org/3/tv/" + tv_show.Id + "?api_key=" + ApiKeys.TMDB_KEY);
 			var details_task = getJson("tv_show;" + tv_show.Id, details_uri);
 			Uri content_ratings_uri = new Uri("https://api.themoviedb.org/3/tv/" + tv_show.Id + "/content_ratings?api_key=" + ApiKeys.TMDB_KEY);
@@ -377,7 +385,7 @@ namespace Movolira {
 
 			JObject details_json = await details_task;
 			if (!doesJsonContainData(details_json)) {
-				return;
+				return false;
 			}
 
 
@@ -389,7 +397,12 @@ namespace Movolira {
 						tv_show_genres.Add(_genre_list[genre["id"].Value<int>()]);
 					}
 				}
+
+
 				tv_show.Genres = tv_show_genres.ToArray();
+				if (tv_show.Genres.Length == 0) {
+					return false;
+				}
 
 
 				if (doesJTokenContainKey(details_json["data"], "first_air_date")) {
@@ -439,7 +452,7 @@ namespace Movolira {
 
 			JObject content_ratings_json = await content_ratings_task;
 			if (!doesJsonContainData(content_ratings_json)) {
-				return;
+				return true;
 			}
 
 
@@ -451,10 +464,13 @@ namespace Movolira {
 						if (certification != "") {
 							tv_show.Certification = certification + "+";
 						}
-						return;
+						return true;
 					}
 				}
 			}
+
+
+			return true;
 		}
 
 
