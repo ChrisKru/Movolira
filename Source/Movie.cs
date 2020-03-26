@@ -43,10 +43,10 @@ namespace Movolira {
 
 
 		public Movie(string id, ShowType type, string title) : base(id, type, title) {
-			/*ReleaseDate = "";
+			ReleaseDate = "";
 			Rating = 0;
 			Votes = 0;
-			Overview = "";*/
+			Overview = "";
 		}
 
 

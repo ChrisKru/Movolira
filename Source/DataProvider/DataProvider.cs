@@ -52,8 +52,6 @@ namespace Movolira {
 			if (HTTP_CLIENT == null) {
 				HTTP_CLIENT = new HttpClient();
 				HTTP_CLIENT.MaxResponseContentBufferSize = 256000;
-				HTTP_CLIENT.DefaultRequestHeaders.Add("trakt-api-version", "2");
-				HTTP_CLIENT.DefaultRequestHeaders.Add("trakt-api-key", ApiKeys.TRAKT_ID);
 			}
 		}
 
@@ -661,7 +659,7 @@ namespace Movolira {
 					JObject json_object = JObject.Parse(json_data);
 					json.Add("data", json_object);
 					json_response.Dispose();
-					await BlobCache.LocalMachine.InsertObject(cache_id, json, new DateTimeOffset(DateTime.Now.AddDays(1)));
+					await BlobCache.LocalMachine.InsertObject(cache_id, json, new DateTimeOffset(DateTime.Now.AddDays(7)));
 					break;
 				}
 			}
