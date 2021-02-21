@@ -4,12 +4,13 @@ using Android.Views;
 using Android.Widget;
 using Java.Lang;
 
+
+
+
 namespace Movolira {
 	internal class RatingButtonClickListener : Object, View.IOnClickListener {
 		private readonly RatingDialog _dialog;
 		private readonly MainActivity _main_activity;
-
-
 		private readonly Button _rating_button;
 		private readonly Show _show;
 		private bool _is_show_rated;
@@ -19,20 +20,18 @@ namespace Movolira {
 
 
 		public RatingButtonClickListener(MainActivity main_activity, Button rating_button, Show show) {
-			_main_activity = main_activity;
-			_show = show;
-			_rating_button = rating_button;
-
-
-			_dialog = new RatingDialog(_main_activity, show);
-			_dialog.RatedEvent += showRated;
+			this._main_activity = main_activity;
+			this._show = show;
+			this._rating_button = rating_button;
+			this._dialog = new RatingDialog(this._main_activity, show);
+			this._dialog.RatedEvent += this.showRated;
 
 
 			int rating = main_activity.UserData.getShowRating(show.Id);
 			if (rating != 0) {
-				_is_show_rated = true;
-				_rating = rating;
-				toggleButtonState();
+				this._is_show_rated = true;
+				this._rating = rating;
+				this.toggleButtonState();
 			}
 		}
 
@@ -40,21 +39,23 @@ namespace Movolira {
 
 
 		private void showRated(object sender, int rating) {
-			_is_show_rated = true;
-			_rating = rating;
-			toggleButtonState();
+			this._is_show_rated = true;
+			this._rating = rating;
+			this.toggleButtonState();
 		}
 
 
 
 
 		public void OnClick(View view) {
-			if (_is_show_rated) {
-				_is_show_rated = false;
-				_main_activity.UserData.removeFromRatedShows(_show.Id);
-				toggleButtonState();
+			if (this._is_show_rated) {
+				this._is_show_rated = false;
+				this._main_activity.UserData.removeFromRatedShows(this._show.Id);
+				this.toggleButtonState();
+
+
 			} else {
-				_dialog.showDialog();
+				this._dialog.showDialog();
 			}
 		}
 
@@ -62,12 +63,14 @@ namespace Movolira {
 
 
 		private void toggleButtonState() {
-			if (_is_show_rated) {
-				_rating_button.Text = "Rated " + _rating + "/5";
-				_rating_button.SetTextColor(new Color(ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text_set)));
+			if (this._is_show_rated) {
+				this._rating_button.Text = "Rated " + this._rating + "/5";
+				this._rating_button.SetTextColor(new Color(
+					ContextCompat.GetColor(this._main_activity, Resource.Color.show_details_button_text_set)));
 			} else {
-				_rating_button.Text = _main_activity.GetString(Resource.String.show_details_add_rating_button);
-				_rating_button.SetTextColor(new Color(ContextCompat.GetColor(_main_activity, Resource.Color.show_details_button_text)));
+				this._rating_button.Text = this._main_activity.GetString(Resource.String.show_details_add_rating_button);
+				this._rating_button.SetTextColor(new Color(
+					ContextCompat.GetColor(this._main_activity, Resource.Color.show_details_button_text)));
 			}
 		}
 	}

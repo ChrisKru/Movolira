@@ -6,6 +6,9 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 
+
+
+
 namespace Movolira {
 	public class WatchlistFragment : Fragment {
 		private MainActivity _main_activity;
@@ -14,7 +17,7 @@ namespace Movolira {
 
 
 		public override void OnAttach(Context main_activity) {
-			_main_activity = (MainActivity) main_activity;
+			this._main_activity = (MainActivity)main_activity;
 			base.OnAttach(main_activity);
 		}
 
@@ -23,13 +26,11 @@ namespace Movolira {
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			View layout = inflater.Inflate(Resource.Layout.watchlist_page, container, false);
-
-
 			ViewGroup entries_layout = layout.FindViewById<ViewGroup>(Resource.Id.watchlist_page_entries);
-			var watchlist = _main_activity.UserData.getWatchlist();
-
-
+			var watchlist = this._main_activity.UserData.getWatchlist();
 			TextView list_empty_text = layout.FindViewById<TextView>(Resource.Id.watchlist_page_empty_text);
+
+
 			if (watchlist.Any()) {
 				list_empty_text.Visibility = ViewStates.Gone;
 			} else {
@@ -38,22 +39,19 @@ namespace Movolira {
 
 
 			foreach (ShowSerialized show in watchlist) {
-				ViewGroup watchlist_entry = (ViewGroup) inflater.Inflate(Resource.Layout.watchlist_page_entry, entries_layout, false);
+				ViewGroup watchlist_entry = (ViewGroup)inflater.Inflate(Resource.Layout.watchlist_page_entry, 
+					entries_layout, false);
 				entries_layout.AddView(watchlist_entry);
-
-
 				TextView watchlist_entry_title = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_title);
 				TextView watchlist_entry_genre = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_genre);
-
-
 				watchlist_entry_title.Text = show.Title;
 				watchlist_entry_genre.Text = show.Genre;
-				watchlist_entry.Click += (sender, args) => onWatchlistEntryClick(show);
+				watchlist_entry.Click += (sender, args) => this.onWatchlistEntryClick(show);
 			}
 
 
-			_main_activity.setToolbarTitle("Watchlist");
-			_main_activity.setIsLoading(false);
+			this._main_activity.setToolbarTitle("Watchlist");
+			this._main_activity.setIsLoading(false);
 			return layout;
 		}
 
@@ -61,8 +59,8 @@ namespace Movolira {
 
 
 		private void onWatchlistEntryClick(ShowSerialized show) {
-			_main_activity.setIsLoading(true);
-			moveToShowDetailsFrag(show);
+			this._main_activity.setIsLoading(true);
+			this.moveToShowDetailsFrag(show);
 		}
 
 
@@ -85,7 +83,8 @@ namespace Movolira {
 
 
 			details_fragment.Arguments = fragment_args;
-			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
+			this._main_activity.SupportFragmentManager.BeginTransaction()
+				.Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}
 	}

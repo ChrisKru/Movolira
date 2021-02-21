@@ -9,12 +9,15 @@ using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
 using Bumptech.Glide.Request;
 
+
+
+
 namespace Movolira {
 	public class ShowCardViewAdapter : RecyclerView.Adapter {
 		public override int ItemCount {
 			get {
-				if (Shows.Count > 0) {
-					return Shows.Count() + 1;
+				if (this.Shows.Count > 0) {
+					return this.Shows.Count() + 1;
 				}
 				return 0;
 			}
@@ -33,10 +36,10 @@ namespace Movolira {
 
 
 		public ShowCardViewAdapter(List<Show> shows, MainActivity main_activity) {
-			Shows = shows;
-			CurrentPageNumber = 1;
-			MaxItemCount = 0;
-			_main_activity = main_activity;
+			this.Shows = shows;
+			this.CurrentPageNumber = 1;
+			this.MaxItemCount = 0;
+			this._main_activity = main_activity;
 		}
 
 
@@ -44,14 +47,17 @@ namespace Movolira {
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent_view, int view_type) {
 			if (view_type == Resource.Layout.show_list_pager) {
-				View pager = LayoutInflater.From(parent_view.Context).Inflate(Resource.Layout.show_list_pager, parent_view, false);
-				ShowListPagerHolder pager_holder = new ShowListPagerHolder(pager, onNextButtonClick, onPrevButtonClick);
+				View pager = LayoutInflater.From(parent_view.Context)
+					.Inflate(Resource.Layout.show_list_pager, parent_view, false);
+				ShowListPagerHolder pager_holder = new ShowListPagerHolder(
+					pager, this.onNextButtonClick, this.onPrevButtonClick);
 				return pager_holder;
 			}
 
 
-			View card_view = LayoutInflater.From(parent_view.Context).Inflate(Resource.Layout.show_card, parent_view, false);
-			ShowCardViewHolder card_holder = new ShowCardViewHolder(card_view, onCardClick);
+			View card_view = LayoutInflater.From(parent_view.Context)
+				.Inflate(Resource.Layout.show_card, parent_view, false);
+			ShowCardViewHolder card_holder = new ShowCardViewHolder(card_view, this.onCardClick);
 			return card_holder;
 		}
 
@@ -59,9 +65,11 @@ namespace Movolira {
 
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder view_holder, int position) {
-			if (position == Shows.Count) {
+			if (position == this.Shows.Count) {
 				ShowListPagerHolder pager_holder = view_holder as ShowListPagerHolder;
-				if (CurrentPageNumber == 1) {
+
+
+				if (this.CurrentPageNumber == 1) {
 					pager_holder.PrevButton.Alpha = 0.5f;
 					pager_holder.PrevButton.Enabled = false;
 				} else {
@@ -70,7 +78,7 @@ namespace Movolira {
 				}
 
 
-				if (CurrentPageNumber * DataProvider.SHOWS_PER_PAGE >= MaxItemCount) {
+				if (this.CurrentPageNumber * DataProvider.SHOWS_PER_PAGE >= this.MaxItemCount) {
 					pager_holder.NextButton.Alpha = 0.5f;
 					pager_holder.NextButton.Enabled = false;
 				} else {
@@ -90,26 +98,29 @@ namespace Movolira {
 
 			} else {
 				ShowCardViewHolder card_holder = view_holder as ShowCardViewHolder;
-				Show show = Shows[position];
-				RequestOptions image_load_options = new RequestOptions().CenterCrop().Placeholder(new ColorDrawable(Color.Black))
+				Show show = this.Shows[position];
+				RequestOptions image_load_options = new RequestOptions().CenterCrop()
+					.Placeholder(new ColorDrawable(Color.Black))
 					.Error(new ColorDrawable(Color.LightGray));
 				RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
-
-
-				Glide.With(_main_activity).Load(show.PosterUrl).Apply(image_load_options).Transition(DrawableTransitionOptions.WithCrossFade())
-					.Thumbnail(Glide.With(_main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/")).Apply(thumbnail_options)
-						.Transition(DrawableTransitionOptions.WithCrossFade())).Into(card_holder.BackdropImage);
+				Glide.With(this._main_activity).Load(show.PosterUrl).Apply(image_load_options)
+					.Transition(DrawableTransitionOptions.WithCrossFade())
+					.Thumbnail(Glide.With(this._main_activity).Load(show.PosterUrl.Replace("/fanart/", "/preview/"))
+					.Apply(thumbnail_options).Transition(DrawableTransitionOptions.WithCrossFade()))
+					.Into(card_holder.BackdropImage);
 
 
 				if (show.Title != null) {
 					card_holder.TitleText.Text = show.Title;
 				}
-
-
 				if (show.Genres.Length > 0) {
-					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() + show.Genres[0].Substring(1);
+					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() 
+						+ show.Genres[0].Substring(1);
+
+
 					if (show.Genres.Length > 1) {
-						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() + show.Genres[1].Substring(1);
+						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() 
+							+ show.Genres[1].Substring(1);
 					}
 				}
 			}
@@ -119,7 +130,7 @@ namespace Movolira {
 
 
 		public override int GetItemViewType(int position) {
-			if (position == Shows.Count()) {
+			if (position == this.Shows.Count()) {
 				return Resource.Layout.show_list_pager;
 			}
 			return Resource.Layout.show_card;

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Akavache;
 using Newtonsoft.Json.Linq;
 
+
+
+
 namespace Movolira {
 	public class DataProvider {
 		public const int SHOWS_PER_PAGE = 20;
@@ -23,26 +26,26 @@ namespace Movolira {
 
 
 		public DataProvider() {
-			_genre_list = new Dictionary<int, string>();
+			this._genre_list = new Dictionary<int, string>();
 
 
-			initHttpClient();
-			initCache();
+			this.initHttpClient();
+			this.initCache();
 		}
 
 
 
 
 		public async Task<Dictionary<int, string>> getGenreList() {
-			if (_genre_list.Count == 0) {
-				await initGenreList();
-				if (_genre_list.Count == 0) {
+			if (this._genre_list.Count == 0) {
+				await this.initGenreList();
+				if (this._genre_list.Count == 0) {
 					return null;
 				}
 			}
 
 
-			return _genre_list;
+			return this._genre_list;
 		}
 
 
@@ -69,23 +72,23 @@ namespace Movolira {
 
 		public async Task<Tuple<List<Show>, int>> getMovies(string category, int page_number) {
 			Uri movies_uri = new Uri("https://api.themoviedb.org/3/movie/" + category + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number);
-			JObject movies_json = await getJson("movies_" + category + ";" + page_number, movies_uri);
+			JObject movies_json = await this.getJson("movies_" + category + ";" + page_number, movies_uri);
 
 
-			if (!doesJsonContainData(movies_json)) {
+			if (!this.doesJsonContainData(movies_json)) {
 				return null;
 			}
 
 
-			if (_genre_list.Count == 0) {
-				await initGenreList();
-				if (_genre_list.Count == 0) {
+			if (this._genre_list.Count == 0) {
+				await this.initGenreList();
+				if (this._genre_list.Count == 0) {
 					return null;
 				}
 			}
 
 
-			var movies = getMovieListFromJson(movies_json);
+			var movies = this.getMovieListFromJson(movies_json);
 			int item_count = movies_json["data"]["total_results"].Value<int>();
 			return Tuple.Create(movies, item_count);
 		}
@@ -100,22 +103,22 @@ namespace Movolira {
 
 			foreach (JToken movie_jtoken in movies_jtokens) {
 				string id = "";
-				if (doesJTokenContainKey(movie_jtoken, "id")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "id")) {
 					id = movie_jtoken["id"].Value<string>();
 				}
 
 
 				string title = "";
-				if (doesJTokenContainKey(movie_jtoken, "title")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "title")) {
 					title = movie_jtoken["title"].Value<string>();
 				}
 
 
 				var genres = new List<string>();
-				if (doesJTokenContainKey(movie_jtoken, "genre_ids")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "genre_ids")) {
 					IList<JToken> genre_ids = movie_jtoken["genre_ids"].Children().ToList();
 					foreach (JToken genre_id in genre_ids) {
-						genres.Add(_genre_list[genre_id.Value<int>()]);
+						genres.Add(this._genre_list[genre_id.Value<int>()]);
 					}
 				}
 				if (genres.Count == 0) {
@@ -124,37 +127,37 @@ namespace Movolira {
 
 
 				string release_date = "";
-				if (doesJTokenContainKey(movie_jtoken, "release_date")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "release_date")) {
 					release_date = movie_jtoken["release_date"].Value<string>();
 				}
 
 
 				double rating = 0;
-				if (doesJTokenContainKey(movie_jtoken, "vote_average")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "vote_average")) {
 					rating = movie_jtoken["vote_average"].Value<double>();
 				}
 
 
 				int vote_count = 0;
-				if (doesJTokenContainKey(movie_jtoken, "vote_count")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "vote_count")) {
 					vote_count = movie_jtoken["vote_count"].Value<int>();
 				}
 
 
 				string overview = "";
-				if (doesJTokenContainKey(movie_jtoken, "overview")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "overview")) {
 					overview = movie_jtoken["overview"].Value<string>();
 				}
 
 
 				string poster_url = "";
-				if (doesJTokenContainKey(movie_jtoken, "poster_path")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "poster_path")) {
 					poster_url = "http://image.tmdb.org/t/p/w500/" + movie_jtoken["poster_path"].Value<string>();
 				}
 
 
 				string backdrop_url = "";
-				if (doesJTokenContainKey(movie_jtoken, "backdrop_path")) {
+				if (this.doesJTokenContainKey(movie_jtoken, "backdrop_path")) {
 					backdrop_url = "http://image.tmdb.org/t/p/w780/" + movie_jtoken["backdrop_path"].Value<string>();
 				}
 
@@ -174,23 +177,23 @@ namespace Movolira {
 
 		public async Task<bool> getMovieDetails(Movie movie) {
 			Uri details_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie.Id + "?api_key=" + ApiKeys.TMDB_KEY);
-			var details_task = getJson("movie;" + movie.Id, details_uri);
+			var details_task = this.getJson("movie;" + movie.Id, details_uri);
 			Uri release_dates_uri = new Uri("https://api.themoviedb.org/3/movie/" + movie.Id + "/release_dates?api_key=" + ApiKeys.TMDB_KEY);
-			var release_dates_task = getJson("movie_release_dates;" + movie.Id, release_dates_uri);
+			var release_dates_task = this.getJson("movie_release_dates;" + movie.Id, release_dates_uri);
 
 
 			JObject details_json = await details_task;
-			if (!doesJsonContainData(details_json)) {
+			if (!this.doesJsonContainData(details_json)) {
 				return false;
 			}
 
 
 			if (movie.Genres == null) {
 				var movie_genres = new List<string>();
-				if (doesJTokenContainKey(details_json["data"], "genres")) {
+				if (this.doesJTokenContainKey(details_json["data"], "genres")) {
 					IList<JToken> genres = details_json["data"]["genres"].Children().ToList();
 					foreach (JToken genre in genres) {
-						movie_genres.Add(_genre_list[genre["id"].Value<int>()]);
+						movie_genres.Add(this._genre_list[genre["id"].Value<int>()]);
 					}
 				}
 
@@ -201,49 +204,49 @@ namespace Movolira {
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "release_date")) {
+				if (this.doesJTokenContainKey(details_json["data"], "release_date")) {
 					movie.ReleaseDate = details_json["data"]["release_date"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "vote_average")) {
+				if (this.doesJTokenContainKey(details_json["data"], "vote_average")) {
 					movie.Rating = details_json["data"]["vote_average"].Value<double>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "vote_count")) {
+				if (this.doesJTokenContainKey(details_json["data"], "vote_count")) {
 					movie.Votes = details_json["data"]["vote_count"].Value<int>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "overview")) {
+				if (this.doesJTokenContainKey(details_json["data"], "overview")) {
 					movie.Overview = details_json["data"]["overview"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "poster_path")) {
+				if (this.doesJTokenContainKey(details_json["data"], "poster_path")) {
 					movie.PosterUrl = "http://image.tmdb.org/t/p/w500/" + details_json["data"]["poster_path"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "backdrop_path")) {
+				if (this.doesJTokenContainKey(details_json["data"], "backdrop_path")) {
 					movie.BackdropUrl = "http://image.tmdb.org/t/p/w780/" + details_json["data"]["backdrop_path"].Value<string>();
 				}
 			}
 
 
-			if (doesJTokenContainKey(details_json["data"], "runtime")) {
+			if (this.doesJTokenContainKey(details_json["data"], "runtime")) {
 				movie.Runtime = details_json["data"]["runtime"].Value<int>();
 			}
 
 
 			JObject release_dates_json = await release_dates_task;
-			if (!doesJsonContainData(release_dates_json)) {
+			if (!this.doesJsonContainData(release_dates_json)) {
 				return true;
 			}
 
 
-			if (doesJTokenContainKey(release_dates_json["data"], "results")) {
+			if (this.doesJTokenContainKey(release_dates_json["data"], "results")) {
 				IList<JToken> release_dates_jtokens = release_dates_json["data"]["results"].Children().ToList();
 				foreach (JToken release_dates_jtoken in release_dates_jtokens) {
 					if (release_dates_jtoken["iso_3166_1"].Value<string>() == "DE") {
@@ -265,23 +268,23 @@ namespace Movolira {
 
 		public async Task<Tuple<List<Show>, int>> getTvShows(string category, int page_number) {
 			Uri tv_shows_uri = new Uri("https://api.themoviedb.org/3/tv/" + category + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number);
-			JObject tv_shows_json = await getJson("tv_shows_" + category + ";" + page_number, tv_shows_uri);
+			JObject tv_shows_json = await this.getJson("tv_shows_" + category + ";" + page_number, tv_shows_uri);
 
 
-			if (!doesJsonContainData(tv_shows_json)) {
+			if (!this.doesJsonContainData(tv_shows_json)) {
 				return null;
 			}
 
 
-			if (_genre_list.Count == 0) {
-				await initGenreList();
-				if (_genre_list.Count == 0) {
+			if (this._genre_list.Count == 0) {
+				await this.initGenreList();
+				if (this._genre_list.Count == 0) {
 					return null;
 				}
 			}
 
 
-			var tv_shows = getTvShowListFromJson(tv_shows_json);
+			var tv_shows = this.getTvShowListFromJson(tv_shows_json);
 			int item_count = tv_shows_json["data"]["total_results"].Value<int>();
 			return Tuple.Create(tv_shows, item_count);
 		}
@@ -296,13 +299,13 @@ namespace Movolira {
 
 			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
 				string id = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "id")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "id")) {
 					id = tv_show_jtoken["id"].Value<string>();
 				}
 
 
 				string title = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "name")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "name")) {
 					title = tv_show_jtoken["name"].Value<string>();
 				}
 
@@ -310,11 +313,11 @@ namespace Movolira {
 				IList<JToken> genre_ids = tv_show_jtoken["genre_ids"].Children().ToList();
 				var genres = new List<string>();
 				foreach (JToken genre_id in genre_ids) {
-					string genre = _genre_list[genre_id.Value<int>()];
+					string genre = this._genre_list[genre_id.Value<int>()];
 					if (!genre.Contains("&")) {
 						genres.Add(genre);
 					} else {
-						var split_genres = genre.Split(new[] {'&', ' '}, StringSplitOptions.RemoveEmptyEntries);
+						var split_genres = genre.Split(new[] { '&', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 						foreach (string split_genre in split_genres) {
 							genres.Add(split_genre);
 						}
@@ -326,37 +329,37 @@ namespace Movolira {
 
 
 				string release_date = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "first_air_date")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "first_air_date")) {
 					release_date = tv_show_jtoken["first_air_date"].Value<string>();
 				}
 
 
 				double rating = 0;
-				if (doesJTokenContainKey(tv_show_jtoken, "vote_average")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "vote_average")) {
 					rating = tv_show_jtoken["vote_average"].Value<double>();
 				}
 
 
 				int vote_count = 0;
-				if (doesJTokenContainKey(tv_show_jtoken, "vote_count")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "vote_count")) {
 					vote_count = tv_show_jtoken["vote_count"].Value<int>();
 				}
 
 
 				string overview = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "overview")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "overview")) {
 					overview = tv_show_jtoken["overview"].Value<string>();
 				}
 
 
 				string poster_url = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "poster_path")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "poster_path")) {
 					poster_url = "http://image.tmdb.org/t/p/w500/" + tv_show_jtoken["poster_path"].Value<string>();
 				}
 
 
 				string backdrop_url = "";
-				if (doesJTokenContainKey(tv_show_jtoken, "backdrop_path")) {
+				if (this.doesJTokenContainKey(tv_show_jtoken, "backdrop_path")) {
 					backdrop_url = "http://image.tmdb.org/t/p/w780/" + tv_show_jtoken["backdrop_path"].Value<string>();
 				}
 
@@ -375,24 +378,24 @@ namespace Movolira {
 
 		public async Task<bool> getTvShowDetails(TvShow tv_show) {
 			Uri details_uri = new Uri("https://api.themoviedb.org/3/tv/" + tv_show.Id + "?api_key=" + ApiKeys.TMDB_KEY);
-			var details_task = getJson("tv_show;" + tv_show.Id, details_uri);
+			var details_task = this.getJson("tv_show;" + tv_show.Id, details_uri);
 			Uri content_ratings_uri = new Uri("https://api.themoviedb.org/3/tv/" + tv_show.Id + "/content_ratings?api_key=" + ApiKeys.TMDB_KEY);
-			var content_ratings_task = getJson("tv_show_content_ratings;" + tv_show.Id, content_ratings_uri);
+			var content_ratings_task = this.getJson("tv_show_content_ratings;" + tv_show.Id, content_ratings_uri);
 
 
 
 			JObject details_json = await details_task;
-			if (!doesJsonContainData(details_json)) {
+			if (!this.doesJsonContainData(details_json)) {
 				return false;
 			}
 
 
 			if (tv_show.Genres == null) {
 				var tv_show_genres = new List<string>();
-				if (doesJTokenContainKey(details_json["data"], "genres")) {
+				if (this.doesJTokenContainKey(details_json["data"], "genres")) {
 					IList<JToken> genres = details_json["data"]["genres"].Children().ToList();
 					foreach (JToken genre in genres) {
-						tv_show_genres.Add(_genre_list[genre["id"].Value<int>()]);
+						tv_show_genres.Add(this._genre_list[genre["id"].Value<int>()]);
 					}
 				}
 
@@ -403,38 +406,38 @@ namespace Movolira {
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "first_air_date")) {
+				if (this.doesJTokenContainKey(details_json["data"], "first_air_date")) {
 					tv_show.AirDate = details_json["data"]["first_air_date"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "vote_average")) {
+				if (this.doesJTokenContainKey(details_json["data"], "vote_average")) {
 					tv_show.Rating = details_json["data"]["vote_average"].Value<double>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "vote_count")) {
+				if (this.doesJTokenContainKey(details_json["data"], "vote_count")) {
 					tv_show.Votes = details_json["data"]["vote_count"].Value<int>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "overview")) {
+				if (this.doesJTokenContainKey(details_json["data"], "overview")) {
 					tv_show.Overview = details_json["data"]["overview"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "poster_path")) {
+				if (this.doesJTokenContainKey(details_json["data"], "poster_path")) {
 					tv_show.PosterUrl = "http://image.tmdb.org/t/p/w500/" + details_json["data"]["poster_path"].Value<string>();
 				}
 
 
-				if (doesJTokenContainKey(details_json["data"], "backdrop_path")) {
+				if (this.doesJTokenContainKey(details_json["data"], "backdrop_path")) {
 					tv_show.BackdropUrl = "http://image.tmdb.org/t/p/w780/" + details_json["data"]["backdrop_path"].Value<string>();
 				}
 			}
 
 
-			if (doesJTokenContainKey(details_json["data"], "episode_run_time")) {
+			if (this.doesJTokenContainKey(details_json["data"], "episode_run_time")) {
 				if (details_json["data"]["episode_run_time"].Type != JTokenType.Null) {
 					IList<JToken> episode_run_times = details_json["data"]["episode_run_time"].Children().ToList();
 					tv_show.Runtime = 0;
@@ -449,12 +452,12 @@ namespace Movolira {
 
 
 			JObject content_ratings_json = await content_ratings_task;
-			if (!doesJsonContainData(content_ratings_json)) {
+			if (!this.doesJsonContainData(content_ratings_json)) {
 				return true;
 			}
 
 
-			if (doesJTokenContainKey(content_ratings_json["data"], "results")) {
+			if (this.doesJTokenContainKey(content_ratings_json["data"], "results")) {
 				IList<JToken> content_ratings_jtokens = content_ratings_json["data"]["results"].Children().ToList();
 				foreach (JToken content_ratings_jtoken in content_ratings_jtokens) {
 					if (content_ratings_jtoken["iso_3166_1"].Value<string>() == "DE") {
@@ -476,34 +479,34 @@ namespace Movolira {
 
 		public async Task<Tuple<List<Show>, int>> getSearchedShows(string query, int page_number) {
 			Uri movies_uri = new Uri("https://api.themoviedb.org/3/search/movie" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number +
-			                         "&query=" + query);
-			var movies_json_task = getJson("search_movies_" + query + ";" + page_number, movies_uri);
+									 "&query=" + query);
+			var movies_json_task = this.getJson("search_movies_" + query + ";" + page_number, movies_uri);
 			Uri tv_shows_uri = new Uri("https://api.themoviedb.org/3/search/tv" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number +
-			                           "&query=" + query);
-			var tv_shows_json_task = getJson("search_tv_shows_" + query + ";" + page_number, tv_shows_uri);
+									   "&query=" + query);
+			var tv_shows_json_task = this.getJson("search_tv_shows_" + query + ";" + page_number, tv_shows_uri);
 
 
-			if (_genre_list.Count == 0) {
-				await initGenreList();
-				if (_genre_list.Count == 0) {
+			if (this._genre_list.Count == 0) {
+				await this.initGenreList();
+				if (this._genre_list.Count == 0) {
 					return null;
 				}
 			}
 
 
 			JObject movies_json = await movies_json_task;
-			if (!doesJsonContainData(movies_json)) {
+			if (!this.doesJsonContainData(movies_json)) {
 				return null;
 			}
-			var movies = getMovieListFromJson(movies_json);
+			var movies = this.getMovieListFromJson(movies_json);
 			int movies_max_item_count = movies_json["data"]["total_results"].Value<int>();
 
 
 			JObject tv_shows_json = await tv_shows_json_task;
-			if (!doesJsonContainData(tv_shows_json)) {
+			if (!this.doesJsonContainData(tv_shows_json)) {
 				return null;
 			}
-			var tv_shows = getTvShowListFromJson(tv_shows_json);
+			var tv_shows = this.getTvShowListFromJson(tv_shows_json);
 			int tv_shows_max_item_count = tv_shows_json["data"]["total_results"].Value<int>();
 
 
@@ -535,34 +538,34 @@ namespace Movolira {
 
 		public async Task<Tuple<List<Show>, int>> getDiscoveredShows(string query, int page_number) {
 			Uri movies_uri = new Uri("https://api.themoviedb.org/3/discover/movie" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number + "&" +
-			                         query);
-			var movies_json_task = getJson("discover_movies_" + query + ";" + page_number, movies_uri);
+									 query);
+			var movies_json_task = this.getJson("discover_movies_" + query + ";" + page_number, movies_uri);
 			Uri tv_shows_uri = new Uri("https://api.themoviedb.org/3/discover/tv" + "?api_key=" + ApiKeys.TMDB_KEY + "&page=" + page_number + "&" +
-			                           query);
-			var tv_shows_json_task = getJson("discover_tv_shows_" + query + ";" + page_number, tv_shows_uri);
+									   query);
+			var tv_shows_json_task = this.getJson("discover_tv_shows_" + query + ";" + page_number, tv_shows_uri);
 
 
-			if (_genre_list.Count == 0) {
-				await initGenreList();
-				if (_genre_list.Count == 0) {
+			if (this._genre_list.Count == 0) {
+				await this.initGenreList();
+				if (this._genre_list.Count == 0) {
 					return null;
 				}
 			}
 
 
 			JObject movies_json = await movies_json_task;
-			if (!doesJsonContainData(movies_json)) {
+			if (!this.doesJsonContainData(movies_json)) {
 				return null;
 			}
-			var movies = getMovieListFromJson(movies_json);
+			var movies = this.getMovieListFromJson(movies_json);
 			int movies_max_item_count = movies_json["data"]["total_results"].Value<int>();
 
 
 			JObject tv_shows_json = await tv_shows_json_task;
-			if (!doesJsonContainData(tv_shows_json)) {
+			if (!this.doesJsonContainData(tv_shows_json)) {
 				return null;
 			}
-			var tv_shows = getTvShowListFromJson(tv_shows_json);
+			var tv_shows = this.getTvShowListFromJson(tv_shows_json);
 			int tv_shows_max_item_count = tv_shows_json["data"]["total_results"].Value<int>();
 
 
@@ -594,12 +597,12 @@ namespace Movolira {
 
 		private async Task initGenreList() {
 			Uri tv_show_genres_uri = new Uri("https://api.themoviedb.org/3/genre/tv/list" + "?api_key=" + ApiKeys.TMDB_KEY);
-			var tv_show_genres_task = getJson("tv_genres", tv_show_genres_uri);
+			var tv_show_genres_task = this.getJson("tv_genres", tv_show_genres_uri);
 			Uri movie_genres_uri = new Uri("https://api.themoviedb.org/3/genre/movie/list" + "?api_key=" + ApiKeys.TMDB_KEY);
-			JObject movie_genres_json = await getJson("movie_genres", movie_genres_uri);
+			JObject movie_genres_json = await this.getJson("movie_genres", movie_genres_uri);
 
 
-			if (!doesJsonContainData(movie_genres_json)) {
+			if (!this.doesJsonContainData(movie_genres_json)) {
 				return;
 			}
 
@@ -608,14 +611,14 @@ namespace Movolira {
 			foreach (JToken genre_jtoken in movie_genres_jtokens) {
 				int id = genre_jtoken["id"].Value<int>();
 				string name = genre_jtoken["name"].Value<string>();
-				if (!_genre_list.ContainsKey(id)) {
-					_genre_list.Add(id, name);
+				if (!this._genre_list.ContainsKey(id)) {
+					this._genre_list.Add(id, name);
 				}
 			}
 
 
 			JObject tv_show_genres_json = await tv_show_genres_task;
-			if (!doesJsonContainData(tv_show_genres_json)) {
+			if (!this.doesJsonContainData(tv_show_genres_json)) {
 				return;
 			}
 
@@ -624,8 +627,8 @@ namespace Movolira {
 			foreach (JToken genre_jtoken in tv_show_genres_jtokens) {
 				int id = genre_jtoken["id"].Value<int>();
 				string name = genre_jtoken["name"].Value<string>();
-				if (!_genre_list.ContainsKey(id)) {
-					_genre_list.Add(id, name);
+				if (!this._genre_list.ContainsKey(id)) {
+					this._genre_list.Add(id, name);
 				}
 			}
 		}

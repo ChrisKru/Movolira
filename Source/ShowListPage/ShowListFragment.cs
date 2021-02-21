@@ -11,6 +11,9 @@ using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Newtonsoft.Json;
 
+
+
+
 namespace Movolira {
 	public class ShowListFragment : Fragment, IBackButtonHandler {
 		private RecyclerView _cards_view;
@@ -33,94 +36,95 @@ namespace Movolira {
 
 
 		public override void OnAttach(Context activity) {
-			_main_activity = (MainActivity) activity;
-			_shows = new List<Show>();
+			this._main_activity = (MainActivity)activity;
+			this._shows = new List<Show>();
 			base.OnAttach(activity);
 		}
 
 
 
 
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
-			string type = Arguments.GetString("type");
-			string subtype = Arguments.GetString("subtype");
-			_main_activity.setToolbarTitle(type, subtype);
+		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, 
+			Bundle saved_instance_state) 
+		{
+			string type = this.Arguments.GetString("type");
+			string subtype = this.Arguments.GetString("subtype");
+			this._main_activity.setToolbarTitle(type, subtype);
+			this._frag_layout = inflater.Inflate(Resource.Layout.show_list_page, container, false);
+			this._cards_view_adapter = new ShowCardViewAdapter(this._shows, this._main_activity);
 
 
-			_frag_layout = inflater.Inflate(Resource.Layout.show_list_page, container, false);
-			_cards_view_adapter = new ShowCardViewAdapter(_shows, _main_activity);
-			if (_shows.Count == 0) {
-				Task.Run(() => fillAdapter(_current_page_number));
+			if (this._shows.Count == 0) {
+				Task.Run(() => this.fillAdapter(this._current_page_number));
 			} else {
-				_main_activity.setIsLoading(false);
+				this._main_activity.setIsLoading(false);
 			}
 
 
-			_cards_view_adapter.ShowCardClickEvent += OnShowCardClick;
-			_cards_view_adapter.NextButtonClickEvent += OnNextButtonClick;
-			_cards_view_adapter.PrevButtonClickEvent += OnPrevButtonClick;
-			_cards_view_adapter.CurrentPageNumber = _current_page_number;
-			_cards_view_adapter.MaxItemCount = _max_item_count;
+			this._cards_view_adapter.ShowCardClickEvent += this.OnShowCardClick;
+			this._cards_view_adapter.NextButtonClickEvent += this.OnNextButtonClick;
+			this._cards_view_adapter.PrevButtonClickEvent += this.OnPrevButtonClick;
+			this._cards_view_adapter.CurrentPageNumber = this._current_page_number;
+			this._cards_view_adapter.MaxItemCount = this._max_item_count;
+			this._cards_view = this._frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 
 
-			_cards_view = _frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
-			int display_dpi = (int) _main_activity.Resources.DisplayMetrics.DensityDpi;
-			float display_width_pixels = _main_activity.Resources.DisplayMetrics.WidthPixels;
-			int span_count = (int) Math.Floor(display_width_pixels / display_dpi / 1.1);
-
-
-			((GridLayoutManager) _cards_view.GetLayoutManager()).SpanCount = span_count;
-			((GridLayoutManager) _cards_view.GetLayoutManager()).SetSpanSizeLookup(new ShowListSpanSizeLookup(span_count, _cards_view_adapter));
-			_cards_view.SetAdapter(_cards_view_adapter);
-
-
-			ShowCardViewDecoration cards_decoration = new ShowCardViewDecoration(_main_activity);
-			_cards_view.AddItemDecoration(cards_decoration);
+			int display_dpi = (int)this._main_activity.Resources.DisplayMetrics.DensityDpi;
+			float display_width_pixels = this._main_activity.Resources.DisplayMetrics.WidthPixels;
+			int span_count = (int)Math.Floor(display_width_pixels / display_dpi / 1.1);
+			((GridLayoutManager)this._cards_view.GetLayoutManager()).SpanCount = span_count;
+			((GridLayoutManager)this._cards_view.GetLayoutManager())
+				.SetSpanSizeLookup(new ShowListSpanSizeLookup(span_count, this._cards_view_adapter));
+			this._cards_view.SetAdapter(this._cards_view_adapter);
+			ShowCardViewDecoration cards_decoration = new ShowCardViewDecoration(this._main_activity);
+			this._cards_view.AddItemDecoration(cards_decoration);
 
 
 			ViewPreloadSizeProvider preload_size_provider = new ViewPreloadSizeProvider();
-			_preload_model_provider = new ShowCardPreloadModelProvider(_shows, _main_activity);
-			var cards_view_preloader = new RecyclerViewPreloader<Movie>(_main_activity, _preload_model_provider,
+			this._preload_model_provider = new ShowCardPreloadModelProvider(this._shows, this._main_activity);
+			var cards_view_preloader = new RecyclerViewPreloader<Movie>(this._main_activity, this._preload_model_provider,
 				preload_size_provider, span_count * 3);
-			_cards_view.AddOnScrollListener(cards_view_preloader);
+			this._cards_view.AddOnScrollListener(cards_view_preloader);
 
 
-			return _frag_layout;
+			return this._frag_layout;
 		}
 
 
 
 
 		private async void fillAdapter(int new_page_number) {
-			var show_data = await getShowData(new_page_number);
+			var show_data = await this.getShowData(new_page_number);
 			if (show_data == null) {
-				_main_activity.RunOnUiThread(() => {
-					_main_activity.setIsLoading(false);
-					_main_activity.showNetworkError();
+				this._main_activity.RunOnUiThread(() => {
+					this._main_activity.setIsLoading(false);
+					this._main_activity.showNetworkError();
 				});
 				return;
 			}
 
 
 			var new_shows = show_data.Item1;
-			_max_item_count = show_data.Item2;
-			_shows = new_shows;
-			_current_page_number = new_page_number;
-			_preload_model_provider.Shows = new_shows;
+			this._max_item_count = show_data.Item2;
+			this._shows = new_shows;
+			this._current_page_number = new_page_number;
+			this._preload_model_provider.Shows = new_shows;
 
 
-			_main_activity.RunOnUiThread(() => {
-				_cards_view_adapter.Shows = new_shows;
-				_cards_view_adapter.CurrentPageNumber = new_page_number;
-				_cards_view_adapter.MaxItemCount = _max_item_count;
-				_cards_view_adapter.NotifyDataSetChanged();
-				((GridLayoutManager) _cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
-				_main_activity.setIsLoading(false);
-				if (_shows.Count == 0) {
-					TextView no_results_text = _frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
+			this._main_activity.RunOnUiThread(() => {
+				this._cards_view_adapter.Shows = new_shows;
+				this._cards_view_adapter.CurrentPageNumber = new_page_number;
+				this._cards_view_adapter.MaxItemCount = this._max_item_count;
+				this._cards_view_adapter.NotifyDataSetChanged();
+				((GridLayoutManager)this._cards_view.GetLayoutManager()).ScrollToPositionWithOffset(0, 0);
+				this._main_activity.setIsLoading(false);
+
+
+				if (this._shows.Count == 0) {
+					TextView no_results_text = this._frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
 					no_results_text.Visibility = ViewStates.Visible;
 				} else {
-					TextView no_results_text = _frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
+					TextView no_results_text = this._frag_layout.FindViewById<TextView>(Resource.Id.show_list_no_shows_text);
 					no_results_text.Visibility = ViewStates.Gone;
 				}
 			});
@@ -130,19 +134,19 @@ namespace Movolira {
 
 
 		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number) {
-			string type = Arguments.GetString("type");
-			string subtype = Arguments.GetString("subtype");
+			string type = this.Arguments.GetString("type");
+			string subtype = this.Arguments.GetString("subtype");
 			Tuple<List<Show>, int> show_data = null;
 
 
 			if (type == "movies") {
-				show_data = await _main_activity.DataProvider.getMovies(subtype, new_page_number);
+				show_data = await this._main_activity.DataProvider.getMovies(subtype, new_page_number);
 			} else if (type == "tv_shows") {
-				show_data = await _main_activity.DataProvider.getTvShows(subtype, new_page_number);
+				show_data = await this._main_activity.DataProvider.getTvShows(subtype, new_page_number);
 			} else if (type == "search") {
-				show_data = await _main_activity.DataProvider.getSearchedShows(subtype, new_page_number);
+				show_data = await this._main_activity.DataProvider.getSearchedShows(subtype, new_page_number);
 			} else if (type == "discover") {
-				show_data = await _main_activity.DataProvider.getDiscoveredShows(subtype, new_page_number);
+				show_data = await this._main_activity.DataProvider.getDiscoveredShows(subtype, new_page_number);
 			}
 
 
@@ -153,43 +157,43 @@ namespace Movolira {
 
 
 		private void OnShowCardClick(object sender, int position) {
-			if (_main_activity.IsLoading) {
+			if (this._main_activity.IsLoading) {
 				return;
 			}
-			_main_activity.setIsLoading(true);
-			Task.Run(() => moveToShowDetailsFrag(position));
+			this._main_activity.setIsLoading(true);
+			Task.Run(() => this.moveToShowDetailsFrag(position));
 		}
 
 
 
 
 		private void OnNextButtonClick(object sender, EventArgs args) {
-			if (_main_activity.IsLoading) {
+			if (this._main_activity.IsLoading) {
 				return;
 			}
-			_main_activity.setIsLoading(true);
-			int new_page_number = _current_page_number + 1;
-			Task.Run(() => fillAdapter(new_page_number));
+			this._main_activity.setIsLoading(true);
+			int new_page_number = this._current_page_number + 1;
+			Task.Run(() => this.fillAdapter(new_page_number));
 		}
 
 
 
 
 		private void OnPrevButtonClick(object sender, EventArgs args) {
-			if (_main_activity.IsLoading) {
+			if (this._main_activity.IsLoading) {
 				return;
 			}
-			_main_activity.setIsLoading(true);
-			int new_page_number = _current_page_number - 1;
-			Task.Run(() => fillAdapter(new_page_number));
+			this._main_activity.setIsLoading(true);
+			int new_page_number = this._current_page_number - 1;
+			Task.Run(() => this.fillAdapter(new_page_number));
 		}
 
 
 
 
 		public bool handleBackButtonPress() {
-			if (_current_page_number > 1) {
-				OnPrevButtonClick(null, null);
+			if (this._current_page_number > 1) {
+				this.OnPrevButtonClick(null, null);
 				return true;
 			}
 			return false;
@@ -201,19 +205,22 @@ namespace Movolira {
 		private void moveToShowDetailsFrag(int position) {
 			Fragment details_fragment;
 			Bundle fragment_args = new Bundle();
-			if (_shows[position].Type == ShowType.Movie) {
+
+
+			if (this._shows[position].Type == ShowType.Movie) {
 				details_fragment = new MovieDetailsFragment();
-				Movie movie = _shows[position] as Movie;
+				Movie movie = this._shows[position] as Movie;
 				fragment_args.PutString("movie", JsonConvert.SerializeObject(movie));
 			} else {
 				details_fragment = new TvShowDetailsFragment();
-				TvShow tv_show = _shows[position] as TvShow;
+				TvShow tv_show = this._shows[position] as TvShow;
 				fragment_args.PutString("tv_show", JsonConvert.SerializeObject(tv_show));
 			}
+
+
 			details_fragment.Arguments = fragment_args;
-
-
-			_main_activity.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
+			this._main_activity.SupportFragmentManager.BeginTransaction()
+				.Replace(Resource.Id.main_activity_fragment_frame, details_fragment)
 				.SetTransition(FragmentTransaction.TransitFragmentFade).AddToBackStack(null).Commit();
 		}
 	}

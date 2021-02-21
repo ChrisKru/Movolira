@@ -2,6 +2,9 @@
 using Android.Views;
 using Java.Lang;
 
+
+
+
 namespace Movolira {
 	public class SearchQueryTextListener : Object, SearchView.IOnQueryTextListener {
 		private readonly MainActivity _main_activity;
@@ -11,8 +14,8 @@ namespace Movolira {
 
 
 		public SearchQueryTextListener(MainActivity main_activity, IMenuItem search_item) {
-			_main_activity = main_activity;
-			_search_item = search_item;
+			this._main_activity = main_activity;
+			this._search_item = search_item;
 		}
 
 
@@ -26,8 +29,8 @@ namespace Movolira {
 
 
 		public bool OnQueryTextSubmit(string query) {
-			_main_activity.submitSearch(query);
-			_search_item.CollapseActionView();
+			this._main_activity.submitSearch(query);
+			this._search_item.CollapseActionView();
 			return true;
 		}
 	}

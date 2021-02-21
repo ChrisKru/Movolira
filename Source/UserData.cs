@@ -2,6 +2,9 @@
 using System.Linq;
 using Realms;
 
+
+
+
 namespace Movolira {
 	public class UserData {
 		public List<ShowSerialized> getWatchlist() {
@@ -30,7 +33,8 @@ namespace Movolira {
 
 		public List<RatedShowSerialized> getRatedShows() {
 			Realm realm_db = Realm.GetInstance();
-			return realm_db.All<RatedShowSerialized>().OrderByDescending(show => show.Rating).ThenBy(show => show.Title).ToList();
+			return realm_db.All<RatedShowSerialized>().OrderByDescending(show => show.Rating)
+				.ThenBy(show => show.Title).ToList();
 		}
 
 

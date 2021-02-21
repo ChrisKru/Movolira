@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 
+
+
+
 namespace Movolira {
 	public class TvShow : Show {
 		public string AirDate { get; set; }
@@ -43,18 +46,20 @@ namespace Movolira {
 
 
 		public TvShow(string id, ShowType type, string title) : base(id, type, title) {
-			AirDate = "";
-			Rating = 0;
-			Votes = 0;
-			Overview = "";
+			this.AirDate = "";
+			this.Rating = 0;
+			this.Votes = 0;
+			this.Overview = "";
 		}
 
 
 
 
 		[JsonConstructor]
-		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, string BackdropUrl, string AirDate, double Rating,
-		              int Votes, string Overview) : base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) {
+		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, 
+			string BackdropUrl, string AirDate, double Rating, int Votes, string Overview) 
+			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) 
+		{
 			this.AirDate = AirDate;
 			this.Rating = Rating;
 			this.Votes = Votes;
