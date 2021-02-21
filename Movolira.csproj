@@ -71,34 +71,34 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\DiscoverPage\DiscoverFragment.cs" />
-    <Compile Include="Source\DataProvider\DataProvider.cs" />
+    <Compile Include="Source\Pages\DiscoverPage\DiscoverFragment.cs" />
+    <Compile Include="Source\DataProviders\DataProvider.cs" />
     <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
     <Compile Include="Source\Interfaces\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
-    <Compile Include="Source\RatedShowsPage\RatedShowsFragment.cs" />
+    <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
     <Compile Include="Source\Show.cs" />
-    <Compile Include="Source\ShowDetailsPages\RatingButtonClickListener.cs" />
-    <Compile Include="Source\ShowDetailsPages\RatingDialog.cs" />
-    <Compile Include="Source\ShowDetailsPages\WatchlistButtonClickListener.cs" />
-    <Compile Include="Source\ShowListPage\ShowCardPreloadModelProvider.cs" />
-    <Compile Include="Source\ShowListPage\ShowCardViewAdapter.cs" />
-    <Compile Include="Source\ShowListPage\ShowListFragment.cs" />
-    <Compile Include="Source\DataProvider\ApiKeys.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\RatingButtonClickListener.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\RatingDialog.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\WatchlistButtonClickListener.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowCardPreloadModelProvider.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowCardViewAdapter.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowListFragment.cs" />
+    <Compile Include="Source\DataProviders\ApiKeys.cs" />
     <Compile Include="Source\MainActivity.cs" />
-    <Compile Include="Source\ShowListPage\ShowCardViewDecoration.cs" />
-    <Compile Include="Source\ShowListPage\ShowCardViewHolder.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowCardViewDecoration.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowCardViewHolder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\ShowDetailsPages\MovieDetailsFragment.cs" />
-    <Compile Include="Source\ShowListPage\ShowListPagerHolder.cs" />
-    <Compile Include="Source\ShowListPage\ShowListSpanSizeLookup.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\MovieDetailsFragment.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowListPagerHolder.cs" />
+    <Compile Include="Source\Pages\ShowListPage\ShowListSpanSizeLookup.cs" />
     <Compile Include="Source\TvShow.cs" />
-    <Compile Include="Source\ShowDetailsPages\TvShowDetailsFragment.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\TvShowDetailsFragment.cs" />
     <Compile Include="Source\UserData.cs" />
-    <Compile Include="Source\WatchlistPage\WatchlistFragment.cs" />
+    <Compile Include="Source\Pages\WatchlistPage\WatchlistFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml">

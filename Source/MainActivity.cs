@@ -13,6 +13,13 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Movolira.DataProviders;
+using Movolira.Interfaces;
+using Movolira.Pages.DiscoverPage;
+using Movolira.Pages.RatedShowsPage;
+using Movolira.Pages.ShowDetailsPages;
+using Movolira.Pages.ShowListPage;
+using Movolira.Pages.WatchlistPage;
 using Newtonsoft.Json;
 
 
