@@ -127,7 +127,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 				if (this._movie.Genres.Length > 1) {
-					genres_view.Text += "\n" + this._movie.Genres[1].First().ToString().ToUpper() 
+					genres_view.Text += "\n" + this._movie.Genres[1].First().ToString().ToUpper()
 						+ this._movie.Genres[1].Substring(1);
 				}
 			}
@@ -150,7 +150,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 			SpannableStringBuilder release_date_styled_string = new SpannableStringBuilder(release_date_view.Text);
-			release_date_styled_string.SetSpan(new RelativeSizeSpan(1.2f), release_date_title.Length, 
+			release_date_styled_string.SetSpan(new RelativeSizeSpan(1.2f), release_date_title.Length,
 				release_date_styled_string.Length(), SpanTypes.ExclusiveExclusive);
 			release_date_view.TextFormatted = release_date_styled_string;
 		}
@@ -174,7 +174,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 			SpannableStringBuilder runtime_styled_string = new SpannableStringBuilder(runtime_view.Text);
-			runtime_styled_string.SetSpan(new RelativeSizeSpan(1.2f), runtime_title.Length, 
+			runtime_styled_string.SetSpan(new RelativeSizeSpan(1.2f), runtime_title.Length,
 				runtime_styled_string.Length(), SpanTypes.ExclusiveExclusive);
 			runtime_view.TextFormatted = runtime_styled_string;
 		}
@@ -196,7 +196,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 			SpannableStringBuilder certification_styled_string = new SpannableStringBuilder(certification_view.Text);
-			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length, 
+			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length,
 				certification_styled_string.Length(), SpanTypes.ExclusiveExclusive);
 			certification_view.TextFormatted = certification_styled_string;
 		}
@@ -265,7 +265,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private void buildWatchlistButton(View layout) {
 			Button watchlist_button = layout.FindViewById<Button>(Resource.Id.movie_details_add_watchlist_button);
-			watchlist_button.SetOnClickListener(new WatchlistButtonClickListener(this._main_activity, 
+			watchlist_button.SetOnClickListener(new WatchlistButtonClickListener(this._main_activity,
 				watchlist_button, this._movie));
 		}
 
@@ -274,7 +274,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private void buildRatingButton(View layout) {
 			Button rating_button = layout.FindViewById<Button>(Resource.Id.movie_details_add_rating_button);
-			rating_button.SetOnClickListener(new RatingButtonClickListener(this._main_activity, 
+			rating_button.SetOnClickListener(new RatingButtonClickListener(this._main_activity,
 				rating_button, this._movie));
 		}
 	}

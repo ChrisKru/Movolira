@@ -56,10 +56,11 @@ namespace Movolira {
 
 
 		[JsonConstructor]
-		public Movie(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl, 
-			string BackdropUrl, string ReleaseDate, double Rating, int Votes, string Overview) 
-			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) 
-		{
+		public Movie(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl,
+			string BackdropUrl, string ReleaseDate, double Rating, int Votes, string Overview)
+			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) {
+
+
 			this.ReleaseDate = ReleaseDate;
 			this.Rating = Rating;
 			this.Votes = Votes;

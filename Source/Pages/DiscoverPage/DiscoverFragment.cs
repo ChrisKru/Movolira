@@ -230,7 +230,7 @@ namespace Movolira.Pages.DiscoverPage {
 			rating_range_slider.LowerValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
-				this._rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" 
+				this._rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-"
 					+ updated_range_slider.GetSelectedMaxValue();
 			};
 
@@ -238,7 +238,7 @@ namespace Movolira.Pages.DiscoverPage {
 			rating_range_slider.UpperValueChanged += (a, b) => {
 				RangeSliderControl updated_range_slider =
 					discover_page_layout.FindViewById<RangeSliderControl>(Resource.Id.discover_page_rating_range_slider);
-				this._rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-" 
+				this._rating_range_view.Text = updated_range_slider.GetSelectedMinValue() + "-"
 					+ updated_range_slider.GetSelectedMaxValue();
 			};
 		}
@@ -353,8 +353,8 @@ namespace Movolira.Pages.DiscoverPage {
 
 
 				string vote_count_query = "vote_count.gte=20";
-				string search_query = runtime_min_query + "&" + runtime_max_query + "&" + rating_min_query + "&" 
-					+ rating_max_query + "&" + excluded_genres_query + "&" + release_date_min_query + "&" 
+				string search_query = runtime_min_query + "&" + runtime_max_query + "&" + rating_min_query + "&"
+					+ rating_max_query + "&" + excluded_genres_query + "&" + release_date_min_query + "&"
 					+ release_date_max_query + "&" + air_date_min_query + "&" + air_date_max_query + "&" + vote_count_query;
 
 

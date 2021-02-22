@@ -356,7 +356,7 @@ namespace Movolira {
 
 
 			this._drawer_layout = this.FindViewById<DrawerLayout>(Resource.Id.main_activity_drawer_layout);
-			this._drawer_toggle = new ActionBarDrawerToggle(this, this._drawer_layout, this._toolbar, 
+			this._drawer_toggle = new ActionBarDrawerToggle(this, this._drawer_layout, this._toolbar,
 				Android.Resource.Drawable.IcMenuDirections, Android.Resource.Drawable.IcMenuDirections);
 			this._drawer_layout.AddDrawerListener(this._drawer_toggle);
 

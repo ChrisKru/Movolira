@@ -71,6 +71,8 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\DataProviders\GenresProvider.cs" />
+    <Compile Include="Source\DataProviders\JSONHelper.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverFragment.cs" />
     <Compile Include="Source\DataProviders\DataProvider.cs" />
     <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />

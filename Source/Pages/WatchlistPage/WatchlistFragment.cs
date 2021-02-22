@@ -40,7 +40,7 @@ namespace Movolira.Pages.WatchlistPage {
 
 
 			foreach (ShowSerialized show in watchlist) {
-				ViewGroup watchlist_entry = (ViewGroup)inflater.Inflate(Resource.Layout.watchlist_page_entry, 
+				ViewGroup watchlist_entry = (ViewGroup)inflater.Inflate(Resource.Layout.watchlist_page_entry,
 					entries_layout, false);
 				entries_layout.AddView(watchlist_entry);
 				TextView watchlist_entry_title = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_title);

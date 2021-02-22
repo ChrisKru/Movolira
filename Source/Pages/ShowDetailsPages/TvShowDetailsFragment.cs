@@ -125,12 +125,12 @@ namespace Movolira.Pages.ShowDetailsPages {
 		private void buildGenresView(View layout) {
 			if (this._tv_show.Genres.Length > 0) {
 				TextView genres_view = layout.FindViewById<TextView>(Resource.Id.tv_show_details_genres);
-				genres_view.Text = this._tv_show.Genres[0].First().ToString().ToUpper() 
+				genres_view.Text = this._tv_show.Genres[0].First().ToString().ToUpper()
 					+ this._tv_show.Genres[0].Substring(1);
 
 
 				if (this._tv_show.Genres.Length > 1) {
-					genres_view.Text += "\n" + this._tv_show.Genres[1].First().ToString().ToUpper() 
+					genres_view.Text += "\n" + this._tv_show.Genres[1].First().ToString().ToUpper()
 						+ this._tv_show.Genres[1].Substring(1);
 				}
 			}
@@ -197,7 +197,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 			SpannableStringBuilder certification_styled_string = new SpannableStringBuilder(certification_view.Text);
-			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length, 
+			certification_styled_string.SetSpan(new RelativeSizeSpan(1.2f), certification_title.Length,
 				certification_styled_string.Length(), SpanTypes.ExclusiveExclusive);
 			certification_view.TextFormatted = certification_styled_string;
 		}
@@ -265,7 +265,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private void buildRatingButton(View layout) {
 			Button rating_button = layout.FindViewById<Button>(Resource.Id.tv_show_details_add_rating_button);
-			rating_button.SetOnClickListener(new RatingButtonClickListener(this._main_activity, 
+			rating_button.SetOnClickListener(new RatingButtonClickListener(this._main_activity,
 				rating_button, this._tv_show));
 		}
 

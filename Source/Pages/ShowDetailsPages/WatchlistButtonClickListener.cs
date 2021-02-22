@@ -50,11 +50,11 @@ namespace Movolira.Pages.ShowDetailsPages {
 		private void toggleButtonState() {
 			if (this._is_show_watchlisted) {
 				this._watchlist_button.Text = this._main_activity.GetString(Resource.String.show_details_add_watchlist_button_added);
-				this._watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(this._main_activity, 
+				this._watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(this._main_activity,
 					Resource.Color.show_details_button_text_set)));
 			} else {
 				this._watchlist_button.Text = this._main_activity.GetString(Resource.String.show_details_add_watchlist_button);
-				this._watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(this._main_activity, 
+				this._watchlist_button.SetTextColor(new Color(ContextCompat.GetColor(this._main_activity,
 					Resource.Color.show_details_button_text)));
 			}
 		}

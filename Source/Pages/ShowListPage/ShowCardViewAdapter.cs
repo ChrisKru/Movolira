@@ -112,12 +112,12 @@ namespace Movolira.Pages.ShowListPage {
 					card_holder.TitleText.Text = show.Title;
 				}
 				if (show.Genres.Length > 0) {
-					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper() 
+					card_holder.GenresText.Text = show.Genres[0].First().ToString().ToUpper()
 						+ show.Genres[0].Substring(1);
 
 
 					if (show.Genres.Length > 1) {
-						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper() 
+						card_holder.GenresText.Text += " " + show.Genres[1].First().ToString().ToUpper()
 							+ show.Genres[1].Substring(1);
 					}
 				}

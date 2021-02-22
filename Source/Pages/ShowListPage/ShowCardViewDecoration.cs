@@ -21,9 +21,10 @@ namespace Movolira.Pages.ShowListPage {
 
 
 
-		public override void GetItemOffsets(Rect offset_rect, View view, 
-			RecyclerView parent_view, RecyclerView.State parent_state) 
-		{
+		public override void GetItemOffsets(Rect offset_rect, View view,
+			RecyclerView parent_view, RecyclerView.State parent_state) {
+
+
 			float display_density = this._app_context.Resources.DisplayMetrics.Density;
 			int offset = (int)(display_density * 14);
 			int child_pos = parent_view.GetChildLayoutPosition(view);

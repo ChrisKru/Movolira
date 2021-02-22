@@ -46,9 +46,10 @@ namespace Movolira.Pages.ShowListPage {
 
 
 
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, 
-			Bundle saved_instance_state) 
-		{
+		public override View OnCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle saved_instance_state) {
+
+
 			string type = this.Arguments.GetString("type");
 			string subtype = this.Arguments.GetString("subtype");
 			this._main_activity.setToolbarTitle(type, subtype);
