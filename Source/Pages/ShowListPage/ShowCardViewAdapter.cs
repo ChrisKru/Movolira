@@ -8,7 +8,6 @@ using Android.Views;
 using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
 using Bumptech.Glide.Request;
-using Movolira.DataProviders;
 
 namespace Movolira.Pages.ShowListPage {
 	public class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -76,7 +75,7 @@ namespace Movolira.Pages.ShowListPage {
 				}
 
 
-				if (this.CurrentPageNumber * DataProvider.SHOWS_PER_PAGE >= this.MaxItemCount) {
+				if (this.CurrentPageNumber * MainActivity.SHOWS_PER_PAGE >= this.MaxItemCount) {
 					pager_holder.NextButton.Alpha = 0.5f;
 					pager_holder.NextButton.Enabled = false;
 				} else {

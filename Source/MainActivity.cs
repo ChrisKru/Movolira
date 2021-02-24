@@ -36,9 +36,17 @@ namespace Movolira {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true,
 		WindowSoftInputMode = SoftInput.StateUnchanged | SoftInput.AdjustResize)]
 	public class MainActivity : AppCompatActivity {
-		public DataProvider DataProvider { get; private set; }
+		public const int SHOWS_PER_PAGE = 20;
+
+
+		public GenresProvider GenresProvider { get; private set; }
+		public MovieProvider MovieProvider { get; private set; }
+		public TvShowProvider TvShowProvider { get; private set; }
+		public ShowProvider ShowProvider { get; private set; }
 		public UserData UserData { get; private set; }
 		public bool IsLoading { get; private set; }
+
+
 		private DrawerLayout _drawer_layout;
 		private ActionBarDrawerToggle _drawer_toggle;
 		private int _loading_count;
@@ -130,10 +138,10 @@ namespace Movolira {
 				for (int i_page = 1; i_page < page_count; ++i_page) {
 					Tuple<List<Show>, int> show_data = null;
 					if (five_star_shows[i_show].Type == ShowType.Movie.ToString()) {
-						show_data = this.DataProvider.getMovies(category, i_page).Result;
+						show_data = this.MovieProvider.getMovies(category, i_page).Result;
 						recommended_show_type = "movie";
 					} else {
-						show_data = this.DataProvider.getTvShows(category, i_page).Result;
+						show_data = this.TvShowProvider.getTvShows(category, i_page).Result;
 						recommended_show_type = "tv_show";
 					}
 
@@ -148,7 +156,7 @@ namespace Movolira {
 
 
 					shows = show_data.Item1;
-					page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+					page_count = show_data.Item2 / SHOWS_PER_PAGE;
 					if (shows.Any()) {
 						for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
 							if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
@@ -183,10 +191,10 @@ namespace Movolira {
 					for (int i_page = 1; i_page < page_count; ++i_page) {
 						Tuple<List<Show>, int> show_data = null;
 						if (four_star_shows[i_show].Type == ShowType.Movie.ToString()) {
-							show_data = this.DataProvider.getMovies(category, i_page).Result;
+							show_data = this.MovieProvider.getMovies(category, i_page).Result;
 							recommended_show_type = "movie";
 						} else {
-							show_data = this.DataProvider.getTvShows(category, i_page).Result;
+							show_data = this.TvShowProvider.getTvShows(category, i_page).Result;
 							recommended_show_type = "tv_show";
 						}
 
@@ -201,7 +209,7 @@ namespace Movolira {
 
 
 						shows = show_data.Item1;
-						page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+						page_count = show_data.Item2 / SHOWS_PER_PAGE;
 						if (shows.Any()) {
 							for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
 								if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
@@ -231,10 +239,10 @@ namespace Movolira {
 				for (int i_page = 1; i_page < page_count; ++i_page) {
 					Tuple<List<Show>, int> show_data = null;
 					if (randomizer.Next(0, 1) == 0) {
-						show_data = this.DataProvider.getMovies("popular", i_page).Result;
+						show_data = this.MovieProvider.getMovies("popular", i_page).Result;
 						recommended_show_type = "movie";
 					} else {
-						show_data = this.DataProvider.getTvShows("popular", i_page).Result;
+						show_data = this.TvShowProvider.getTvShows("popular", i_page).Result;
 						recommended_show_type = "tv_show";
 					}
 
@@ -249,7 +257,7 @@ namespace Movolira {
 
 
 					shows = show_data.Item1;
-					page_count = show_data.Item2 / DataProvider.SHOWS_PER_PAGE;
+					page_count = show_data.Item2 / SHOWS_PER_PAGE;
 					if (shows.Any()) {
 						for (int i_similar_shows = 0; i_similar_shows < shows.Count; ++i_similar_shows) {
 							if (!known_show_ids.Contains(shows[i_similar_shows].Id)) {
@@ -340,7 +348,10 @@ namespace Movolira {
 		protected override void OnCreate(Bundle saved_instance_state) {
 			base.OnCreate(saved_instance_state);
 			this.UserData = new UserData();
-			this.DataProvider = new DataProvider();
+			this.GenresProvider = new GenresProvider();
+			this.MovieProvider = new MovieProvider(this.GenresProvider);
+			this.TvShowProvider = new TvShowProvider(this.GenresProvider);
+			this.ShowProvider = new ShowProvider(this.GenresProvider, this.MovieProvider, this.TvShowProvider);
 			this.SetContentView(Resource.Layout.main_activity);
 			this._loading_view = this.FindViewById<ImageView>(Resource.Id.show_list_loading);
 			((AnimationDrawable)this._loading_view.Background).Start();

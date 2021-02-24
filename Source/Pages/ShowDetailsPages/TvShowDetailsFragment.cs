@@ -52,7 +52,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 		private async void buildTvShowData(View layout) {
-			if (!(await this._main_activity.DataProvider.getTvShowDetails(this._tv_show))) {
+			if (!(await this._main_activity.TvShowProvider.getTvShowDetails(this._tv_show))) {
 				this._main_activity.RunOnUiThread(() => {
 					this._main_activity.setIsLoading(false);
 					this._main_activity.showNetworkError();

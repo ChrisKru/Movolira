@@ -51,7 +51,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 		private async void buildMovieData(View layout) {
-			if (!await this._main_activity.DataProvider.getMovieDetails(this._movie)) {
+			if (!await this._main_activity.MovieProvider.getMovieDetails(this._movie)) {
 				this._main_activity.RunOnUiThread(() => {
 					this._main_activity.setIsLoading(false);
 					this._main_activity.showNetworkError();

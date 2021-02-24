@@ -73,8 +73,10 @@
   <ItemGroup>
     <Compile Include="Source\DataProviders\GenresProvider.cs" />
     <Compile Include="Source\DataProviders\JSONHelper.cs" />
+    <Compile Include="Source\DataProviders\MovieProvider.cs" />
+    <Compile Include="Source\DataProviders\ShowProvider.cs" />
+    <Compile Include="Source\DataProviders\TvShowProvider.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverFragment.cs" />
-    <Compile Include="Source\DataProviders\DataProvider.cs" />
     <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
     <Compile Include="Source\Interfaces\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />

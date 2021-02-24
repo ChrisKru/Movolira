@@ -143,13 +143,13 @@ namespace Movolira.Pages.ShowListPage {
 
 
 			if (type == "movies") {
-				show_data = await this._main_activity.DataProvider.getMovies(subtype, new_page_number);
+				show_data = await this._main_activity.MovieProvider.getMovies(subtype, new_page_number);
 			} else if (type == "tv_shows") {
-				show_data = await this._main_activity.DataProvider.getTvShows(subtype, new_page_number);
+				show_data = await this._main_activity.TvShowProvider.getTvShows(subtype, new_page_number);
 			} else if (type == "search") {
-				show_data = await this._main_activity.DataProvider.getSearchedShows(subtype, new_page_number);
+				show_data = await this._main_activity.ShowProvider.getSearchedShows(subtype, new_page_number);
 			} else if (type == "discover") {
-				show_data = await this._main_activity.DataProvider.getDiscoveredShows(subtype, new_page_number);
+				show_data = await this._main_activity.ShowProvider.getDiscoveredShows(subtype, new_page_number);
 			}
 
 

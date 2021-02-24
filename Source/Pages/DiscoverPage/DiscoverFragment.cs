@@ -65,6 +65,8 @@ namespace Movolira.Pages.DiscoverPage {
 				this.buildResetButton(this._layout);
 				this.buildDiscoverButton(this._layout);
 				this.buildYearsNumberPickers(this._layout, this._frag_saved_state);
+
+
 			} else {
 				Task.Run(() => this.buildGenreButtons(this._layout, inflater, saved_instance_state));
 				this.buildRuntimeRange(this._layout, saved_instance_state);
@@ -87,7 +89,7 @@ namespace Movolira.Pages.DiscoverPage {
 		private async void buildGenreButtons(View discover_page_layout, LayoutInflater inflater, Bundle saved_instance_state) {
 			this._genre_buttons = new List<ToggleButton>();
 			this._genre_ids = new Dictionary<string, string>();
-			var genre_list = await this._main_activity.DataProvider.getGenreList();
+			var genre_list = await this._main_activity.GenresProvider.getGenreList();
 
 
 			this._main_activity.RunOnUiThread(() => {

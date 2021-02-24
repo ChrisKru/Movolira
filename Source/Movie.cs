@@ -65,6 +65,7 @@ namespace Movolira {
 			this.Rating = Rating;
 			this.Votes = Votes;
 			this.Overview = Overview;
+			this.AreShowMainDetailsFetched = true;
 		}
 	}
 }

@@ -6,6 +6,9 @@ using Realms;
 
 namespace Movolira {
 	public class Show {
+		// "Main Details" refers to the fields that are bundled together with page listing requests of TMDB API.
+		// The field is used to omit reinitializing those fields, when fetching other show details.
+		public bool AreShowMainDetailsFetched { get; set; } = false;
 		public string Id { get; }
 		public ShowType Type { get; }
 		public string Title { get; }

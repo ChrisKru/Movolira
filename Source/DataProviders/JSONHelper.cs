@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -10,8 +12,27 @@ using Newtonsoft.Json.Linq;
 
 namespace Movolira.DataProviders {
 	public static class JSONHelper {
+		private static HttpClient _http_client;
 		private const int HTTP_RETRY_COUNT = 5;
 		private const int HTTP_RETRY_DELAY = 500; // milliseconds
+
+
+
+
+		static JSONHelper() {
+			// These if clauses prevent the objects from being reinitialized when not needed.
+			// (when the app is recovering from a saved instance state)
+			if (_http_client == null) {
+				_http_client = new HttpClient();
+				// Default buffer size results in over 200MB additional taken storage space
+				_http_client.MaxResponseContentBufferSize = 256000; // bytes
+			}
+
+
+			if (BlobCache.ApplicationName != "Movolira") {
+				BlobCache.ApplicationName = "Movolira";
+			}
+		}
 
 
 
@@ -27,7 +48,7 @@ namespace Movolira.DataProviders {
 				for (int i_retry = 0; i_retry < HTTP_RETRY_COUNT; ++i_retry) {
 					HttpResponseMessage json_response;
 					try {
-						json_response = await DataProvider.HTTP_CLIENT.GetAsync(json_uri);
+						json_response = await _http_client.GetAsync(json_uri);
 					} catch (Exception) {
 						await Task.Delay(HTTP_RETRY_DELAY);
 						continue;
@@ -52,6 +73,39 @@ namespace Movolira.DataProviders {
 
 			}
 			return json;
+		}
+
+
+
+
+		public static T getJTokenValue<T>(JToken jtoken, string key) {
+			T value = default;
+			if (doesJTokenContainKey(jtoken, key)) {
+				value = jtoken[key].Value<T>();
+			}
+			return value;
+		}
+
+
+
+
+		public static List<T> getJTokenValueList<T>(JToken jtoken, string key) {
+			var value_list = new List<T>();
+			if (doesJTokenContainKey(jtoken, key)) {
+				value_list = jtoken[key].Children().Values<T>().ToList();
+			}
+			return value_list;
+		}
+
+
+
+
+		public static List<JToken> getJTokenList(JToken jtoken, string key) {
+			var jtoken_list = new List<JToken>();
+			if (doesJTokenContainKey(jtoken, key)) {
+				jtoken_list = jtoken[key].Children().ToList();
+			}
+			return jtoken_list;
 		}
 
 
