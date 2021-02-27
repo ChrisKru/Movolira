@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Views;

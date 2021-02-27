@@ -77,8 +77,8 @@
     <Compile Include="Source\DataProviders\ShowProvider.cs" />
     <Compile Include="Source\DataProviders\TvShowProvider.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverFragment.cs" />
-    <Compile Include="Source\Interfaces\IBackButtonHandler.cs" />
-    <Compile Include="Source\Interfaces\ITouchHandler.cs" />
+    <Compile Include="Source\IBackButtonHandler.cs" />
+    <Compile Include="Source\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
     <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />

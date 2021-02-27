@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -31,8 +31,8 @@ namespace Movolira.DataProviders {
 			}
 
 
-			bool is_genre_list_filled = await this._genres_provider.tryFillGenreList();
-			if (!is_genre_list_filled) {
+			bool is_genre_dict_filled = await this._genres_provider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
 				return null;
 			}
 			var movies = this.getMovieListFromJson(movies_json);
@@ -52,8 +52,10 @@ namespace Movolira.DataProviders {
 				var genre_ids = JSONHelper.getJTokenValueList<int>(movie_jtoken, "genre_ids");
 				var genres = new List<string>();
 				foreach (int genre_id in genre_ids) {
-					genres.Add(this._genres_provider.getGenreNameForId(genre_id));
+					genres.AddRange(this._genres_provider.getGenreNamesForId(genre_id));
 				}
+				// Multiple ids may point to the same genre.
+				genres = genres.Distinct().ToList();
 
 
 				// TMDB returns shows with no genres, even if genre inclusion/exclusion is specified in the request.
@@ -126,21 +128,23 @@ namespace Movolira.DataProviders {
 		// "Main Details" refers to the fields that are bundled together with page listing requests of TMDB API.
 		// The field is used to omit reinitializing those fields, when fetching other show details.
 		private bool fillMainMovieDetails(Movie movie, JObject details_json) {
-			var movie_genre_jtokens = JSONHelper.getJTokenList(details_json["data"], "genres");
-			var movie_genres = new List<string>();
-			foreach (JToken genre_jtoken in movie_genre_jtokens) {
+			var genre_jtokens = JSONHelper.getJTokenList(details_json["data"], "genres");
+			var genres = new List<string>();
+			foreach (JToken genre_jtoken in genre_jtokens) {
 				int genre_id = JSONHelper.getJTokenValue<int>(genre_jtoken, "id");
-				movie_genres.Add(this._genres_provider.getGenreNameForId(genre_id));
+				genres.AddRange(this._genres_provider.getGenreNamesForId(genre_id));
 			}
+			// Multiple ids may point to the same genre.
+			genres = genres.Distinct().ToList();
 
 
 			// TMDB returns shows with no genres even if genre inclusion/exclusion is specified in the request.
 			// Which is why they'd normally show up on every discover/search regardless of options.
 			// These show entries are ignored by data providers, for consistency.
-			if (movie_genres.Count == 0) {
+			if (genres.Count == 0) {
 				return false;
 			}
-			movie.Genres = movie_genres.ToArray();
+			movie.Genres = genres.ToArray();
 
 
 			movie.ReleaseDate = JSONHelper.getJTokenValue<string>(details_json["data"], "release_date");

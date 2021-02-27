@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
@@ -25,7 +25,6 @@ namespace Movolira.Pages.DiscoverPage {
 
 
 		private MainActivity _main_activity;
-		private Dictionary<string, string> _genre_ids;
 		private Bundle _frag_saved_state;
 
 
@@ -77,8 +76,6 @@ namespace Movolira.Pages.DiscoverPage {
 			}
 
 
-
-
 			this._main_activity.setToolbarTitle("Discover");
 			return this._layout;
 		}
@@ -88,51 +85,24 @@ namespace Movolira.Pages.DiscoverPage {
 
 		private async void buildGenreButtons(View discover_page_layout, LayoutInflater inflater, Bundle saved_instance_state) {
 			this._genre_buttons = new List<ToggleButton>();
-			this._genre_ids = new Dictionary<string, string>();
-			var genre_list = await this._main_activity.GenresProvider.getGenreList();
+			bool is_genre_dict_filled = await this._main_activity.GenresProvider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
+				// DISLAY CONNECTION ERROR
+			}
+			var genre_id_dict = this._main_activity.GenresProvider.getGenreIdDict();
 
 
 			this._main_activity.RunOnUiThread(() => {
 				ViewGroup genre_button_layout = discover_page_layout.FindViewById<ViewGroup>(
 					Resource.Id.discover_page_genre_buttons);
-				if (this._genre_ids.Count == 0) {
-					foreach (var genre_pair in genre_list) {
 
 
-						if (genre_pair.Value.Contains("&")) {
-							var split_genres = genre_pair.Value.Split(new[] { '&', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-							foreach (string genre in split_genres) {
-								if (this._genre_ids.ContainsKey(genre)) {
-									this._genre_ids[genre] = this._genre_ids[genre] + "," + genre_pair.Key;
-								} else {
-									this._genre_ids.Add(genre, genre_pair.Key.ToString());
-								}
-							}
-						}
-
-
-						if (this._genre_ids.ContainsKey(genre_pair.Value)) {
-							this._genre_ids[genre_pair.Value] = this._genre_ids[genre_pair.Value] + "," + genre_pair.Key;
-						} else {
-							this._genre_ids.Add(genre_pair.Value, genre_pair.Key.ToString());
-						}
-
-
-					}
-				}
-
-
-				foreach (var genre_pair in genre_list) {
-					if (genre_pair.Value.Contains("&")) {
-						continue;
-					}
-
-
+				foreach (var genre_name in genre_id_dict.Keys) {
 					ToggleButton genre_button = (ToggleButton)inflater.Inflate(
 						Resource.Layout.discover_page_genre_button, genre_button_layout, false);
 					genre_button_layout.AddView(genre_button);
-					genre_button.TextOn = genre_pair.Value;
-					genre_button.TextOff = genre_pair.Value;
+					genre_button.TextOn = genre_name;
+					genre_button.TextOff = genre_name;
 					genre_button.Checked = true;
 					this._genre_buttons.Add(genre_button);
 				}
@@ -323,7 +293,10 @@ namespace Movolira.Pages.DiscoverPage {
 
 				foreach (ToggleButton genre_button in this._genre_buttons) {
 					if (!genre_button.Checked) {
-						excluded_genres_query += this._genre_ids[genre_button.TextOn] + ",";
+						var excluded_genre_ids = this._main_activity.GenresProvider.getGenreIdsForName(genre_button.TextOn);
+						foreach (int genre_id in excluded_genre_ids) {
+							excluded_genres_query += genre_id.ToString() + ",";
+						}
 					} else {
 						no_genres_included = false;
 					}

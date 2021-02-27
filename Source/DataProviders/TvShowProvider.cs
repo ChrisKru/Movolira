@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -31,8 +31,8 @@ namespace Movolira.DataProviders {
 			}
 
 
-			bool is_genre_list_filled = await this._genres_provider.tryFillGenreList();
-			if (!is_genre_list_filled) {
+			bool is_genre_dict_filled = await this._genres_provider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
 				return null;
 			}
 			var tv_shows = this.getTvShowListFromJson(tv_shows_json);
@@ -50,7 +50,14 @@ namespace Movolira.DataProviders {
 
 			foreach (JToken tv_show_jtoken in tv_shows_jtokens) {
 				var genre_ids = JSONHelper.getJTokenValueList<int>(tv_show_jtoken, "genre_ids");
-				var genres = this.getTvShowGenres(genre_ids);
+				var genres = new List<string>();
+				foreach (int genre_id in genre_ids) {
+					genres.AddRange(this._genres_provider.getGenreNamesForId(genre_id));
+				}
+				// Multiple ids may point to the same genre.
+				genres = genres.Distinct().ToList();
+
+
 				// TMDB returns shows with no genres, even if genre inclusion/exclusion is specified in the request.
 				// Which is why they'd normally show up on every discover/search regardless of options.
 				// These show entries are ignored by data providers, for consistency. 
@@ -78,31 +85,6 @@ namespace Movolira.DataProviders {
 
 
 			return tv_shows;
-		}
-
-
-
-
-		private List<string> getTvShowGenres(List<int> genre_ids) {
-			var genres = new List<string>();
-			foreach (int genre_id in genre_ids) {
-				string genre = this._genres_provider.getGenreNameForId(genre_id);
-				if (!genre.Contains("&")) {
-					genres.Add(genre);
-
-
-					// Tv shows returned by TMDB API might contain a combination of multiple genres within a single entry.
-					// These entries are split and taken as multiple genres.
-				} else {
-					var split_genres = genre.Split(new[] { '&', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-					foreach (string split_genre in split_genres) {
-						genres.Add(split_genre);
-					}
-				}
-			}
-
-
-			return genres;
 		}
 
 
@@ -144,22 +126,23 @@ namespace Movolira.DataProviders {
 		// "Main Details" refers to the fields that are bundled together with page listing requests of TMDB API.
 		// The field is used to omit reinitializing those fields, when fetching other show details.
 		private bool fillMainTvShowDetails(TvShow tv_show, JObject details_json) {
-			var tv_show_genre_jtokens = JSONHelper.getJTokenList(details_json["data"], "genres");
-			var tv_show_genres = new List<string>();
-			foreach (JToken genre_jtoken in tv_show_genre_jtokens) {
+			var genre_jtokens = JSONHelper.getJTokenList(details_json["data"], "genres");
+			var genres = new List<string>();
+			foreach (JToken genre_jtoken in genre_jtokens) {
 				int genre_id = JSONHelper.getJTokenValue<int>(genre_jtoken, "id");
-				tv_show_genres.Add(this._genres_provider.getGenreNameForId(genre_id));
+				genres.AddRange(this._genres_provider.getGenreNamesForId(genre_id));
 			}
+			genres = genres.Distinct().ToList();
 
 
 
 			// TMDB returns shows with no genres even if genre inclusion/exclusion is specified in the request.
 			// Which is why they'd normally show up on every discover/search regardless of options.
 			// These show entries are ignored by data providers, for consistency.
-			if (tv_show_genres.Count == 0) {
+			if (genres.Count == 0) {
 				return false;
 			}
-			tv_show.Genres = tv_show_genres.ToArray();
+			tv_show.Genres = genres.ToArray();
 
 
 			tv_show.AirDate = JSONHelper.getJTokenValue<string>(details_json["data"], "first_air_date");

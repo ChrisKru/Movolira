@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -33,8 +33,8 @@ namespace Movolira.DataProviders {
 			var tv_shows_json_task = JSONHelper.getJson("search_tv_shows_" + query + ";" + page_number, tv_shows_uri);
 
 
-			bool is_genre_list_filled = await this._genres_provider.tryFillGenreList();
-			if (!is_genre_list_filled) {
+			bool is_genre_dict_filled = await this._genres_provider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
 				return null;
 			}
 
@@ -94,8 +94,8 @@ namespace Movolira.DataProviders {
 			var tv_shows_json_task = JSONHelper.getJson("discover_tv_shows_" + query + ";" + page_number, tv_shows_uri);
 
 
-			bool is_genre_list_filled = await this._genres_provider.tryFillGenreList();
-			if (!is_genre_list_filled) {
+			bool is_genre_dict_filled = await this._genres_provider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
 				return null;
 			}
 
