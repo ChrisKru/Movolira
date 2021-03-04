@@ -6,11 +6,11 @@
     <!--FilterDialog-->
     <color name="discover_page_title">#220024</color>
     <color name="discover_page_content">#232323</color>
-    <color name="genre_button_on">#220024</color>
-    <color name="genre_button_off">#ffffff</color>
-    <color name="genre_button_off_border">#220024</color>
-    <color name="genre_button_text_on">#ffffff</color>
-    <color name="genre_button_text_off">#220024</color>
+    <color name="genre_chip_button_on">#220024</color>
+    <color name="genre_chip_button_off">#ffffff</color>
+    <color name="genre_chip_button_off_border">#220024</color>
+    <color name="genre_chip_button_text_on">#ffffff</color>
+    <color name="genre_chip_button_text_off">#220024</color>
     <color name="ic_cancel_button_tint">#636363</color>
     <color name="ic_reset_button_tint">#636363</color>
     <!--Menu-->

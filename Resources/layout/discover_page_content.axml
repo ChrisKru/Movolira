@@ -11,7 +11,7 @@
         android:descendantFocusability="beforeDescendants">
         <requestFocus />
         <TextView
-            android:id="@+id/discover_page_genres_title"
+            android:id="@+id/discover_page_genre_buttons_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -20,18 +20,18 @@
             android:textColor="@color/discover_page_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/discover_page_genres_title"
+            android:text="@string/discover_page_genre_buttons_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
         <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/discover_page_genre_buttons"
+            android:id="@+id/discover_page_genre_chip_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:flexDirection="row"
             app:flexWrap="wrap"
             app:justifyContent="center"
-            app:layout_constraintTop_toBottomOf="@id/discover_page_genres_title"
+            app:layout_constraintTop_toBottomOf="@id/discover_page_genre_buttons_title"
             app:layout_constraintLeft_toLeftOf="parent" />
         <Button
             android:id="@+id/discover_page_none_genres_button"
@@ -40,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:theme="@style/Widget.AppCompat.Button"
             android:text="@string/discover_page_none_genres_button"
-            app:layout_constraintTop_toBottomOf="@id/discover_page_genre_buttons"
+            app:layout_constraintTop_toBottomOf="@id/discover_page_genre_chip_buttons"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/discover_page_all_genres_button"
             app:layout_constraintHorizontal_chainStyle="spread" />
@@ -51,12 +51,12 @@
             android:layout_marginTop="10dp"
             android:theme="@style/ColoredButtonStyle"
             android:text="@string/discover_page_all_genres_button"
-            app:layout_constraintTop_toBottomOf="@id/discover_page_genre_buttons"
+            app:layout_constraintTop_toBottomOf="@id/discover_page_genre_chip_buttons"
             app:layout_constraintLeft_toRightOf="@id/discover_page_none_genres_button"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread" />
         <TextView
-            android:id="@+id/discover_page_runtime_title"
+            android:id="@+id/discover_page_runtime_range_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
@@ -65,7 +65,7 @@
             android:textColor="@color/discover_page_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/discover_page_runtime_title"
+            android:text="@string/discover_page_runtime_range_title"
             app:layout_constraintTop_toBottomOf="@id/discover_page_none_genres_button"
             app:layout_constraintLeft_toLeftOf="parent" />
         <TextView
@@ -100,7 +100,7 @@
             app:activeColor="@color/range_slider"
             app:layout_constraintTop_toBottomOf="@id/discover_page_runtime_range" />
         <TextView
-            android:id="@+id/discover_page_rating_title"
+            android:id="@+id/discover_page_rating_range_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -109,7 +109,7 @@
             android:textColor="@color/discover_page_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/discover_page_rating_title"
+            android:text="@string/discover_page_rating_range_title"
             app:layout_constraintTop_toBottomOf="@id/discover_page_runtime_range_slider"
             app:layout_constraintLeft_toLeftOf="parent" />
         <TextView
@@ -144,43 +144,43 @@
             app:activeColor="@color/range_slider"
             app:layout_constraintTop_toBottomOf="@id/discover_page_rating_range" />
         <TextView
-            android:id="@+id/discover_page_years_start_title"
+            android:id="@+id/discover_page_years_start_range_picker_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:textColor="@color/discover_page_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/discover_page_years_start_title"
+            android:text="@string/discover_page_years_start_range_picker_title"
             app:layout_constraintTop_toBottomOf="@id/discover_page_rating_range_slider"
-            app:layout_constraintLeft_toLeftOf="@+id/discover_page_years_start_picker"
-            app:layout_constraintRight_toRightOf="@id/discover_page_years_start_picker" />
+            app:layout_constraintLeft_toLeftOf="@+id/discover_page_years_start_range_picker"
+            app:layout_constraintRight_toRightOf="@id/discover_page_years_start_range_picker" />
         <TextView
-            android:id="@+id/discover_page_years_end_title"
+            android:id="@+id/discover_page_years_end_range_picker_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:textColor="@color/discover_page_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/discover_page_years_end_title"
+            android:text="@string/discover_page_years_end_range_picker_title"
             app:layout_constraintTop_toBottomOf="@id/discover_page_rating_range_slider"
-            app:layout_constraintLeft_toLeftOf="@+id/discover_page_years_end_picker"
-            app:layout_constraintRight_toRightOf="@id/discover_page_years_end_picker" />
+            app:layout_constraintLeft_toLeftOf="@+id/discover_page_years_end_range_picker"
+            app:layout_constraintRight_toRightOf="@id/discover_page_years_end_range_picker" />
         <NumberPicker
-            android:id="@id/discover_page_years_start_picker"
+            android:id="@id/discover_page_years_start_range_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/discover_page_years_start_title"
-            app:layout_constraintRight_toLeftOf="@id/discover_page_years_end_picker"
+            app:layout_constraintTop_toBottomOf="@id/discover_page_years_start_range_picker_title"
+            app:layout_constraintRight_toLeftOf="@id/discover_page_years_end_range_picker"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread" />
         <NumberPicker
-            android:id="@id/discover_page_years_end_picker"
+            android:id="@id/discover_page_years_end_range_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/discover_page_years_start_title"
-            app:layout_constraintLeft_toRightOf="@id/discover_page_years_start_picker"
+            app:layout_constraintTop_toBottomOf="@id/discover_page_years_start_range_picker_title"
+            app:layout_constraintLeft_toRightOf="@id/discover_page_years_start_range_picker"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread" />
     </android.support.constraint.ConstraintLayout>

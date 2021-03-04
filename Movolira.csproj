@@ -81,6 +81,10 @@
     <Compile Include="Source\ITouchHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
     <Compile Include="Source\Movie.cs" />
+    <Compile Include="Source\Pages\DiscoverPage\DiscoverGenreButtons.cs" />
+    <Compile Include="Source\Pages\DiscoverPage\DiscoverRatingRangeSlider.cs" />
+    <Compile Include="Source\Pages\DiscoverPage\DiscoverRuntimeRangeSlider.cs" />
+    <Compile Include="Source\Pages\DiscoverPage\DiscoverYearsRangePicker.cs" />
     <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
     <Compile Include="Source\Show.cs" />
@@ -750,16 +754,16 @@
     <AndroidResource Include="Resources\drawable\ic_cancel_button.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\genre_button.xml" />
+    <AndroidResource Include="Resources\drawable\genre_chip_button.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\genre_button_on.xml" />
+    <AndroidResource Include="Resources\drawable\genre_chip_button_on.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\genre_button_off.xml" />
+    <AndroidResource Include="Resources\drawable\genre_chip_button_off.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\genre_button_text.xml" />
+    <AndroidResource Include="Resources\drawable\genre_chip_button_text.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\discover_page_content.axml">
@@ -781,7 +785,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\discover_page_genre_button.axml">
+    <AndroidResource Include="Resources\layout\discover_page_genre_chip_button.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

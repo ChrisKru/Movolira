@@ -3971,19 +3971,19 @@ namespace Movolira
 			public const int foreground_material_light = 2131034178;
 			
 			// aapt resource value: 0x7F050043
-			public const int genre_button_off = 2131034179;
+			public const int genre_chip_button_off = 2131034179;
 			
 			// aapt resource value: 0x7F050044
-			public const int genre_button_off_border = 2131034180;
+			public const int genre_chip_button_off_border = 2131034180;
 			
 			// aapt resource value: 0x7F050045
-			public const int genre_button_on = 2131034181;
+			public const int genre_chip_button_on = 2131034181;
 			
 			// aapt resource value: 0x7F050046
-			public const int genre_button_text_off = 2131034182;
+			public const int genre_chip_button_text_off = 2131034182;
 			
 			// aapt resource value: 0x7F050047
-			public const int genre_button_text_on = 2131034183;
+			public const int genre_chip_button_text_on = 2131034183;
 			
 			// aapt resource value: 0x7F050048
 			public const int highlighted_text_material_dark = 2131034184;
@@ -5209,16 +5209,16 @@ namespace Movolira
 			public const int design_snackbar_background = 2131165281;
 			
 			// aapt resource value: 0x7F070062
-			public const int genre_button = 2131165282;
+			public const int genre_chip_button = 2131165282;
 			
 			// aapt resource value: 0x7F070063
-			public const int genre_button_off = 2131165283;
+			public const int genre_chip_button_off = 2131165283;
 			
 			// aapt resource value: 0x7F070064
-			public const int genre_button_on = 2131165284;
+			public const int genre_chip_button_on = 2131165284;
 			
 			// aapt resource value: 0x7F070065
-			public const int genre_button_text = 2131165285;
+			public const int genre_chip_button_text = 2131165285;
 			
 			// aapt resource value: 0x7F070066
 			public const int ic_arrow_left = 2131165286;
@@ -5756,14 +5756,14 @@ namespace Movolira
 			// aapt resource value: 0x7F090059
 			public const int discover_page_discover_button = 2131296345;
 			
-			// aapt resource value: 0x7F09005C
-			public const int discover_page_genres_title = 2131296348;
-			
 			// aapt resource value: 0x7F09005A
-			public const int discover_page_genre_button = 2131296346;
+			public const int discover_page_genre_buttons_title = 2131296346;
 			
 			// aapt resource value: 0x7F09005B
-			public const int discover_page_genre_buttons = 2131296347;
+			public const int discover_page_genre_chip_button = 2131296347;
+			
+			// aapt resource value: 0x7F09005C
+			public const int discover_page_genre_chip_buttons = 2131296348;
 			
 			// aapt resource value: 0x7F09005D
 			public const int discover_page_none_genres_button = 2131296349;
@@ -5775,7 +5775,7 @@ namespace Movolira
 			public const int discover_page_rating_range_slider = 2131296351;
 			
 			// aapt resource value: 0x7F090060
-			public const int discover_page_rating_title = 2131296352;
+			public const int discover_page_rating_range_title = 2131296352;
 			
 			// aapt resource value: 0x7F090061
 			public const int discover_page_reset_button = 2131296353;
@@ -5787,19 +5787,19 @@ namespace Movolira
 			public const int discover_page_runtime_range_slider = 2131296355;
 			
 			// aapt resource value: 0x7F090064
-			public const int discover_page_runtime_title = 2131296356;
+			public const int discover_page_runtime_range_title = 2131296356;
 			
 			// aapt resource value: 0x7F090065
-			public const int discover_page_years_end_picker = 2131296357;
+			public const int discover_page_years_end_range_picker = 2131296357;
 			
 			// aapt resource value: 0x7F090066
-			public const int discover_page_years_end_title = 2131296358;
+			public const int discover_page_years_end_range_picker_title = 2131296358;
 			
 			// aapt resource value: 0x7F090067
-			public const int discover_page_years_start_picker = 2131296359;
+			public const int discover_page_years_start_range_picker = 2131296359;
 			
 			// aapt resource value: 0x7F090068
-			public const int discover_page_years_start_title = 2131296360;
+			public const int discover_page_years_start_range_picker_title = 2131296360;
 			
 			// aapt resource value: 0x7F090069
 			public const int dragDown = 2131296361;
@@ -6927,7 +6927,7 @@ namespace Movolira
 			public const int discover_page_content = 2131492907;
 			
 			// aapt resource value: 0x7F0C002C
-			public const int discover_page_genre_button = 2131492908;
+			public const int discover_page_genre_chip_button = 2131492908;
 			
 			// aapt resource value: 0x7F0C002D
 			public const int main_activity = 2131492909;
@@ -7224,7 +7224,7 @@ namespace Movolira
 			public const int discover_page_discover = 2131689519;
 			
 			// aapt resource value: 0x7F0F0030
-			public const int discover_page_genres_title = 2131689520;
+			public const int discover_page_genre_buttons_title = 2131689520;
 			
 			// aapt resource value: 0x7F0F0031
 			public const int discover_page_keywords_hint = 2131689521;
@@ -7236,19 +7236,19 @@ namespace Movolira
 			public const int discover_page_none_genres_button = 2131689523;
 			
 			// aapt resource value: 0x7F0F0034
-			public const int discover_page_rating_title = 2131689524;
+			public const int discover_page_rating_range_title = 2131689524;
 			
 			// aapt resource value: 0x7F0F0035
 			public const int discover_page_reset = 2131689525;
 			
 			// aapt resource value: 0x7F0F0036
-			public const int discover_page_runtime_title = 2131689526;
+			public const int discover_page_runtime_range_title = 2131689526;
 			
 			// aapt resource value: 0x7F0F0037
-			public const int discover_page_years_end_title = 2131689527;
+			public const int discover_page_years_end_range_picker_title = 2131689527;
 			
 			// aapt resource value: 0x7F0F0038
-			public const int discover_page_years_start_title = 2131689528;
+			public const int discover_page_years_start_range_picker_title = 2131689528;
 			
 			// aapt resource value: 0x7F0F0039
 			public const int fab_transformation_scrim_behavior = 2131689529;
