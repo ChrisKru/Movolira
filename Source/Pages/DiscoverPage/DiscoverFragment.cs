@@ -109,7 +109,7 @@ namespace Movolira.Pages.DiscoverPage {
 			// A lot of those entries have an unproportionally high rating (because of the small amount of votes),
 			// and would be prioritized by rating sort functions.
 			// The value '20' seems to be a stable option for this filter.
-			search_query += "&vote_count.gte = 20";
+			search_query += "&vote_count.gte=20";
 
 
 			this._frag_saved_state = this.getFragmentStateBundle(null);
