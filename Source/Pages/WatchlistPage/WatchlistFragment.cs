@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
 using Android.OS;
@@ -34,20 +35,9 @@ namespace Movolira.Pages.WatchlistPage {
 
 			if (watchlist.Any()) {
 				list_empty_text.Visibility = ViewStates.Gone;
+				this.fillWatchlistEntriesLayout(inflater, entries_layout, watchlist);
 			} else {
 				list_empty_text.Visibility = ViewStates.Visible;
-			}
-
-
-			foreach (ShowSerialized show in watchlist) {
-				ViewGroup watchlist_entry = (ViewGroup)inflater.Inflate(Resource.Layout.watchlist_page_entry,
-					entries_layout, false);
-				entries_layout.AddView(watchlist_entry);
-				TextView watchlist_entry_title = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_title);
-				TextView watchlist_entry_genre = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_genre);
-				watchlist_entry_title.Text = show.Title;
-				watchlist_entry_genre.Text = show.Genre;
-				watchlist_entry.Click += (sender, args) => this.onWatchlistEntryClick(show);
 			}
 
 
@@ -59,7 +49,23 @@ namespace Movolira.Pages.WatchlistPage {
 
 
 
-		private void onWatchlistEntryClick(ShowSerialized show) {
+		private void fillWatchlistEntriesLayout(LayoutInflater inflater, ViewGroup entries_layout, List<SerializedShow> watchlist) {
+			foreach (SerializedShow show in watchlist) {
+				ViewGroup watchlist_entry = (ViewGroup)inflater.Inflate(Resource.Layout.watchlist_page_entry,
+					entries_layout, false);
+				entries_layout.AddView(watchlist_entry);
+				TextView watchlist_entry_title = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_title);
+				TextView watchlist_entry_genre = watchlist_entry.FindViewById<TextView>(Resource.Id.watchlist_entry_genre);
+				watchlist_entry_title.Text = show.Title;
+				watchlist_entry_genre.Text = show.Genre;
+				watchlist_entry.Click += (sender, args) => this.onWatchlistEntryClick(show);
+			}
+		}
+
+
+
+
+		private void onWatchlistEntryClick(SerializedShow show) {
 			this._main_activity.setIsLoading(true);
 			this.moveToShowDetailsFrag(show);
 		}
@@ -67,7 +73,7 @@ namespace Movolira.Pages.WatchlistPage {
 
 
 
-		private void moveToShowDetailsFrag(ShowSerialized show) {
+		private void moveToShowDetailsFrag(SerializedShow show) {
 			Fragment details_fragment;
 			Bundle fragment_args = new Bundle();
 

@@ -9,7 +9,6 @@ using Android.Views;
 using Android.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
-using Movolira.Interfaces;
 using Movolira.Pages.ShowDetailsPages;
 using Newtonsoft.Json;
 

@@ -43,17 +43,15 @@ namespace Movolira {
 
 
 
-		public ShowSerialized serialize() {
-			ShowSerialized show = new ShowSerialized();
+		public SerializedShow serialize() {
+			SerializedShow show = new SerializedShow();
 			show.Id = this.Id;
 			show.Type = this.Type.ToString();
 			show.Title = this.Title;
+			// Saves only a single, most accurate genre, which will be displayed in the listings.
 			show.Genre = this.Genres[0];
 
 
-			if (show.Genre == "Science Fiction") {
-				show.Genre = "Sci-Fi";
-			}
 			return show;
 		}
 	}
@@ -69,7 +67,8 @@ namespace Movolira {
 
 
 
-	public class ShowSerialized : RealmObject {
+	// Each class is used to categorize different database entries in the Realm database API
+	public class SerializedShow : RealmObject {
 		public string Id { get; set; }
 		public string Type { get; set; }
 		public string Title { get; set; }
@@ -79,7 +78,7 @@ namespace Movolira {
 
 
 
-	public class RatedShowSerialized : RealmObject {
+	public class SerializedRatedShow : RealmObject {
 		public string Id { get; set; }
 		public string Type { get; set; }
 		public string Title { get; set; }

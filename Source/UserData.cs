@@ -7,33 +7,33 @@ using Realms;
 
 namespace Movolira {
 	public class UserData {
-		public List<ShowSerialized> getWatchlist() {
+		public List<SerializedShow> getWatchlist() {
 			Realm realm_db = Realm.GetInstance();
-			return realm_db.All<ShowSerialized>().ToList();
+			return realm_db.All<SerializedShow>().ToList();
 		}
 
 
 
 
-		public List<RatedShowSerialized> getFiveStarShows() {
+		public List<SerializedRatedShow> getFiveStarShows() {
 			Realm realm_db = Realm.GetInstance();
-			return realm_db.All<RatedShowSerialized>().Where(show => show.Rating == 5).ToList();
+			return realm_db.All<SerializedRatedShow>().Where(show => show.Rating == 5).ToList();
 		}
 
 
 
 
-		public List<RatedShowSerialized> getFourStarShows() {
+		public List<SerializedRatedShow> getFourStarShows() {
 			Realm realm_db = Realm.GetInstance();
-			return realm_db.All<RatedShowSerialized>().Where(show => show.Rating == 4).ToList();
+			return realm_db.All<SerializedRatedShow>().Where(show => show.Rating == 4).ToList();
 		}
 
 
 
 
-		public List<RatedShowSerialized> getRatedShows() {
+		public List<SerializedRatedShow> getRatedShows() {
 			Realm realm_db = Realm.GetInstance();
-			return realm_db.All<RatedShowSerialized>().OrderByDescending(show => show.Rating)
+			return realm_db.All<SerializedRatedShow>().OrderByDescending(show => show.Rating)
 				.ThenBy(show => show.Title).ToList();
 		}
 
@@ -42,7 +42,7 @@ namespace Movolira {
 
 		public int getShowRating(string show_id) {
 			Realm realm_db = Realm.GetInstance();
-			var matching_shows = realm_db.All<RatedShowSerialized>().Where(show => show.Id == show_id);
+			var matching_shows = realm_db.All<SerializedRatedShow>().Where(show => show.Id == show_id);
 
 
 			if (!matching_shows.Any()) {
@@ -59,10 +59,10 @@ namespace Movolira {
 			Realm realm_db = Realm.GetInstance();
 
 
-			foreach (var show in realm_db.All<ShowSerialized>()) {
+			foreach (var show in realm_db.All<SerializedShow>()) {
 				known_show_ids.Add(show.Id);
 			}
-			foreach (var show in realm_db.All<RatedShowSerialized>()) {
+			foreach (var show in realm_db.All<SerializedRatedShow>()) {
 				known_show_ids.Add(show.Id);
 			}
 			foreach (var show in realm_db.All<AlreadyRecommendedShow>()) {
@@ -85,8 +85,8 @@ namespace Movolira {
 
 
 		public void addToRatedShows(Show show, int rating) {
-			ShowSerialized serialized_show = show.serialize();
-			RatedShowSerialized rated_show = new RatedShowSerialized();
+			SerializedShow serialized_show = show.serialize();
+			SerializedRatedShow rated_show = new SerializedRatedShow();
 
 
 			rated_show.Id = serialized_show.Id;
@@ -114,7 +114,7 @@ namespace Movolira {
 
 		public void removeFromWatchlist(string show_id) {
 			Realm realm_db = Realm.GetInstance();
-			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
+			var matching_shows = realm_db.All<SerializedShow>().Where(show => show.Id == show_id);
 			realm_db.Write(() => realm_db.RemoveRange(matching_shows));
 		}
 
@@ -123,7 +123,7 @@ namespace Movolira {
 
 		public void removeFromRatedShows(string show_id) {
 			Realm realm_db = Realm.GetInstance();
-			var matching_shows = realm_db.All<RatedShowSerialized>().Where(show => show.Id == show_id);
+			var matching_shows = realm_db.All<SerializedRatedShow>().Where(show => show.Id == show_id);
 			realm_db.Write(() => realm_db.RemoveRange(matching_shows));
 		}
 
@@ -132,9 +132,7 @@ namespace Movolira {
 
 		public bool isShowInWatchlist(string show_id) {
 			Realm realm_db = Realm.GetInstance();
-			var matching_shows = realm_db.All<ShowSerialized>().Where(show => show.Id == show_id);
-
-
+			var matching_shows = realm_db.All<SerializedShow>().Where(show => show.Id == show_id);
 			if (matching_shows.Any()) {
 				return true;
 			}

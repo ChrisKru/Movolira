@@ -14,7 +14,6 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Movolira.DataProviders;
-using Movolira.Interfaces;
 using Movolira.Pages.DiscoverPage;
 using Movolira.Pages.RatedShowsPage;
 using Movolira.Pages.ShowDetailsPages;
@@ -127,7 +126,7 @@ namespace Movolira {
 			Show recommended_show = null;
 			string recommended_show_type = null;
 			int page_count = 9999;
-			List<RatedShowSerialized> five_star_shows = this.UserData.getFiveStarShows();
+			List<SerializedRatedShow> five_star_shows = this.UserData.getFiveStarShows();
 
 
 			while (five_star_shows.Any()) {
@@ -182,7 +181,7 @@ namespace Movolira {
 
 			if (recommended_show == null) {
 				page_count = 9999;
-				List<RatedShowSerialized> four_star_shows = this.UserData.getFourStarShows();
+				List<SerializedRatedShow> four_star_shows = this.UserData.getFourStarShows();
 				while (four_star_shows.Any()) {
 					int i_show = randomizer.Next(0, four_star_shows.Count - 1);
 					string category = four_star_shows[i_show].Id + "/similar";
@@ -464,19 +463,6 @@ namespace Movolira {
 			Task.Delay(200).ContinueWith(a => this.RunOnUiThread(
 				() => this._loading_view.Visibility = ViewStates.Gone)
 			);
-		}
-
-
-
-
-		public override bool DispatchTouchEvent(MotionEvent motion_event) {
-			var fragments = this.SupportFragmentManager.Fragments;
-			for (int i_fragment = 0; i_fragment < fragments.Count; ++i_fragment) {
-				if (this.SupportFragmentManager.Fragments[i_fragment] is ITouchHandler back_button_handler) {
-					back_button_handler.handleTouch(motion_event);
-				}
-			}
-			return base.DispatchTouchEvent(motion_event);
 		}
 	}
 }

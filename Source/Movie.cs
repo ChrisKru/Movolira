@@ -15,7 +15,7 @@ namespace Movolira {
 
 
 
-		public static Movie deserialize(ShowSerialized show) {
+		public static Movie deserialize(SerializedShow show) {
 			ShowType type;
 			if (show.Type == ShowType.Movie.ToString()) {
 				type = ShowType.Movie;
@@ -30,7 +30,7 @@ namespace Movolira {
 
 
 
-		public static Movie deserialize(RatedShowSerialized show) {
+		public static Movie deserialize(SerializedRatedShow show) {
 			ShowType type;
 			if (show.Type == ShowType.Movie.ToString()) {
 				type = ShowType.Movie;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
 using Android.OS;
@@ -34,12 +35,25 @@ namespace Movolira.Pages.RatedShowsPage {
 
 			if (rated_shows.Any()) {
 				list_empty_text.Visibility = ViewStates.Gone;
+				this.fillRatedShowsEntriesLayout(inflater, entries_layout, rated_shows);
 			} else {
 				list_empty_text.Visibility = ViewStates.Visible;
 			}
 
 
-			foreach (RatedShowSerialized show in rated_shows) {
+			this._main_activity.setToolbarTitle("Rated");
+			this._main_activity.setIsLoading(false);
+			return layout;
+		}
+
+
+
+
+		private void fillRatedShowsEntriesLayout(LayoutInflater inflater, ViewGroup entries_layout, 
+			List<SerializedRatedShow> rated_shows) {
+
+
+			foreach (SerializedRatedShow show in rated_shows) {
 				ViewGroup rated_shows_entry = (ViewGroup)inflater
 					.Inflate(Resource.Layout.rated_shows_page_entry, entries_layout, false);
 				entries_layout.AddView(rated_shows_entry);
@@ -67,17 +81,12 @@ namespace Movolira.Pages.RatedShowsPage {
 
 				rated_shows_entry.Click += (sender, args) => this.onRatedShowsEntryClick(show);
 			}
-
-
-			this._main_activity.setToolbarTitle("Rated");
-			this._main_activity.setIsLoading(false);
-			return layout;
 		}
 
 
 
 
-		private void onRatedShowsEntryClick(RatedShowSerialized show) {
+		private void onRatedShowsEntryClick(SerializedRatedShow show) {
 			this._main_activity.setIsLoading(true);
 			this.moveToShowDetailsFrag(show);
 		}
@@ -85,7 +94,7 @@ namespace Movolira.Pages.RatedShowsPage {
 
 
 
-		private void moveToShowDetailsFrag(RatedShowSerialized show) {
+		private void moveToShowDetailsFrag(SerializedRatedShow show) {
 			Fragment details_fragment;
 			Bundle fragment_args = new Bundle();
 
