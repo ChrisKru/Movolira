@@ -24,7 +24,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 		private View _layout;
 		private readonly MainActivity _main_activity;
 		private readonly Show _show;
-		private int _current_rating = 3;
+		private int _current_rating_index = 2;
 
 
 
@@ -45,16 +45,11 @@ namespace Movolira.Pages.ShowDetailsPages {
 			this._layout.FindViewById(Resource.Id.rating_dialog_rate_button).Click += this.OnRateButtonClick;
 
 
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_1).Click
-				+= (object s, EventArgs a) => this.OnRatingStarClick(1);
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_2).Click
-				+= (object s, EventArgs a) => this.OnRatingStarClick(2);
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_3).Click
-				+= (object s, EventArgs a) => this.OnRatingStarClick(3);
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_4).Click
-				+= (object s, EventArgs a) => this.OnRatingStarClick(4);
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_5).Click
-				+= (object s, EventArgs a) => this.OnRatingStarClick(5);
+			for (int i_rating = 0; i_rating < 5; ++i_rating) {
+				int i_rating_copy = i_rating;
+				this._layout.FindViewById(this.RATING_STAR_VIEW_RESOURCE_IDS[i_rating_copy]).Click
+					+= (object s, EventArgs a) => this.OnRatingStarClick(i_rating_copy);
+			}
 
 
 			dialog_builder.SetView(this._layout);
@@ -72,8 +67,8 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 		private void OnRateButtonClick(object sender, EventArgs args) {
-			this._main_activity.UserData.addToRatedShows(this._show, this._current_rating);
-			OnShowRatedEvent.Invoke(this, this._current_rating);
+			this._main_activity.UserData.addToRatedShows(this._show, this._current_rating_index + 1);
+			OnShowRatedEvent.Invoke(this, this._current_rating_index + 1);
 			this._dialog.Hide();
 		}
 
@@ -82,15 +77,15 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private void OnRatingStarClick(int i_rating_star) {
 			this.toggleRatingStars(i_rating_star);
-			this._current_rating = i_rating_star;
+			this._current_rating_index = i_rating_star;
 		}
 
 
 
 
-		private void toggleRatingStars(int new_rating) {
+		private void toggleRatingStars(int new_rating_index) {
 			for (int i_rating = 1; i_rating < 5; ++i_rating) {
-				if (new_rating >= i_rating + 1) {
+				if (new_rating_index >= i_rating) {
 					this._layout.FindViewById<ImageView>(this.RATING_STAR_VIEW_RESOURCE_IDS[i_rating])
 						.SetImageResource(Resource.Drawable.ic_star_crop_full);
 				} else {
