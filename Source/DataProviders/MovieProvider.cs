@@ -80,7 +80,7 @@ namespace Movolira.DataProviders {
 
 
 				Movie movie = new Movie(ShowType.Movie, id, title, genres.ToArray(),
-					poster_url, backdrop_url, release_date, rating, vote_count, overview);
+					poster_url, backdrop_url, rating, vote_count, overview, release_date);
 				movies.Add(movie);
 			}
 

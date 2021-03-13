@@ -8,7 +8,7 @@ using Android.Views;
 
 
 namespace Movolira.Pages.ShowListPage {
-	internal class ShowCardViewDecoration : RecyclerView.ItemDecoration {
+	public class ShowCardViewDecoration : RecyclerView.ItemDecoration {
 		private readonly Context _app_context;
 
 

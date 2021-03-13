@@ -7,7 +7,7 @@ using Android.Widget;
 
 
 namespace Movolira.Pages.ShowListPage {
-	internal class ShowListPagerHolder : RecyclerView.ViewHolder {
+	public class ShowListPagerHolder : RecyclerView.ViewHolder {
 		public Button NextButton { get; }
 		public Button PrevButton { get; }
 

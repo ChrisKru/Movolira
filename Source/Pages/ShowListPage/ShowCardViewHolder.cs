@@ -7,7 +7,7 @@ using Android.Widget;
 
 
 namespace Movolira.Pages.ShowListPage {
-	internal class ShowCardViewHolder : RecyclerView.ViewHolder {
+	public class ShowCardViewHolder : RecyclerView.ViewHolder {
 		public ImageView BackdropImage { get; }
 		public TextView TitleText { get; }
 		public TextView GenresText { get; }

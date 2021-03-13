@@ -12,9 +12,11 @@ using Newtonsoft.Json.Linq;
 
 namespace Movolira.DataProviders {
 	public static class JSONHelper {
-		private static HttpClient _http_client;
 		private const int HTTP_RETRY_COUNT = 5;
 		private const int HTTP_RETRY_DELAY = 500; // milliseconds
+
+
+		private static HttpClient _http_client;
 
 
 

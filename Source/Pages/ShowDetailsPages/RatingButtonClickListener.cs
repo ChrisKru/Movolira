@@ -8,8 +8,8 @@ using Java.Lang;
 
 
 namespace Movolira.Pages.ShowDetailsPages {
-	internal class RatingButtonClickListener : Object, View.IOnClickListener {
-		private readonly RatingDialog _dialog;
+	public class RatingButtonClickListener : Object, View.IOnClickListener {
+		private readonly RatingDialog _rating_dialog;
 		private readonly MainActivity _main_activity;
 		private readonly Button _rating_button;
 		private readonly Show _show;
@@ -23,25 +23,29 @@ namespace Movolira.Pages.ShowDetailsPages {
 			this._main_activity = main_activity;
 			this._show = show;
 			this._rating_button = rating_button;
-			this._dialog = new RatingDialog(this._main_activity, show);
-			this._dialog.RatedEvent += this.showRated;
+			this._rating_dialog = new RatingDialog(this._main_activity, show);
+			this._rating_dialog.OnShowRatedEvent += this.OnShowRatedEvent;
 
 
 			int rating = main_activity.UserData.getShowRating(show.Id);
 			if (rating != 0) {
 				this._is_show_rated = true;
 				this._rating = rating;
-				this.toggleButtonState();
+				this.toggleRatingButtonState();
+
+
+			} else {
+				this._is_show_rated = false;
 			}
 		}
 
 
 
 
-		private void showRated(object sender, int rating) {
+		private void OnShowRatedEvent(object sender, int rating) {
 			this._is_show_rated = true;
 			this._rating = rating;
-			this.toggleButtonState();
+			this.toggleRatingButtonState();
 		}
 
 
@@ -51,22 +55,24 @@ namespace Movolira.Pages.ShowDetailsPages {
 			if (this._is_show_rated) {
 				this._is_show_rated = false;
 				this._main_activity.UserData.removeFromRatedShows(this._show.Id);
-				this.toggleButtonState();
+				this.toggleRatingButtonState();
 
 
 			} else {
-				this._dialog.showDialog();
+				this._rating_dialog.showDialog();
 			}
 		}
 
 
 
 
-		private void toggleButtonState() {
+		private void toggleRatingButtonState() {
 			if (this._is_show_rated) {
 				this._rating_button.Text = "Rated " + this._rating + "/5";
 				this._rating_button.SetTextColor(new Color(
 					ContextCompat.GetColor(this._main_activity, Resource.Color.show_details_button_text_set)));
+
+
 			} else {
 				this._rating_button.Text = this._main_activity.GetString(Resource.String.show_details_add_rating_button);
 				this._rating_button.SetTextColor(new Color(

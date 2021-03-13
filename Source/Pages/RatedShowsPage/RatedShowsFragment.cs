@@ -49,7 +49,7 @@ namespace Movolira.Pages.RatedShowsPage {
 
 
 
-		private void fillRatedShowsEntriesLayout(LayoutInflater inflater, ViewGroup entries_layout, 
+		private void fillRatedShowsEntriesLayout(LayoutInflater inflater, ViewGroup entries_layout,
 			List<SerializedRatedShow> rated_shows) {
 
 

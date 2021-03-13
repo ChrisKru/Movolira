@@ -7,7 +7,7 @@ using Realms;
 namespace Movolira {
 	public class Show {
 		// "Main Details" refers to the fields that are bundled together with page listing requests of TMDB API.
-		// The field is used to omit reinitializing those fields, when fetching other show details.
+		// The "AreShowMainDetailsFetched" field is used to omit reinitializing those fields.
 		public bool AreShowMainDetailsFetched { get; set; } = false;
 		public string Id { get; }
 		public ShowType Type { get; }
@@ -15,6 +15,11 @@ namespace Movolira {
 		public string[] Genres { get; set; }
 		public string PosterUrl { get; set; }
 		public string BackdropUrl { get; set; }
+		public double Rating { get; set; }
+		public int Votes { get; set; }
+		public string Overview { get; set; }
+		// Certification is an extra value, which requires separate TMDB API query.
+		public string Certification { get; set; }
 
 
 
@@ -23,21 +28,26 @@ namespace Movolira {
 			this.Id = id;
 			this.Type = type;
 			this.Title = title;
-			this.PosterUrl = "";
-			this.BackdropUrl = "";
 		}
 
 
 
 
 		[JsonConstructor]
-		public Show(string Id, ShowType Type, string Title, string[] Genres, string PosterUrl, string BackdropUrl) {
+		public Show(string Id, ShowType Type, string Title, string[] Genres, string PosterUrl,
+			string BackdropUrl, double Rating, int Votes, string Overview) {
+
+
+			this.AreShowMainDetailsFetched = true;
 			this.Id = Id;
 			this.Type = Type;
 			this.Title = Title;
 			this.Genres = Genres;
 			this.PosterUrl = PosterUrl;
 			this.BackdropUrl = BackdropUrl;
+			this.Rating = Rating;
+			this.Votes = Votes;
+			this.Overview = Overview;
 		}
 
 

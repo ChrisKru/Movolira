@@ -7,8 +7,17 @@ using Android.Widget;
 
 
 namespace Movolira.Pages.ShowDetailsPages {
-	internal class RatingDialog {
-		public event EventHandler<int> RatedEvent;
+	public class RatingDialog {
+		public event EventHandler<int> OnShowRatedEvent;
+
+
+		private readonly int[] RATING_STAR_VIEW_RESOURCE_IDS = {
+			Resource.Id.rating_dialog_rating_star_1,
+			Resource.Id.rating_dialog_rating_star_2,
+			Resource.Id.rating_dialog_rating_star_3,
+			Resource.Id.rating_dialog_rating_star_4,
+			Resource.Id.rating_dialog_rating_star_5,
+		};
 
 
 		private AlertDialog _dialog;
@@ -32,15 +41,20 @@ namespace Movolira.Pages.ShowDetailsPages {
 		private void buildDialog() {
 			AlertDialog.Builder dialog_builder = new AlertDialog.Builder(this._main_activity);
 			this._layout = this._main_activity.LayoutInflater.Inflate(Resource.Layout.rating_dialog, null);
-
-
 			this._layout.FindViewById(Resource.Id.rating_dialog_cancel_button).Click += this.OnCancelButtonClick;
 			this._layout.FindViewById(Resource.Id.rating_dialog_rate_button).Click += this.OnRateButtonClick;
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_1).Click += this.OnRatingStar1Click;
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_2).Click += this.OnRatingStar2Click;
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_3).Click += this.OnRatingStar3Click;
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_4).Click += this.OnRatingStar4Click;
-			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_5).Click += this.OnRatingStar5Click;
+
+
+			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_1).Click
+				+= (object s, EventArgs a) => this.OnRatingStarClick(1);
+			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_2).Click
+				+= (object s, EventArgs a) => this.OnRatingStarClick(2);
+			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_3).Click
+				+= (object s, EventArgs a) => this.OnRatingStarClick(3);
+			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_4).Click
+				+= (object s, EventArgs a) => this.OnRatingStarClick(4);
+			this._layout.FindViewById(Resource.Id.rating_dialog_rating_star_5).Click
+				+= (object s, EventArgs a) => this.OnRatingStarClick(5);
 
 
 			dialog_builder.SetView(this._layout);
@@ -59,87 +73,30 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private void OnRateButtonClick(object sender, EventArgs args) {
 			this._main_activity.UserData.addToRatedShows(this._show, this._current_rating);
-			RatedEvent.Invoke(this, this._current_rating);
+			OnShowRatedEvent.Invoke(this, this._current_rating);
 			this._dialog.Hide();
 		}
 
 
 
 
-		private void OnRatingStar1Click(object sender, EventArgs args) {
-			this.toggleRatingStars(1);
-			this._current_rating = 1;
+		private void OnRatingStarClick(int i_rating_star) {
+			this.toggleRatingStars(i_rating_star);
+			this._current_rating = i_rating_star;
 		}
 
 
 
 
-		private void OnRatingStar2Click(object sender, EventArgs args) {
-			this.toggleRatingStars(2);
-			this._current_rating = 2;
-		}
-
-
-
-
-		private void OnRatingStar3Click(object sender, EventArgs args) {
-			this.toggleRatingStars(3);
-			this._current_rating = 3;
-		}
-
-
-
-
-		private void OnRatingStar4Click(object sender, EventArgs args) {
-			this.toggleRatingStars(4);
-			this._current_rating = 4;
-		}
-
-
-
-
-		private void OnRatingStar5Click(object sender, EventArgs args) {
-			this.toggleRatingStars(5);
-			this._current_rating = 5;
-		}
-
-
-
-
-		private void toggleRatingStars(int rating) {
-			if (rating >= 2) {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_2)
-					.SetImageResource(Resource.Drawable.ic_star_crop_full);
-			} else {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_2)
-					.SetImageResource(Resource.Drawable.ic_star_crop_empty);
-			}
-
-
-			if (rating >= 3) {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_3)
-					.SetImageResource(Resource.Drawable.ic_star_crop_full);
-			} else {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_3)
-					.SetImageResource(Resource.Drawable.ic_star_crop_empty);
-			}
-
-
-			if (rating >= 4) {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_4)
-					.SetImageResource(Resource.Drawable.ic_star_crop_full);
-			} else {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_4)
-					.SetImageResource(Resource.Drawable.ic_star_crop_empty);
-			}
-
-
-			if (rating >= 5) {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_5)
-					.SetImageResource(Resource.Drawable.ic_star_crop_full);
-			} else {
-				this._layout.FindViewById<ImageView>(Resource.Id.rating_dialog_rating_star_5)
-					.SetImageResource(Resource.Drawable.ic_star_crop_empty);
+		private void toggleRatingStars(int new_rating) {
+			for (int i_rating = 1; i_rating < 5; ++i_rating) {
+				if (new_rating >= i_rating + 1) {
+					this._layout.FindViewById<ImageView>(this.RATING_STAR_VIEW_RESOURCE_IDS[i_rating])
+						.SetImageResource(Resource.Drawable.ic_star_crop_full);
+				} else {
+					this._layout.FindViewById<ImageView>(this.RATING_STAR_VIEW_RESOURCE_IDS[i_rating])
+						.SetImageResource(Resource.Drawable.ic_star_crop_empty);
+				}
 			}
 		}
 

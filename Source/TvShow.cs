@@ -6,11 +6,8 @@ using Newtonsoft.Json;
 namespace Movolira {
 	public class TvShow : Show {
 		public string AirDate { get; set; }
-		public double Rating { get; set; }
-		public int Votes { get; set; }
-		public string Overview { get; set; }
-		public int Runtime { get; set; }
-		public string Certification { get; set; }
+		// EpisodeRuntime is an extra value, which requires separate TMDB API query.
+		public int EpisodeRuntime { get; set; }
 
 
 
@@ -45,27 +42,18 @@ namespace Movolira {
 
 
 
-		public TvShow(string id, ShowType type, string title) : base(id, type, title) {
-			this.AirDate = "";
-			this.Rating = 0;
-			this.Votes = 0;
-			this.Overview = "";
-		}
+		public TvShow(string id, ShowType type, string title) : base(id, type, title) { }
 
 
 
 
 		[JsonConstructor]
 		public TvShow(ShowType Type, string Id, string Title, string[] Genres, string PosterUrl,
-			string BackdropUrl, string AirDate, double Rating, int Votes, string Overview)
-			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl) {
+			string BackdropUrl, double Rating, int Votes, string Overview, string AirDate)
+			: base(Id, Type, Title, Genres, PosterUrl, BackdropUrl, Rating, Votes, Overview) {
 
 
 			this.AirDate = AirDate;
-			this.Rating = Rating;
-			this.Votes = Votes;
-			this.Overview = Overview;
-			this.AreShowMainDetailsFetched = true;
 		}
 	}
 }

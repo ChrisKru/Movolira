@@ -79,7 +79,7 @@ namespace Movolira.DataProviders {
 
 
 				TvShow tv_show = new TvShow(ShowType.TvShow, id, title, genres.ToArray(), poster_url,
-					backdrop_url, release_date, rating, vote_count, overview);
+					backdrop_url, rating, vote_count, overview, release_date);
 				tv_shows.Add(tv_show);
 			}
 
@@ -166,12 +166,12 @@ namespace Movolira.DataProviders {
 			if (JSONHelper.doesJTokenContainKey(details_json["data"], "episode_run_time")) {
 				if (details_json["data"]["episode_run_time"].Type != JTokenType.Null) {
 					IList<JToken> episode_run_times = details_json["data"]["episode_run_time"].Children().ToList();
-					tv_show.Runtime = 0;
+					tv_show.EpisodeRuntime = 0;
 					if (episode_run_times.Count > 0) {
 						foreach (JToken episode_run_time in episode_run_times) {
-							tv_show.Runtime += episode_run_time.Value<int>();
+							tv_show.EpisodeRuntime += episode_run_time.Value<int>();
 						}
-						tv_show.Runtime /= episode_run_times.Count();
+						tv_show.EpisodeRuntime /= episode_run_times.Count();
 					}
 				}
 			}

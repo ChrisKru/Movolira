@@ -86,6 +86,7 @@
     <Compile Include="Source\Pages\DiscoverPage\DiscoverRuntimeRangeSlider.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverYearsRangePicker.cs" />
     <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />
+    <Compile Include="Source\Pages\ShowDetailsPages\ShowDetailsViewBuilder.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
     <Compile Include="Source\Show.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\RatingButtonClickListener.cs" />
