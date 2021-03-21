@@ -49,20 +49,28 @@ namespace Movolira.Pages.ShowListPage {
 			Bundle saved_instance_state) {
 
 
-			string type = this.Arguments.GetString("type");
-			string subtype = this.Arguments.GetString("subtype");
-			this._main_activity.setToolbarTitle(type, subtype);
+			string fragment_type = this.Arguments.GetString("fragment_type");
+			string fragment_subtype = this.Arguments.GetString("fragment_subtype");
+			this._main_activity.setToolbarTitle(fragment_type, fragment_subtype);
 			this._frag_layout = inflater.Inflate(Resource.Layout.show_list_page, container, false);
 			this._cards_view_adapter = new ShowCardViewAdapter(this._shows, this._main_activity);
 
 
 			if (this._shows.Count == 0) {
-				Task.Run(() => this.fillAdapter(this._current_page_number));
+				Task.Run(() => this.fillCardsViewAdapter(this._current_page_number));
 			} else {
 				this._main_activity.setIsLoading(false);
 			}
 
 
+			this.buildCardsView();
+			return this._frag_layout;
+		}
+
+
+
+
+		private void buildCardsView() {
 			this._cards_view_adapter.ShowCardClickEvent += this.OnShowCardClick;
 			this._cards_view_adapter.NextButtonClickEvent += this.OnNextButtonClick;
 			this._cards_view_adapter.PrevButtonClickEvent += this.OnPrevButtonClick;
@@ -71,6 +79,9 @@ namespace Movolira.Pages.ShowListPage {
 			this._cards_view = this._frag_layout.FindViewById<RecyclerView>(Resource.Id.show_list_content_layout);
 
 
+			// These formulas manage the number of card columns.
+			// The number depends on the width of the app's screen.
+			// The wider it is, the more columns of cards it displays.
 			int display_dpi = (int)this._main_activity.Resources.DisplayMetrics.DensityDpi;
 			float display_width_pixels = this._main_activity.Resources.DisplayMetrics.WidthPixels;
 			int span_count = (int)Math.Floor(display_width_pixels / display_dpi / 1.1);
@@ -87,15 +98,12 @@ namespace Movolira.Pages.ShowListPage {
 			var cards_view_preloader = new RecyclerViewPreloader<Movie>(this._main_activity, this._preload_model_provider,
 				preload_size_provider, span_count * 3);
 			this._cards_view.AddOnScrollListener(cards_view_preloader);
-
-
-			return this._frag_layout;
 		}
 
 
 
 
-		private async void fillAdapter(int new_page_number) {
+		private async void fillCardsViewAdapter(int new_page_number) {
 			var show_data = await this.getShowData(new_page_number);
 			if (show_data == null) {
 				this._main_activity.RunOnUiThread(() => {
@@ -136,19 +144,19 @@ namespace Movolira.Pages.ShowListPage {
 
 
 		private async Task<Tuple<List<Show>, int>> getShowData(int new_page_number) {
-			string type = this.Arguments.GetString("type");
-			string subtype = this.Arguments.GetString("subtype");
+			string fragment_type = this.Arguments.GetString("fragment_type");
+			string fragment_subtype = this.Arguments.GetString("fragment_subtype");
 			Tuple<List<Show>, int> show_data = null;
 
 
-			if (type == "movies") {
-				show_data = await this._main_activity.MovieProvider.getMovies(subtype, new_page_number);
-			} else if (type == "tv_shows") {
-				show_data = await this._main_activity.TvShowProvider.getTvShows(subtype, new_page_number);
-			} else if (type == "search") {
-				show_data = await this._main_activity.ShowProvider.getSearchedShows(subtype, new_page_number);
-			} else if (type == "discover") {
-				show_data = await this._main_activity.ShowProvider.getDiscoveredShows(subtype, new_page_number);
+			if (fragment_type == "movies") {
+				show_data = await this._main_activity.MovieProvider.getMovies(fragment_subtype, new_page_number);
+			} else if (fragment_type == "tv_shows") {
+				show_data = await this._main_activity.TvShowProvider.getTvShows(fragment_subtype, new_page_number);
+			} else if (fragment_type == "search") {
+				show_data = await this._main_activity.ShowProvider.getSearchedShows(fragment_subtype, new_page_number);
+			} else if (fragment_type == "discover") {
+				show_data = await this._main_activity.ShowProvider.getDiscoveredShows(fragment_subtype, new_page_number);
 			}
 
 
@@ -158,12 +166,12 @@ namespace Movolira.Pages.ShowListPage {
 
 
 
-		private void OnShowCardClick(object sender, int position) {
+		private void OnShowCardClick(object sender, int show_index) {
 			if (this._main_activity.IsLoading) {
 				return;
 			}
 			this._main_activity.setIsLoading(true);
-			Task.Run(() => this.moveToShowDetailsFrag(position));
+			Task.Run(() => this.moveToShowDetailsFrag(show_index));
 		}
 
 
@@ -175,7 +183,7 @@ namespace Movolira.Pages.ShowListPage {
 			}
 			this._main_activity.setIsLoading(true);
 			int new_page_number = this._current_page_number + 1;
-			Task.Run(() => this.fillAdapter(new_page_number));
+			Task.Run(() => this.fillCardsViewAdapter(new_page_number));
 		}
 
 
@@ -187,7 +195,7 @@ namespace Movolira.Pages.ShowListPage {
 			}
 			this._main_activity.setIsLoading(true);
 			int new_page_number = this._current_page_number - 1;
-			Task.Run(() => this.fillAdapter(new_page_number));
+			Task.Run(() => this.fillCardsViewAdapter(new_page_number));
 		}
 
 
@@ -204,18 +212,18 @@ namespace Movolira.Pages.ShowListPage {
 
 
 
-		private void moveToShowDetailsFrag(int position) {
+		private void moveToShowDetailsFrag(int show_index) {
 			Fragment details_fragment;
 			Bundle fragment_args = new Bundle();
 
 
-			if (this._shows[position].Type == ShowType.Movie) {
+			if (this._shows[show_index].Type == ShowType.Movie) {
 				details_fragment = new MovieDetailsFragment();
-				Movie movie = this._shows[position] as Movie;
+				Movie movie = this._shows[show_index] as Movie;
 				fragment_args.PutString("movie", JsonConvert.SerializeObject(movie));
 			} else {
 				details_fragment = new TvShowDetailsFragment();
-				TvShow tv_show = this._shows[position] as TvShow;
+				TvShow tv_show = this._shows[show_index] as TvShow;
 				fragment_args.PutString("tv_show", JsonConvert.SerializeObject(tv_show));
 			}
 

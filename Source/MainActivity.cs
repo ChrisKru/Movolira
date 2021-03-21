@@ -89,19 +89,21 @@ namespace Movolira {
 
 
 
-		public void changeContentFragment(string type, string subtype) {
+		public void changeContentFragment(string fragment_type, string fragment_subtype) {
 			this.RunOnUiThread(() => { this.setIsLoading(true); });
 			Bundle fragment_args = new Bundle();
-			fragment_args.PutString("type", type);
-			fragment_args.PutString("subtype", subtype);
+			fragment_args.PutString("fragment_type", fragment_type);
+			fragment_args.PutString("fragment_subtype", fragment_subtype);
 
 
 			Fragment content_fragment;
-			if (type == "movies" || type == "tv_shows" || type == "search" || type == "discover" && subtype != "") {
+			if (fragment_type == "movies" || fragment_type == "tv_shows"
+				|| fragment_type == "search" || fragment_type == "discover" && fragment_subtype != "") {
+
 				content_fragment = new ShowListFragment();
-			} else if (type == "discover" && subtype == "") {
+			} else if (fragment_type == "discover" && fragment_subtype == "") {
 				content_fragment = new DiscoverFragment();
-			} else if (type == "watchlist") {
+			} else if (fragment_type == "watchlist") {
 				content_fragment = new WatchlistFragment();
 			} else {
 				content_fragment = new RatedShowsFragment();
@@ -321,20 +323,20 @@ namespace Movolira {
 
 
 
-		public void setToolbarTitle(string type, string subtype) {
+		public void setToolbarTitle(string fragment_type, string fragment_subtype) {
 			TextInfo text_info = new CultureInfo("en-US", false).TextInfo;
-			string title_a = type.Replace("_", " ");
+			string title_a = fragment_type.Replace("_", " ");
 			title_a = text_info.ToTitleCase(title_a);
 
 
-			string title_b = subtype;
-			if (type != "search") {
-				title_b = subtype.Replace("_", " ");
+			string title_b = fragment_subtype;
+			if (fragment_type != "search") {
+				title_b = fragment_subtype.Replace("_", " ");
 				title_b = text_info.ToTitleCase(title_b);
 			}
 
 
-			if (type == "discover" || type == "watchlist") {
+			if (fragment_type == "discover" || fragment_type == "watchlist") {
 				this._toolbar.Title = title_a;
 			} else {
 				this._toolbar.Title = title_a + ": " + title_b;
@@ -384,8 +386,8 @@ namespace Movolira {
 			if (this.SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
 				Bundle fragment_args = new Bundle();
-				fragment_args.PutString("type", "movies");
-				fragment_args.PutString("subtype", "popular");
+				fragment_args.PutString("fragment_type", "movies");
+				fragment_args.PutString("fragment_subtype", "popular");
 				content_frag.Arguments = fragment_args;
 				this.SupportFragmentManager.BeginTransaction()
 					.Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();

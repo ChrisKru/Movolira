@@ -20,10 +20,15 @@ namespace Movolira.Pages.ShowListPage {
 
 
 		public override int GetSpanSize(int child_position) {
+			// If child is a card view.
 			if (child_position == this._cards_view_adapter.ItemCount - 1) {
 				return this._span_count;
+
+
+				// If child is the pager view.
+			} else {
+				return 1;
 			}
-			return 1;
 		}
 	}
 }

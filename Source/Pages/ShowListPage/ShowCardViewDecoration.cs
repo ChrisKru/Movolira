@@ -21,25 +21,26 @@ namespace Movolira.Pages.ShowListPage {
 
 
 
+		// Calculates exact card positions, based on screen DPI and previously calculated column number.
 		public override void GetItemOffsets(Rect offset_rect, View view,
 			RecyclerView parent_view, RecyclerView.State parent_state) {
 
 
 			float display_density = this._app_context.Resources.DisplayMetrics.Density;
 			int offset = (int)(display_density * 14);
-			int child_pos = parent_view.GetChildLayoutPosition(view);
+			int child_position = parent_view.GetChildLayoutPosition(view);
 			int child_count = parent_view.GetAdapter().ItemCount;
 
 
-			if (child_pos == child_count - 1) {
+			if (child_position == child_count - 1) {
 				return;
 			}
 			int span_count = ((GridLayoutManager)parent_view.GetLayoutManager()).SpanCount;
-			int child_column_pos = child_pos % span_count;
+			int child_column_pos = child_position % span_count;
 
 
 			offset_rect.Bottom = offset;
-			if (child_pos < span_count) {
+			if (child_position < span_count) {
 				offset_rect.Top = offset;
 			}
 
