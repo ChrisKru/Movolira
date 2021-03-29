@@ -52,7 +52,7 @@ namespace Movolira {
 			} else if (clicked_view.Id == Resource.Id.menu_recommendations) {
 				this._drawer.CloseDrawer(GravityCompat.Start);
 				this.collapseAllGroups();
-				Task.Run(() => this._main_activity.getRecommendation());
+				Task.Run(() => this._main_activity.moveToRecommendationFragment());
 
 
 			} else {

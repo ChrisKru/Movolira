@@ -21,8 +21,10 @@ namespace Movolira {
 
 
 
+		// This is only here, because the ''IOnQueryTextListener' interface,
+		// forces the implementation of it.
 		public bool OnQueryTextChange(string newText) {
-			return false;
+			return false; // perform default action
 		}
 
 

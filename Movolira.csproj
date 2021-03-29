@@ -77,6 +77,7 @@
     <Compile Include="Source\DataProviders\MovieProvider.cs" />
     <Compile Include="Source\DataProviders\ShowProvider.cs" />
     <Compile Include="Source\DataProviders\TvShowProvider.cs" />
+    <Compile Include="Source\MainActivityViewBuilder.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverFragment.cs" />
     <Compile Include="Source\IBackButtonHandler.cs" />
     <Compile Include="Source\MenuOnClickListener.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Source\Pages\DiscoverPage\DiscoverYearsRangePicker.cs" />
     <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\ShowDetailsViewBuilder.cs" />
+    <Compile Include="Source\Recommendation.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
     <Compile Include="Source\Show.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\RatingButtonClickListener.cs" />
@@ -106,7 +108,7 @@
     <Compile Include="Source\Pages\ShowListPage\ShowListSpanSizeLookup.cs" />
     <Compile Include="Source\TvShow.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\TvShowDetailsFragment.cs" />
-    <Compile Include="Source\UserData.cs" />
+    <Compile Include="Source\DataProviders\UserDataProvider.cs" />
     <Compile Include="Source\Pages\WatchlistPage\WatchlistFragment.cs" />
   </ItemGroup>
   <ItemGroup>

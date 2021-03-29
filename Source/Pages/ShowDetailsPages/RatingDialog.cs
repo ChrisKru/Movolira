@@ -67,7 +67,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 
 		private void OnRateButtonClick(object sender, EventArgs args) {
-			this._main_activity.UserData.addToRatedShows(this._show, this._current_rating_index + 1);
+			UserDataProvider.addToRatedShows(this._show, this._current_rating_index + 1);
 			OnShowRatedEvent.Invoke(this, this._current_rating_index + 1);
 			this._dialog.Hide();
 		}

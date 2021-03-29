@@ -29,7 +29,7 @@ namespace Movolira.Pages.WatchlistPage {
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			View layout = inflater.Inflate(Resource.Layout.watchlist_page, container, false);
 			ViewGroup entries_layout = layout.FindViewById<ViewGroup>(Resource.Id.watchlist_page_entries);
-			var watchlist = this._main_activity.UserData.getWatchlist();
+			var watchlist = UserDataProvider.getWatchlist();
 			TextView list_empty_text = layout.FindViewById<TextView>(Resource.Id.watchlist_page_empty_text);
 
 

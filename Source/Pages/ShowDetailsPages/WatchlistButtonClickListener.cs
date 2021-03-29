@@ -23,7 +23,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 			this._show = show;
 
 
-			if (main_activity.UserData.isShowInWatchlist(show.Id)) {
+			if (UserDataProvider.isShowInWatchlist(show.Id)) {
 				this._is_show_watchlisted = true;
 				this.toggleButtonState();
 			} else {
@@ -36,9 +36,9 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		public void OnClick(View button) {
 			if (this._is_show_watchlisted) {
-				this._main_activity.UserData.removeFromWatchlist(this._show.Id);
+				UserDataProvider.removeFromWatchlist(this._show.Id);
 			} else {
-				this._main_activity.UserData.addToWatchlist(this._show);
+				UserDataProvider.addToWatchlist(this._show);
 			}
 
 

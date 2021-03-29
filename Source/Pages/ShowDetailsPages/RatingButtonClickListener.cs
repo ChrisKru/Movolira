@@ -27,7 +27,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 			this._rating_dialog.OnShowRatedEvent += this.OnShowRatedEvent;
 
 
-			int rating = main_activity.UserData.getShowRating(show.Id);
+			int rating = UserDataProvider.getShowRating(show.Id);
 			if (rating != 0) {
 				this._is_show_rated = true;
 				this._rating = rating;
@@ -54,7 +54,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 		public void OnClick(View view) {
 			if (this._is_show_rated) {
 				this._is_show_rated = false;
-				this._main_activity.UserData.removeFromRatedShows(this._show.Id);
+				UserDataProvider.removeFromRatedShows(this._show.Id);
 				this.toggleRatingButtonState();
 
 

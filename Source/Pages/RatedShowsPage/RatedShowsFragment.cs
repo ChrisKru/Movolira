@@ -29,7 +29,7 @@ namespace Movolira.Pages.RatedShowsPage {
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle saved_instance_state) {
 			View layout = inflater.Inflate(Resource.Layout.rated_shows_page, container, false);
 			ViewGroup entries_layout = layout.FindViewById<ViewGroup>(Resource.Id.rated_shows_page_entries);
-			var rated_shows = this._main_activity.UserData.getRatedShows();
+			var rated_shows = UserDataProvider.getRatedShows();
 			TextView list_empty_text = layout.FindViewById<TextView>(Resource.Id.rated_shows_page_empty_text);
 
 
