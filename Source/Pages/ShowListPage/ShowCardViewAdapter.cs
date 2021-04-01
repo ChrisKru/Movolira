@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using Bumptech.Glide;
 using Bumptech.Glide.Load.Resource.Drawable;
 using Bumptech.Glide.Request;
+
+
+
 
 namespace Movolira.Pages.ShowListPage {
 	public class ShowCardViewAdapter : RecyclerView.Adapter {
@@ -121,7 +124,7 @@ namespace Movolira.Pages.ShowListPage {
 
 			RequestOptions image_load_options = new RequestOptions().CenterCrop()
 				.Placeholder(new ColorDrawable(Color.Black))
-				.Error(new ColorDrawable(Color.LightGray));
+				.Error(Color.LightGray);
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
 			Glide.With(this._main_activity).Load(show.PosterUrl).Apply(image_load_options)
 				.Transition(DrawableTransitionOptions.WithCrossFade())

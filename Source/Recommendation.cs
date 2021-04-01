@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
+
+
 namespace Movolira {
 	public static class Recommendation {
 		public static Tuple<Show, string> getRecommendation(MainActivity main_activity) {

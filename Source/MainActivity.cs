@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Net;
 using Android.OS;
-using Android.Support.V4.View;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.Core.View;
+using AndroidX.DrawerLayout.Widget;
 using Movolira.DataProviders;
 using Movolira.Pages.DiscoverPage;
 using Movolira.Pages.RatedShowsPage;
@@ -15,9 +15,9 @@ using Movolira.Pages.ShowDetailsPages;
 using Movolira.Pages.ShowListPage;
 using Movolira.Pages.WatchlistPage;
 using Newtonsoft.Json;
-using Fragment = Android.Support.V4.App.Fragment;
-using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Fragment = AndroidX.Fragment.App.Fragment;
+using FragmentTransaction = AndroidX.Fragment.App.FragmentTransaction;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 
 

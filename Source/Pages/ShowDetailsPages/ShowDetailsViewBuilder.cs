@@ -19,7 +19,7 @@ namespace Movolira.Pages.ShowDetailsPages {
 		public static void buildBackdropView(MainActivity main_activity, View layout, Show show, int backdrop_view_resource_id) {
 			ImageView backdrop_view = layout.FindViewById<ImageView>(backdrop_view_resource_id);
 			RequestOptions image_load_options = new RequestOptions().CenterCrop().Placeholder(new ColorDrawable(Color.Black))
-				.Error(new ColorDrawable(Color.LightGray));
+				.Error(Color.LightGray);
 			RequestOptions thumbnail_options = new RequestOptions().CenterCrop();
 
 

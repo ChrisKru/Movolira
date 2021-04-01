@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Fragment.App;
+using AndroidX.RecyclerView.Widget;
 using Bumptech.Glide.Integration.RecyclerView;
 using Bumptech.Glide.Util;
 using Movolira.Pages.ShowDetailsPages;
@@ -95,8 +95,9 @@ namespace Movolira.Pages.ShowListPage {
 
 			ViewPreloadSizeProvider preload_size_provider = new ViewPreloadSizeProvider();
 			this._preload_model_provider = new ShowCardPreloadModelProvider(this._shows, this._main_activity);
-			var cards_view_preloader = new RecyclerViewPreloader<Movie>(this._main_activity, this._preload_model_provider,
+			var cards_view_preloader = new RecyclerViewPreloader(this._main_activity, this._preload_model_provider,
 				preload_size_provider, span_count * 3);
+
 			this._cards_view.AddOnScrollListener(cards_view_preloader);
 		}
 

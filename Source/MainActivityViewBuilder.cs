@@ -1,12 +1,12 @@
 ﻿using Android.Animation;
 using Android.Graphics.Drawables;
 using Android.OS;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using SearchView = Android.Support.V7.Widget.SearchView;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using AndroidX.AppCompat.App;
+using AndroidX.DrawerLayout.Widget;
+using SearchView = AndroidX.AppCompat.Widget.SearchView;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 
 
