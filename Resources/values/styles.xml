@@ -4,6 +4,8 @@
         <item name="android:textSize">18sp</item>
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#FAFAFA</item>
+        <item name="android:forceDarkAllowed">false</item>
         <item name="colorPrimary">#220024</item>
         <item name="colorPrimaryDark">#220024</item>
         <item name="colorAccent">#73007a</item>
