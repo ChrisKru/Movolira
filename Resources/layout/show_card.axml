@@ -22,8 +22,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:background="@color/card_primary"
-            android:textColor="@color/card_text"
+            android:background="?app:attr/backgroundColorDTransparent"
+            android:textColor="?app:attr/textColorB"
             android:fontFamily="@font/exo_bold"
             android:textSize="16sp"
             android:maxLines="2"
@@ -37,14 +37,13 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:background="@color/card_primary"
+            android:background="?app:attr/backgroundColorDTransparent"
             android:textSize="11sp"
-            android:textColor="@color/card_text"
+            android:textColor="?app:attr/textColorB"
             android:fontFamily="@font/notosans_regular"
             android:lines="1"
             android:maxLines="1"
             android:ellipsize="end"
             android:gravity="center" />
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

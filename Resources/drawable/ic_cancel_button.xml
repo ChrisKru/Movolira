@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    
     <item
         android:width="32dp"
         android:height="32dp">
         <bitmap
             android:src="@drawable/ic_cross"
-            android:tint="@color/ic_cancel_button_tint" />
+            android:tint="?app:attr/textColorA" />
     </item>
 </layer-list>

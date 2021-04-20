@@ -14,7 +14,7 @@ using IList = System.Collections.IList;
 namespace Movolira.Pages.ShowListPage {
 	public class ShowCardPreloadModelProvider : Object, ListPreloader.IPreloadModelProvider {
 		public List<Show> Shows { get; set; }
-		private readonly MainActivity _main_activity;
+		private MainActivity _main_activity;
 
 
 

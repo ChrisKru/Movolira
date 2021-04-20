@@ -7,8 +7,8 @@ using Java.Lang;
 
 namespace Movolira {
 	public class SearchQueryTextListener : Object, SearchView.IOnQueryTextListener {
-		private readonly MainActivity _main_activity;
-		private readonly IMenuItem _search_item;
+		private MainActivity _main_activity;
+		private IMenuItem _search_item;
 
 
 

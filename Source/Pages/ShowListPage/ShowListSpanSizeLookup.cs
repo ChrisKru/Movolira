@@ -5,8 +5,8 @@ using AndroidX.RecyclerView.Widget;
 
 namespace Movolira.Pages.ShowListPage {
 	public class ShowListSpanSizeLookup : GridLayoutManager.SpanSizeLookup {
-		private readonly ShowCardViewAdapter _cards_view_adapter;
-		private readonly int _span_count;
+		private ShowCardViewAdapter _cards_view_adapter;
+		private int _span_count;
 
 
 

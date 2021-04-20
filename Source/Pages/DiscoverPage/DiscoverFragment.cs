@@ -64,6 +64,7 @@ namespace Movolira.Pages.DiscoverPage {
 			this.buildResetButton(layout);
 			this.buildDiscoverButton(layout);
 			this._main_activity.setToolbarTitle("Discover");
+			this._main_activity.setIsLoading(false);
 			return layout;
 		}
 

@@ -10,8 +10,8 @@ using Java.Lang;
 
 namespace Movolira {
 	public class MenuOnClickListener : Object, View.IOnClickListener {
-		private readonly DrawerLayout _drawer;
-		private readonly MainActivity _main_activity;
+		private DrawerLayout _drawer;
+		private MainActivity _main_activity;
 
 
 
@@ -53,6 +53,12 @@ namespace Movolira {
 				this._drawer.CloseDrawer(GravityCompat.Start);
 				this.collapseAllGroups();
 				Task.Run(() => this._main_activity.moveToRecommendationFragment());
+
+
+			} else if (clicked_view.Id == Resource.Id.menu_settings) {
+				this._drawer.CloseDrawer(GravityCompat.Start);
+				this.collapseAllGroups();
+				Task.Run(() => this._main_activity.changeContentFragment("settings", ""));
 
 
 			} else {

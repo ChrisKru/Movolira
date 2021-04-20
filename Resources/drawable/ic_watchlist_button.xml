@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:width="33dp"
         android:height="33dp">
         <bitmap
             android:src="@drawable/ic_eye"
-            android:tint="@color/ic_watchlist_button_tint"/>
+            android:tint="?app:attr/textColorD"/>
     </item>
 </layer-list>

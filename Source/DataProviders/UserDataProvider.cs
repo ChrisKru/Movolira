@@ -5,7 +5,7 @@ using Realms;
 
 
 
-namespace Movolira {
+namespace Movolira.DataProviders {
 	public static class UserDataProvider {
 		public static List<SerializedShow> getWatchlist() {
 			Realm realm_db = Realm.GetInstance();

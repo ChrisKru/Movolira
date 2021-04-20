@@ -75,6 +75,7 @@
     <Compile Include="Source\DataProviders\GenresProvider.cs" />
     <Compile Include="Source\DataProviders\JSONHelper.cs" />
     <Compile Include="Source\DataProviders\MovieProvider.cs" />
+    <Compile Include="Source\DataProviders\SettingsProvider.cs" />
     <Compile Include="Source\DataProviders\ShowProvider.cs" />
     <Compile Include="Source\DataProviders\TvShowProvider.cs" />
     <Compile Include="Source\MainActivityViewBuilder.cs" />
@@ -87,9 +88,13 @@
     <Compile Include="Source\Pages\DiscoverPage\DiscoverRuntimeRangeSlider.cs" />
     <Compile Include="Source\Pages\DiscoverPage\DiscoverYearsRangePicker.cs" />
     <Compile Include="Source\Pages\RatedShowsPage\RatedShowsFragment.cs" />
+    <Compile Include="Source\Pages\SettingsPage\SettingsFragment.cs" />
+    <Compile Include="Source\Pages\SettingsPage\ThemeSpinnerAdapter.cs" />
+    <Compile Include="Source\Pages\SettingsPage\ThemeSpinnerOnItemSelectedListener.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\ShowDetailsViewBuilder.cs" />
     <Compile Include="Source\Recommendation.cs" />
     <Compile Include="Source\SearchQueryTextListener.cs" />
+    <Compile Include="Source\Settings.cs" />
     <Compile Include="Source\Show.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\RatingButtonClickListener.cs" />
     <Compile Include="Source\Pages\ShowDetailsPages\RatingDialog.cs" />
@@ -527,7 +532,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\ic_launcher_background.xml" />
     <AndroidResource Include="Resources\values\strings.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
@@ -887,6 +891,46 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_theater.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\attrs.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\settings_page.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\theme_spinner_item.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\theme_spinner_dropdown_item.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\theme_spinner_wrapper_background.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

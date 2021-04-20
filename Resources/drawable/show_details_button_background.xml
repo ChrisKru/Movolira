@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid
-        android:color="@color/show_details_button_background"/>
+        android:color="#00000000"/>
 </shape>

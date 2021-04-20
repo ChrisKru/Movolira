@@ -11,6 +11,7 @@ using AndroidX.DrawerLayout.Widget;
 using Movolira.DataProviders;
 using Movolira.Pages.DiscoverPage;
 using Movolira.Pages.RatedShowsPage;
+using Movolira.Pages.SettingsPage;
 using Movolira.Pages.ShowDetailsPages;
 using Movolira.Pages.ShowListPage;
 using Movolira.Pages.WatchlistPage;
@@ -23,7 +24,7 @@ using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 
 namespace Movolira {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true,
+	[Activity(Label = "@string/app_name", Theme = "@style/AppThemeBlue", MainLauncher = true,
 		WindowSoftInputMode = SoftInput.StateUnchanged | SoftInput.AdjustResize)]
 	public class MainActivity : AppCompatActivity {
 		public static readonly int SHOWS_PER_PAGE = 20;
@@ -33,6 +34,7 @@ namespace Movolira {
 		public MovieProvider MovieProvider { get; private set; }
 		public TvShowProvider TvShowProvider { get; private set; }
 		public ShowProvider ShowProvider { get; private set; }
+		public SettingsProvider SettingsProvider { get; private set; }
 		public bool IsLoading { get; private set; }
 
 
@@ -56,9 +58,19 @@ namespace Movolira {
 			MainActivityViewBuilder.buildDrawerMenu(this, this._toolbar, out this._drawer_layout, out this._drawer_toggle);
 
 
-			// Creates and moves to a default page fragment if no fragments have been constructed yet.
-			// The default page is "movies/popular".
-			if (this.SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
+			// If the activity was restarted by the settings page fragment, it goes directly to it.
+			if (this.Intent.GetBooleanExtra("was_restarted_by_settings_page", false)) {
+				SettingsFragment settings_frag = new SettingsFragment();
+				Bundle fragment_args = new Bundle();
+				fragment_args.PutString("fragment_type", "settings");
+				settings_frag.Arguments = fragment_args;
+				this.SupportFragmentManager.BeginTransaction()
+					.Add(Resource.Id.main_activity_fragment_frame, settings_frag, null).Commit();
+
+
+			// If no fragments have been constructed yet, the default fragment is created,
+			// which is "movies/popular" listings page.
+			} else if (this.SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				ShowListFragment content_frag = new ShowListFragment();
 				Bundle fragment_args = new Bundle();
 				fragment_args.PutString("fragment_type", "movies");
@@ -77,6 +89,7 @@ namespace Movolira {
 			this.MovieProvider = new MovieProvider(this.GenresProvider);
 			this.TvShowProvider = new TvShowProvider(this.GenresProvider);
 			this.ShowProvider = new ShowProvider(this.GenresProvider, this.MovieProvider, this.TvShowProvider);
+			this.SettingsProvider = new SettingsProvider(this);
 		}
 
 
@@ -193,8 +206,10 @@ namespace Movolira {
 				content_fragment = new DiscoverFragment();
 			} else if (fragment_type == "watchlist") {
 				content_fragment = new WatchlistFragment();
-			} else {
+			} else if (fragment_type == "rated_shows") {
 				content_fragment = new RatedShowsFragment();
+			} else {
+				content_fragment = new SettingsFragment();
 			}
 			content_fragment.Arguments = fragment_args;
 

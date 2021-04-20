@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/settings_page_theme_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:textColor="?app:attr/textColorC"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/settings_page_theme_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/theme_spinner_wrapper_background"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_theme_title"
+        app:layout_constraintLeft_toLeftOf="parent" >
+        <Spinner
+            android:id="@+id/settings_page_theme_spinner"
+		    android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:backgroundTint="?app:attr/textColorB"
+            android:layoutDirection="rtl"
+            android:gravity="left"/>
+    </RelativeLayout>
+    
+</android.support.constraint.ConstraintLayout>

@@ -9,7 +9,7 @@ using AndroidX.RecyclerView.Widget;
 
 namespace Movolira.Pages.ShowListPage {
 	public class ShowCardViewDecoration : RecyclerView.ItemDecoration {
-		private readonly Context _app_context;
+		private Context _app_context;
 
 
 

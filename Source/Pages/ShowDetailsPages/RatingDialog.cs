@@ -2,9 +2,7 @@ using System;
 using Android.App;
 using Android.Views;
 using Android.Widget;
-
-
-
+using Movolira.DataProviders;
 
 namespace Movolira.Pages.ShowDetailsPages {
 	public class RatingDialog {
@@ -22,8 +20,8 @@ namespace Movolira.Pages.ShowDetailsPages {
 
 		private AlertDialog _dialog;
 		private View _layout;
-		private readonly MainActivity _main_activity;
-		private readonly Show _show;
+		private MainActivity _main_activity;
+		private Show _show;
 		private int _current_rating_index = 2;
 
 

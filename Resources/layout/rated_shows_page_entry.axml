@@ -19,7 +19,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:fontFamily="@font/exo_bold"
-        android:textColor="@color/rated_shows_entry"
+        android:textColor="?app:attr/textColorC"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/rated_shows_entry_rating"/>
@@ -89,6 +89,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/rated_shows_entry_divider"
+        android:background="?app:attr/dividerColor"
         app:layout_constraintTop_toBottomOf="@id/rated_shows_entry_title"/>
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,19 @@
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <attr name="backgroundColorA" format="color" />
+    <attr name="backgroundColorB" format="color" />
+    <attr name="backgroundColorC" format="color" />
+    <attr name="backgroundColorD" format="color" />
+    <attr name="backgroundColorDTransparent" format="color" />
+    
+    
+    <attr name="textColorA" format="color" />
+    <attr name="textColorB" format="color" />
+    <attr name="textColorC" format="color" />
+    <attr name="textColorD" format="color" />
+    
+    
+    <attr name="dividerColor" format="color"/>
+</resources>

@@ -45,7 +45,6 @@ namespace Movolira.Pages.DiscoverPage {
 				this.buildGenreChipButtons(discover_page_layout, inflater, saved_instance_state, genre_id_dict);
 				this.buildAllGenresButton(discover_page_layout);
 				this.buildNoneGenresButton(discover_page_layout);
-				this._main_activity.setIsLoading(false);
 			});
 		}
 
