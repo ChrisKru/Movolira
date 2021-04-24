@@ -8,8 +8,12 @@ using Realms;
 namespace Movolira.DataProviders {
 	public class SettingsProvider {
 		private readonly int[] THEME_RIDS = {
+			Resource.Style.AppThemeEmerald,
 			Resource.Style.AppThemeBlue,
-			Resource.Style.AppThemeViolet
+			Resource.Style.AppThemeViolet,
+			Resource.Style.AppThemeAmaranth,
+			Resource.Style.AppThemeFirebrick,
+			Resource.Style.AppThemeTangerine,
 		};
 		private MainActivity _main_activity;
 		private Settings _settings;

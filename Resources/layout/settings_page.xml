@@ -22,17 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/theme_spinner_wrapper_background"
+        android:background="?app:attr/backgroundColorB"
         app:layout_constraintTop_toBottomOf="@id/settings_page_theme_title"
         app:layout_constraintLeft_toLeftOf="parent" >
         <Spinner
             android:id="@+id/settings_page_theme_spinner"
 		    android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
+            android:gravity="left"
             android:backgroundTint="?app:attr/textColorB"
-            android:layoutDirection="rtl"
-            android:gravity="left"/>
+            android:overlapAnchor="false"/>
     </RelativeLayout>
     
 </android.support.constraint.ConstraintLayout>

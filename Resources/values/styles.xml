@@ -26,6 +26,20 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:forceDarkAllowed">false</item>
     </style>
+
+
+    <style name="AppThemeEmerald" parent="AppThemeCore">
+        <item name="app:backgroundColorA">#fafafa</item>
+        <item name="app:backgroundColorB">#009987</item>
+        <item name="app:backgroundColorC">#99FFF3</item>
+        <item name="app:backgroundColorD">#000000</item>
+        <item name="app:backgroundColorDTransparent">#dd000000</item>
+        <item name="app:textColorA">#636363</item>
+        <item name="app:textColorB">#ffffff</item>
+        <item name="app:textColorC">#232323</item>
+        <item name="app:textColorD">#009987</item>
+        <item name="app:dividerColor">#7d7d7d</item>
+    </style>
     
         
     <style name="AppThemeBlue" parent="AppThemeCore">
@@ -52,6 +66,48 @@
         <item name="app:textColorB">#ffffff</item>
         <item name="app:textColorC">#232323</item>
         <item name="app:textColorD">#501460</item>
+        <item name="app:dividerColor">#7d7d7d</item>
+    </style>
+
+
+    <style name="AppThemeAmaranth" parent="AppThemeCore">
+        <item name="app:backgroundColorA">#fafafa</item>
+        <item name="app:backgroundColorB">#AB154C</item>
+        <item name="app:backgroundColorC">#F5AFC8</item>
+        <item name="app:backgroundColorD">#000000</item>
+        <item name="app:backgroundColorDTransparent">#dd000000</item>
+        <item name="app:textColorA">#636363</item>
+        <item name="app:textColorB">#ffffff</item>
+        <item name="app:textColorC">#232323</item>
+        <item name="app:textColorD">#AB154C</item>
+        <item name="app:dividerColor">#7d7d7d</item>
+    </style>
+
+
+    <style name="AppThemeFirebrick" parent="AppThemeCore">
+        <item name="app:backgroundColorA">#fafafa</item>
+        <item name="app:backgroundColorB">#B82727</item>
+        <item name="app:backgroundColorC">#F1BCBC</item>
+        <item name="app:backgroundColorD">#000000</item>
+        <item name="app:backgroundColorDTransparent">#dd000000</item>
+        <item name="app:textColorA">#636363</item>
+        <item name="app:textColorB">#ffffff</item>
+        <item name="app:textColorC">#232323</item>
+        <item name="app:textColorD">#B82727</item>
+        <item name="app:dividerColor">#7d7d7d</item>
+    </style>
+
+
+    <style name="AppThemeTangerine" parent="AppThemeCore">
+        <item name="app:backgroundColorA">#fafafa</item>
+        <item name="app:backgroundColorB">#E88000</item>
+        <item name="app:backgroundColorC">#FFDBAF</item>
+        <item name="app:backgroundColorD">#000000</item>
+        <item name="app:backgroundColorDTransparent">#dd000000</item>
+        <item name="app:textColorA">#636363</item>
+        <item name="app:textColorB">#ffffff</item>
+        <item name="app:textColorC">#232323</item>
+        <item name="app:textColorD">#E88000</item>
         <item name="app:dividerColor">#7d7d7d</item>
     </style>
     
