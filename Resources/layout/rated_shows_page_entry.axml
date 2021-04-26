@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,6 +9,8 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:background="@drawable/abc_list_selector_holo_dark">
+
+
     <TextView
         android:id="@+id/rated_shows_entry_title"
         android:layout_width="0dp"
@@ -23,6 +27,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/rated_shows_entry_rating"/>
+
+
     <android.support.constraint.ConstraintLayout
         android:id="@id/rated_shows_entry_rating"
         android:layout_width="wrap_content"
@@ -30,6 +36,8 @@
         app:layout_constraintTop_toTopOf="@id/rated_shows_entry_title"
         app:layout_constraintBottom_toBottomOf="@id/rated_shows_entry_title"
         app:layout_constraintRight_toRightOf="parent">
+
+
         <ImageView
             android:id="@+id/rated_shows_entry_rating_star_1"
             android:layout_width="26dp"
@@ -40,6 +48,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
+
         <ImageView
             android:id="@+id/rated_shows_entry_rating_star_2"
             android:visibility="invisible"
@@ -51,6 +61,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/rated_shows_entry_rating_star_1"/>
+
+
         <ImageView
             android:id="@+id/rated_shows_entry_rating_star_3"
             android:visibility="invisible"
@@ -62,6 +74,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/rated_shows_entry_rating_star_2"/>
+
+
         <ImageView
             android:id="@+id/rated_shows_entry_rating_star_4"
             android:visibility="invisible"
@@ -73,6 +87,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/rated_shows_entry_rating_star_3"/>
+
+
         <ImageView
             android:id="@+id/rated_shows_entry_rating_star_5"
             android:visibility="invisible"
@@ -84,11 +100,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/rated_shows_entry_rating_star_4"/>
+
+
     </android.support.constraint.ConstraintLayout>
     
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?app:attr/dividerColor"
         app:layout_constraintTop_toBottomOf="@id/rated_shows_entry_title"/>
+
+
 </android.support.constraint.ConstraintLayout>

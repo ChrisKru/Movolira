@@ -1,6 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
 <resources>
+    
+    
     <!--app-->
     <string name="app_name">Movolira</string>
+    
+    
     <!--menu-->
     <string name="menu_movies">Movies</string>
     <string name="menu_movies_popular">Popular</string>
@@ -14,6 +21,8 @@
     <string name="menu_rated_shows">Rated</string>
     <string name="menu_recommendations">Recommendation</string>
     <string name="menu_settings">Settings</string>
+    
+    
     <!--DiscoverPage-->
     <string name="discover_page_keywords_title">KEYWORDS</string>
     <string name="discover_page_keywords_hint">Movie or Tv show</string>
@@ -26,11 +35,17 @@
     <string name="discover_page_years_end_range_picker_title">TO</string>
     <string name="discover_page_discover">Discover</string>
     <string name="discover_page_reset">Reset</string>
+    
+    
     <!--ShowList-->
     <string name="show_list_no_shows_text">No results found</string>
+    
+    
     <!--ShowListPager-->
     <string name="show_list_pager_prev_button">prev</string>
     <string name="show_list_pager_next_button">next</string>
+    
+    
     <!--ShowDetails-->
     <string name="show_details_runtime_title">Runtime: </string>
     <string name="show_details_release_date_title">Released: </string>
@@ -41,10 +56,18 @@
     <string name="rating_dialog_title">Rate Show</string>
     <string name="rating_dialog_cancel_button">Cancel</string>
     <string name="rating_dialog_rate_button">Rate</string>
+    
+    
     <!--WatchlistPage-->
     <string name="watchlist_page_empty_text">Empty</string>
+    
+    
     <!--RatedShowsPage-->
     <string name="rated_shows_page_empty_text">Empty</string>
+    
+    
     <!--SettingsPage-->
     <string name="settings_page_theme_title">Theme</string>
+    
+    
 </resources>

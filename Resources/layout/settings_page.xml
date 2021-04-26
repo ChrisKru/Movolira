@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
     <TextView
         android:id="@+id/settings_page_theme_title"
         android:layout_width="wrap_content"
@@ -17,6 +20,8 @@
         android:text="@string/settings_page_theme_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +30,8 @@
         android:background="?app:attr/backgroundColorB"
         app:layout_constraintTop_toBottomOf="@id/settings_page_theme_title"
         app:layout_constraintLeft_toLeftOf="parent" >
+
+
         <Spinner
             android:id="@+id/settings_page_theme_spinner"
 		    android:layout_width="wrap_content"
@@ -32,6 +39,9 @@
             android:gravity="left"
             android:backgroundTint="?app:attr/textColorB"
             android:overlapAnchor="false"/>
+
+
     </RelativeLayout>
     
+
 </android.support.constraint.ConstraintLayout>

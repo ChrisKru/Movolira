@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
 <shape 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:shape="rectangle">
+    
+    
     <solid 
         android:color="?app:attr/backgroundColorB"/>
+    
+    
     <corners 
         android:bottomRightRadius="100dp"
         android:bottomLeftRadius="100dp"
         android:topRightRadius="100dp"
         android:topLeftRadius="100dp"/>
+    
+    
 </shape>

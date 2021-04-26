@@ -24,7 +24,7 @@ using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 
 namespace Movolira {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppThemeBlue", MainLauncher = true,
+	[Activity(Label = "@string/app_name", Theme = "@style/AppThemeLightBlue", MainLauncher = true,
 		WindowSoftInputMode = SoftInput.StateUnchanged | SoftInput.AdjustResize)]
 	public class MainActivity : AppCompatActivity {
 		public static readonly int SHOWS_PER_PAGE = 20;
@@ -58,26 +58,28 @@ namespace Movolira {
 			MainActivityViewBuilder.buildDrawerMenu(this, this._toolbar, out this._drawer_layout, out this._drawer_toggle);
 
 
-			// If the activity was restarted by the settings page fragment, it goes directly to it.
-			if (this.Intent.GetBooleanExtra("was_restarted_by_settings_page", false)) {
-				SettingsFragment settings_frag = new SettingsFragment();
+			// If no fragments have been constructed yet, the 'main' fragment is created.
+			// By default it is the 'movies/popular' page.
+			if (this.SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
 				Bundle fragment_args = new Bundle();
-				fragment_args.PutString("fragment_type", "settings");
-				settings_frag.Arguments = fragment_args;
-				this.SupportFragmentManager.BeginTransaction()
-					.Add(Resource.Id.main_activity_fragment_frame, settings_frag, null).Commit();
+				Fragment main_frag;
 
 
-			// If no fragments have been constructed yet, the default fragment is created,
-			// which is "movies/popular" listings page.
-			} else if (this.SupportFragmentManager.FindFragmentById(Resource.Id.main_activity_fragment_frame) == null) {
-				ShowListFragment content_frag = new ShowListFragment();
-				Bundle fragment_args = new Bundle();
-				fragment_args.PutString("fragment_type", "movies");
-				fragment_args.PutString("fragment_subtype", "popular");
-				content_frag.Arguments = fragment_args;
+				// If the activity was restarted by changing themes in the settings page fragment,
+				// the settings page is initialized instead.
+				if (this.Intent.GetBooleanExtra("was_restarted_by_settings_page", false)) {
+					main_frag = new SettingsFragment();
+					fragment_args.PutString("fragment_type", "settings");
+				} else {
+					main_frag = new ShowListFragment();
+					fragment_args.PutString("fragment_type", "movies");
+					fragment_args.PutString("fragment_subtype", "popular");
+				}
+
+
+				main_frag.Arguments = fragment_args;
 				this.SupportFragmentManager.BeginTransaction()
-					.Add(Resource.Id.main_activity_fragment_frame, content_frag, null).Commit();
+					.Add(Resource.Id.main_activity_fragment_frame, main_frag, null).Commit();
 			}
 		}
 
