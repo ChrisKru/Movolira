@@ -103,6 +103,12 @@ namespace Movolira.DataProviders {
 			if (!JSONHelper.doesJsonContainData(details_json)) {
 				return false;
 			}
+			bool is_genre_dict_filled = await this._genres_provider.tryFillGenreDict();
+			if (!is_genre_dict_filled) {
+				return false;
+			}
+
+
 			if (!movie.AreShowMainDetailsFetched) {
 				if (!this.fillMainMovieDetails(movie, details_json)) {
 					return false;
