@@ -8,6 +8,15 @@ Movolira is a mobile movie and tv-show assistant application for Android devices
 - Rate and watchlist shows.
 - Get show recommendations.
 
+<p align="middle">
+	<img src="./Docs/readme1.jpg" width="200">
+	&nbsp;&nbsp;
+	<img src="./Docs/readme2.jpg" width="200">
+	&nbsp;&nbsp;
+	<img src="./Docs/readme3.jpg" width="200">
+</p>
+
+
 
 ## Building
 Prerequisites:
