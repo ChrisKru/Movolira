@@ -16,7 +16,7 @@ Prerequisites:
 Building process:
 1. Open `Movolira.sln` in `Visual Studio`
 2. Create `ApiKeys.cs` file in `/Source/DataProviders/`:
-```
+```C#
 namespace Movolira.DataProviders {
 	public static class ApiKeys {
 		public const string TMDB_KEY = "";
