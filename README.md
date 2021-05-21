@@ -1,5 +1,5 @@
 # Movolira
-Movolira is a mobile movie and tv-show assistant application for Android devices. The application is made with [Xamarin.Android](https://docs.microsoft.com/en-us/xamarin/android/) and is based on [TheMovieDB API](https://developers.themoviedb.org/3/getting-started/introduction). 
+Movolira is a movie and tv-show assistant application, for Android devices. The application is made with [Xamarin.Android](https://docs.microsoft.com/en-us/xamarin/android/) and is based on [TheMovieDB API](https://developers.themoviedb.org/3/getting-started/introduction). 
 
 
 ## Features
